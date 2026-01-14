@@ -1,0 +1,101 @@
+---
+// src/components/CoupangLink.astro
+interface Props {
+  title: string;
+  url: string;
+  description: string;
+}
+
+const { title, url, description } = Astro.props;
+---
+
+<div class="coupang-link">
+  <a href={url} target="_blank" rel="noopener noreferrer nofollow">
+    <div class="coupang-header">
+      <span class="coupang-icon">🛒</span>
+      <span class="coupang-title">{title}</span>
+    </div>
+    <p class="coupang-description">{description}</p>
+    <div class="coupang-button">
+      쿠팡에서 보기 →
+    </div>
+  </a>
+</div>
+
+<style>
+  .coupang-link {
+    margin: 2.5rem 0;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: #ffffff;
+  }
+
+  .coupang-link:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .coupang-link a {
+    display: block;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .coupang-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .coupang-icon {
+    font-size: 1.5rem;
+  }
+
+  .coupang-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  .coupang-description {
+    font-size: 0.9375rem;
+    color: #6b7280;
+    margin: 0 0 1rem 0;
+    line-height: 1.5;
+  }
+
+  .coupang-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.625rem 1.25rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .coupang-link:hover .coupang-button {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 768px) {
+    .coupang-link a {
+      padding: 1.25rem;
+    }
+
+    .coupang-title {
+      font-size: 1rem;
+    }
+
+    .coupang-description {
+      font-size: 0.875rem;
+    }
+  }
+</style>

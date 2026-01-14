@@ -1,0 +1,177 @@
+---
+import { getCollection } from 'astro:content';
+import type { Page, GetStaticPaths } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const posts = (await getCollection('blog')).sort(
+		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+	);
+	return paginate(posts, { pageSize: 9 });
+}) satisfies GetStaticPaths;
+
+type Props = {
+	page: Page<CollectionEntry<'blog'>>;
+};
+
+const { page } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead 
+			title={`All Posts - Page ${page.currentPage} | ${SITE_TITLE}`} 
+			description={SITE_DESCRIPTION} 
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="container">
+				<section class="posts">
+					<h1 class="page-title">All Posts</h1>
+					
+					<div class="posts-grid">
+						{page.data.map((post, index) => (
+							<div class="post-item" style={`animation-delay: ${index * 0.1}s`}>
+								<BlogCard
+									title={post.data.title}
+									description={post.data.description}
+									pubDate={post.data.pubDate}
+									heroImage={post.data.heroImage}
+									slug={post.id}
+								/>
+							</div>
+						))}
+					</div>
+
+					<nav class="pagination">
+						<div class="pagination-container">
+							{page.url.prev ? (
+								<a href={page.url.prev} class="pagination-btn prev">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+										<path d="M19 12H5M12 19l-7-7 7-7"/>
+									</svg>
+									Previous
+								</a>
+							) : (
+								<span class="pagination-btn disabled">Previous</span>
+							)}
+
+							<span class="pagination-info">
+								Page <strong>{page.currentPage}</strong> of <strong>{page.lastPage}</strong>
+							</span>
+
+							{page.url.next ? (
+								<a href={page.url.next} class="pagination-btn next">
+									Next
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+										<path d="M5 12h14M12 5l7 7-7 7"/>
+									</svg>
+								</a>
+							) : (
+								<span class="pagination-btn disabled">Next</span>
+							)}
+						</div>
+					</nav>
+				</section>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	/* 스타일은 이전과 동일 */
+	:global(body) {
+		margin: 0;
+		padding: 0;
+		background: #fafafa;
+	}
+
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 2rem;
+	}
+
+	.posts {
+		padding: 3rem 0 4rem;
+	}
+
+	.page-title {
+		font-size: 2.5rem;
+		font-weight: 800;
+		text-align: center;
+		margin-bottom: 3rem;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	.posts-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+		gap: 2rem;
+		margin-bottom: 3rem;
+	}
+
+	.post-item {
+		animation: fadeInUp 0.6s ease-out both;
+	}
+
+	@keyframes fadeInUp {
+		from { opacity: 0; transform: translateY(30px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	.pagination {
+		margin-top: 4rem;
+	}
+
+	.pagination-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 2rem;
+	}
+
+	.pagination-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.5rem;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		color: white;
+		text-decoration: none;
+		border-radius: 10px;
+		font-weight: 600;
+		transition: all 0.2s ease;
+	}
+
+	.pagination-btn:hover:not(.disabled) {
+		transform: translateY(-2px);
+	}
+
+	.pagination-btn.disabled {
+		background: #e5e7eb;
+		color: #9ca3af;
+		cursor: not-allowed;
+	}
+
+	.pagination-info strong {
+		color: #667eea;
+	}
+
+	@media (max-width: 768px) {
+		.posts-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
