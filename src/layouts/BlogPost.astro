@@ -6,6 +6,8 @@ import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
 import AdSense from "../components/AdSense.astro"
+import RelatedPosts from "../components/RelatedPosts.astro";
+import PostNavigation from "../components/PostNavigation.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
@@ -162,6 +164,12 @@ const readingTime = Math.ceil(wordCount / 200);
                 </button>
               </div>
             </div>
+
+            <!-- 이전/다음글 추가 -->
+            <PostNavigation currentId={Astro.params.slug} lang={lang} />
+
+            <!-- 다른 글 보기 -->
+            <RelatedPosts lang={lang} />
 
             <a href="/" class="back-link">
               <svg
