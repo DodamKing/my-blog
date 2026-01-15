@@ -107,7 +107,7 @@ const readingTime = Math.ceil(wordCount / 200);
             <slot />
           </div>
 
-		  <!-- 두 번째 광고: 본문 끝 -->
+		  <!-- 마지막 광고: 본문 끝 -->
           <AdSense />
 
           <footer class="article-footer">
@@ -232,6 +232,78 @@ const readingTime = Math.ceil(wordCount / 200);
               alert(failMessage);
             });
         });
+
+      // ========================================
+      // 중간 광고 자동 삽입 (새로 추가된 부분)
+      // ========================================
+      window.addEventListener('DOMContentLoaded', () => {
+        const prose = document.querySelector('.prose');
+        if (!prose) return;
+
+        const h2s = prose.querySelectorAll('h2');
+        const totalH2s = h2s.length;
+
+        // 글 길이에 따라 광고 개수 결정
+        let adCount;
+        if (totalH2s <= 4) {
+          adCount = 0;  // 짧은 글: 중간 광고 없음 (시작/끝만)
+        } else if (totalH2s <= 7) {
+          adCount = 2;  // 중간 길이: 2개
+        } else if (totalH2s <= 10) {
+          adCount = 3;  // 긴 글: 3개
+        } else {
+          adCount = 4;  // 매우 긴 글: 4개
+        }
+
+        if (adCount === 0) return;
+
+        // H2를 균등하게 나눠서 광고 위치 계산
+        const positions = [];
+        const interval = totalH2s / (adCount + 1);
+        
+        for (let i = 1; i <= adCount; i++) {
+          const index = Math.floor(interval * i) - 1;
+          if (index >= 0 && index < totalH2s) {
+            positions.push(index);
+          }
+        }
+
+        // 각 위치에 광고 삽입
+        positions.forEach((index) => {
+          const h2 = h2s[index];
+          if (h2) {
+            // 광고 컨테이너 생성
+            const adContainer = document.createElement('div');
+            adContainer.className = 'adsense-auto-insert';
+            adContainer.style.margin = '3rem 0';
+            adContainer.style.textAlign = 'center';
+            
+            // AdSense 광고 코드 (실제 사용 시 data-ad-client, data-ad-slot 수정 필요)
+            adContainer.innerHTML = `
+              <ins class="adsbygoogle"
+                   style="display:block"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+            `;
+
+            // H2 다음 요소 앞에 삽입 (H2와 내용 사이)
+            if (h2.nextElementSibling) {
+              h2.parentNode.insertBefore(adContainer, h2.nextElementSibling);
+            } else {
+              h2.parentNode.appendChild(adContainer);
+            }
+
+            // AdSense 스크립트 실행
+            if (window.adsbygoogle) {
+              try {
+                (window.adsbygoogle = window.adsbygoogle || []).push({});
+              } catch (e) {
+                console.error('AdSense error:', e);
+              }
+            }
+          }
+        });
+      });
     </script>
   </body>
 </html>
@@ -483,6 +555,41 @@ const readingTime = Math.ceil(wordCount / 200);
     background: linear-gradient(to right, transparent, #e5e7eb, transparent);
   }
 
+  /* 테이블 스타일 추가 */
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.95rem;
+    overflow-x: auto;
+    display: block;
+  }
+
+  .prose :global(thead) {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  }
+
+  .prose :global(th) {
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .prose :global(td) {
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .prose :global(tbody tr:hover) {
+    background: #f9fafb;
+  }
+
+  .prose :global(tbody tr:last-child td) {
+    border-bottom: none;
+  }
+
   /* Article Footer */
   .article-footer {
     margin-top: 4rem;
@@ -598,6 +705,15 @@ const readingTime = Math.ceil(wordCount / 200);
 
     .prose :global(h3) {
       font-size: 1.375rem;
+    }
+
+    .prose :global(table) {
+      font-size: 0.875rem;
+    }
+
+    .prose :global(th),
+    .prose :global(td) {
+      padding: 0.625rem 0.75rem;
     }
 
     .share-buttons {

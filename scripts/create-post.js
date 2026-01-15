@@ -122,7 +122,7 @@ const template = `---
 title: 'Title Here'
 description: 'Description here'
 pubDate: ${date}
-heroImage: './images/hero.jpg'
+heroImage: './images/hero.webp'
 lang: '${lang}'
 ---
 
@@ -159,7 +159,7 @@ console.log(`📁 위치: src/content/blog/${slug}/`);
 console.log(`📝 파일: src/content/blog/${slug}/index.mdx`);
 console.log(`🖼️  이미지: src/content/blog/${slug}/images/\n`);
 console.log('💡 다음 단계:');
-console.log(`   1. ${slug}/images/hero.jpg 파일 추가`);
+console.log(`   1. ${slug}/images/hero.webp 파일 추가`);
 console.log(`   2. ${slug}/index.mdx 파일 편집 (제목, 설명, 본문)`);
 console.log(`   3. 쿠팡 링크 필요시 CoupangLink 컴포넌트 사용`);
 console.log('   4. npm run dev 로 확인\n');
