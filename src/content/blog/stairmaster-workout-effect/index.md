@@ -3,6 +3,7 @@ title: "천국의 계단 운동, 힘들기만 한데 진짜 효과 있을까?"
 description: "천국의 계단 운동이 유산소에 효과 있는지, 몇 분이 적당한지. 계단 오르기 관련 연구를 직접 찾아 정리했습니다."
 pubDate: "2026-01-08"
 heroImage: "./images/hero.webp"
+category: 'health'
 ---
 
 ## 천국의 계단, 10분만 타도 효과 있을까?

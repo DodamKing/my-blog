@@ -5,6 +5,7 @@ tags: ["fitness", 'cardio', "stair climber", "workout", "exercise science", "fat
 pubDate: "2026-01-08"
 heroImage: "./images/hero.webp"
 lang: "en"
+category: 'health'
 ---
 
 ## Stair Climber: Is 10 Minutes Really Enough?

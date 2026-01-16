@@ -3,6 +3,7 @@ title: "ISA, 연금저축, IRP 헷갈린다면 이 글 하나로 끝"
 description: "ISA, 연금저축, IRP. 이름은 많이 들어봤는데 뭐가 다른지 헷갈린다면 이 글로 정리 끝내세요."
 pubDate: "2026-01-06"
 heroImage: "./images/hero.webp"
+category: 'finance'
 ---
 
 <p style="text-align: center; font-size: 0.75rem; color: #9CA3AF; margin-top: 0.5rem;">

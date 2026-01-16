@@ -4,6 +4,7 @@ description: "Scientists measured muscle volume and found the answer surprising.
 pubDate: "2026-01-13"
 heroImage: "./images/hero.webp"
 lang: "en"
+category: 'health'
 ---
 
 <p style="text-align: center; font-size: 0.875rem; color: #64748B; margin: 2rem 0 3rem 0; font-weight: 500;">

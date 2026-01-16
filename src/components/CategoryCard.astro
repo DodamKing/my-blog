@@ -1,0 +1,100 @@
+---
+// src/components/CategoryCard.astro
+interface Props {
+  name: { ko: string; en: string };
+  description: { ko: string; en: string };
+  count: number;
+  categoryKey: string;
+  color: string;
+}
+
+const { name, description, count, categoryKey, color } = Astro.props;
+---
+
+<a href={`/blog/${categoryKey}`} class={`category-card ${color}`} data-i18n-container>
+  <h3 data-i18n-name-ko={name.ko} data-i18n-name-en={name.en}>{name.ko}</h3>
+  <p data-i18n-desc-ko={description.ko} data-i18n-desc-en={description.en}>{description.ko}</p>
+  <span class="category-count"><span class="count-number">{count}</span><span data-i18n="posts_count">개</span></span>
+</a>
+
+<style>
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    min-height: 140px;
+  }
+
+  .category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border-color: #e0e0e0;
+  }
+
+  .category-card h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 0.5rem 0;
+    text-align: center;
+  }
+
+  .category-card p {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0 0 1rem 0;
+    text-align: center;
+  }
+
+  .category-count {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    font-weight: 600;
+    background: #f9fafb;
+    padding: 0.375rem 0.875rem;
+    border-radius: 12px;
+  }
+
+  .category-card.health:hover {
+    border-color: #d1fae5;
+  }
+
+  .category-card.health:hover .category-count {
+    background: #d1fae5;
+    color: #059669;
+  }
+
+  .category-card.tech:hover {
+    border-color: #dbeafe;
+  }
+
+  .category-card.tech:hover .category-count {
+    background: #dbeafe;
+    color: #2563eb;
+  }
+
+  .category-card.finance:hover {
+    border-color: #fef3c7;
+  }
+
+  .category-card.finance:hover .category-count {
+    background: #fef3c7;
+    color: #d97706;
+  }
+
+  .category-card.other:hover {
+    border-color: #e9d5ff;
+  }
+
+  .category-card.other:hover .category-count {
+    background: #e9d5ff;
+    color: #9333ea;
+  }
+</style>

@@ -1,18 +1,26 @@
 ---
 import { getCollection } from 'astro:content';
-import type { Page, GetStaticPaths } from 'astro';
+import type { GetStaticPaths, Page } from 'astro';
 import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import BlogCard from '../../components/BlogCard.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, CATEGORY_INFO } from '../../consts';
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import BlogCard from '../../../components/BlogCard.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, CATEGORY_INFO, type CategoryKey } from '../../../consts';
 
 export const getStaticPaths = (async ({ paginate }) => {
-	const posts = (await getCollection('blog')).sort(
+	const allPosts = (await getCollection('blog')).sort(
 		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 	);
-	return paginate(posts, { pageSize: 9 });
+
+	// 각 카테고리별로 페이지 생성
+	return Object.keys(CATEGORY_INFO).flatMap((category) => {
+		const categoryPosts = allPosts.filter(post => post.data.category === category);
+		return paginate(categoryPosts, {
+			params: { category },
+			pageSize: 9
+		});
+	});
 }) satisfies GetStaticPaths;
 
 type Props = {
@@ -20,6 +28,9 @@ type Props = {
 };
 
 const { page } = Astro.props;
+const { category } = Astro.params;
+
+const categoryInfo = CATEGORY_INFO[category as CategoryKey];
 
 // 카테고리별 글 개수
 const allPosts = (await getCollection('blog'));
@@ -34,7 +45,7 @@ const categoryCounts = Object.entries(CATEGORY_INFO).map(([key, info]) => ({
 <html lang="ko">
 	<head>
 		<BaseHead 
-			title={`All Posts - Page ${page.currentPage} | ${SITE_TITLE}`} 
+			title={`${categoryInfo.name.ko} - Page ${page.currentPage} | ${SITE_TITLE}`} 
 			description={SITE_DESCRIPTION} 
 		/>
 	</head>
@@ -53,15 +64,21 @@ const categoryCounts = Object.entries(CATEGORY_INFO).map(([key, info]) => ({
 				</div>
 
 				<section class="posts">
-					<h1 class="page-title" data-i18n="all_posts">전체 글</h1>
+					<h1 
+						class="page-title" 
+						data-category-ko={categoryInfo.name.ko}
+						data-category-en={categoryInfo.name.en}
+					>
+						{categoryInfo.name.ko}
+					</h1>
 
 					<!-- 카테고리 필터 -->
 					<div class="category-filters">
-						<a href="/blog" class="filter-btn active" data-i18n="all">전체</a>
+						<a href="/blog" class="filter-btn" data-i18n="all">전체</a>
 						{categoryCounts.map(cat => (
 							<a 
 								href={`/blog/${cat.key}`}
-								class="filter-btn"
+								class={`filter-btn ${category === cat.key ? 'active' : ''}`}
 								data-category-ko={cat.name.ko}
 								data-category-en={cat.name.en}
 							>
@@ -85,42 +102,44 @@ const categoryCounts = Object.entries(CATEGORY_INFO).map(([key, info]) => ({
 						))}
 					</div>
 
-					<nav class="pagination">
-						<div class="pagination-container">
-							{page.url.prev ? (
-								<a href={page.url.prev} class="pagination-btn prev">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-										<path d="M19 12H5M12 19l-7-7 7-7"/>
-									</svg>
-									<span data-i18n="previous">이전</span>
-								</a>
-							) : (
-								<span class="pagination-btn disabled" data-i18n="previous">이전</span>
-							)}
+					{page.lastPage > 1 && (
+						<nav class="pagination">
+							<div class="pagination-container">
+								{page.url.prev ? (
+									<a href={page.url.prev} class="pagination-btn prev">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+											<path d="M19 12H5M12 19l-7-7 7-7"/>
+										</svg>
+										<span data-i18n="previous">이전</span>
+									</a>
+								) : (
+									<span class="pagination-btn disabled" data-i18n="previous">이전</span>
+								)}
 
-							<span class="pagination-info">
-								<span data-i18n="page">페이지</span> <strong>{page.currentPage}</strong> / <strong>{page.lastPage}</strong>
-							</span>
+								<span class="pagination-info">
+									<span data-i18n="page">페이지</span> <strong>{page.currentPage}</strong> / <strong>{page.lastPage}</strong>
+								</span>
 
-							{page.url.next ? (
-								<a href={page.url.next} class="pagination-btn next">
-									<span data-i18n="next">다음</span>
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-										<path d="M5 12h14M12 5l7 7-7 7"/>
-									</svg>
-								</a>
-							) : (
-								<span class="pagination-btn disabled" data-i18n="next">다음</span>
-							)}
-						</div>
-					</nav>
+								{page.url.next ? (
+									<a href={page.url.next} class="pagination-btn next">
+										<span data-i18n="next">다음</span>
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+											<path d="M5 12h14M12 5l7 7-7 7"/>
+										</svg>
+									</a>
+								) : (
+									<span class="pagination-btn disabled" data-i18n="next">다음</span>
+								)}
+							</div>
+						</nav>
+					)}
 				</section>
 			</div>
 		</main>
 		<Footer />
 
 		<script>
-			import { UI_TEXT, DEFAULT_LANG, type Language } from '../../consts';
+			import { UI_TEXT, DEFAULT_LANG, type Language } from '../../../consts';
 
 			const savedLang = localStorage.getItem('lang') as Language | null;
 			let currentLang: Language = savedLang || DEFAULT_LANG;
@@ -157,6 +176,17 @@ const categoryCounts = Object.entries(CATEGORY_INFO).map(([key, info]) => ({
 					}
 				});
 
+				// 페이지 제목
+				const titleEl = document.querySelector('.page-title');
+				if (titleEl) {
+					const koName = titleEl.getAttribute('data-category-ko');
+					const enName = titleEl.getAttribute('data-category-en');
+					if (koName && enName) {
+						titleEl.textContent = lang === 'ko' ? koName : enName;
+					}
+				}
+
+				// 카테고리 필터
 				document.querySelectorAll('.filter-btn').forEach(btn => {
 					const nameEl = btn.querySelector('.filter-name');
 					if (nameEl) {
@@ -175,7 +205,6 @@ const categoryCounts = Object.entries(CATEGORY_INFO).map(([key, info]) => ({
 </html>
 
 <style>
-	/* 기존 스타일 동일 */
 	:global(body) {
 		margin: 0;
 		padding: 0;
@@ -369,6 +398,15 @@ const categoryCounts = Object.entries(CATEGORY_INFO).map(([key, info]) => ({
 		.lang-switcher {
 			right: 1.5rem;
 			top: 0.75rem;
+		}
+
+		.category-filters {
+			gap: 0.5rem;
+		}
+
+		.filter-btn {
+			padding: 0.5rem 1rem;
+			font-size: 0.8125rem;
 		}
 
 		.posts-grid {
