@@ -20,6 +20,9 @@ const {
   lang = "ko",
 } = Astro.props;
 
+// heroImage.src가 실제 빌드된 이미지 경로 (예: /_astro/hero.xxxxx.webp)
+const ogImage = heroImage?.src;
+
 // 읽는 시간 계산 (대략 분당 200단어 기준)
 const content = await Astro.slots.render("default");
 const wordCount = content.split(/\s+/).length;
@@ -28,7 +31,7 @@ const readingTime = Math.ceil(wordCount / 200);
 
 <html lang={lang}>
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description}, image={ogImage} />
   </head>
 
   <body>
