@@ -1,7 +1,7 @@
 // Place any global data in this file.
 // You can import this data from anywhere in your site by using the `import` keyword.
 
-export const SITE_TITLE = 'Laon Blog';
+export const SITE_TITLE = 'Laon';
 export const SITE_DESCRIPTION = 'Sharing insights on Health, Tech, and Finance';
 
 // 다국어 텍스트
