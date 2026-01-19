@@ -258,14 +258,14 @@ const readingTime = Math.ceil(wordCount / 200);
 
         // 글 길이에 따라 광고 개수 결정
         let adCount;
-        if (totalH2s <= 4) {
+        if (totalH2s <= 5) {
           adCount = 0;
-        } else if (totalH2s <= 7) {
+        } else if (totalH2s <= 9) {
+          adCount = 1;
+        } else if (totalH2s <= 13) {
           adCount = 2;
-        } else if (totalH2s <= 10) {
-          adCount = 3;
         } else {
-          adCount = 4;
+          adCount = 3;
         }
 
         if (adCount === 0) return;
