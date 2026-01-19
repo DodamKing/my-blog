@@ -1,52 +1,23 @@
 ---
 // src/components/AdSense.astro
-import { ADSENSE_CONFIG } from '../consts';
-const isDev = import.meta.env.DEV;
+import { ADSENSE_CONFIG } from "../consts";
 ---
 
 <div class="adsense-wrapper">
-  {isDev ? (
-    <!-- 개발 환경: 테스트 광고 -->
-    <div class="test-ad">
-      <p>📢 AdSense 광고 영역</p>
-      <small style="color: #999;">개발 모드 - 실제 배포 시 광고가 표시됩니다</small>
-    </div>
-  ) : (
-    <!-- 프로덕션: 실제 광고 -->
-    <ins 
-      class="adsbygoogle"
-      style="display:block"
-      data-ad-client={ADSENSE_CONFIG.client}
-      data-ad-slot={ADSENSE_CONFIG.slot}
-      data-ad-format="auto"
-      data-full-width-responsive="true"
-    ></ins>
-  )}
+  <ins
+    class="adsbygoogle"
+    style="display:block"
+    data-ad-client={ADSENSE_CONFIG.client}
+    data-ad-slot={ADSENSE_CONFIG.slot}
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
 </div>
-
-{!isDev && (
-  <script>
-    // TypeScript 타입 선언
-    declare global {
-      interface Window {
-        adsbygoogle: any[];
-      }
-    }
-
-    // AdSense 초기화
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {
-      console.error('AdSense error:', e);
-    }
-  </script>
-)}
 
 <style>
   .adsense-wrapper {
     margin: 2.5rem 0;
     text-align: center;
-    min-height: 100px;
+    min-height: 10px;
   }
 
   .test-ad {
@@ -71,5 +42,12 @@ const isDev = import.meta.env.DEV;
 
   .test-ad small {
     font-size: 0.875rem;
+  }
+
+  @media (max-width: 768px) {
+    .adsense-wrapper {
+      min-height: 140px;
+      margin: 2rem 0;
+    }
   }
 </style>
