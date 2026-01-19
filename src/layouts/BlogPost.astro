@@ -8,6 +8,8 @@ import Header from "../components/Header.astro";
 import AdSense from "../components/AdSense.astro"
 import RelatedPosts from "../components/RelatedPosts.astro";
 import PostNavigation from "../components/PostNavigation.astro";
+import { ADSENSE_CONFIG } from '../consts';
+
 
 type Props = CollectionEntry<"blog">["data"];
 
@@ -193,7 +195,7 @@ const readingTime = Math.ceil(wordCount / 200);
     </main>
     <Footer />
 
-    <script define:vars={{ lang }}>
+    <script define:vars={{ lang, adConfig: ADSENSE_CONFIG }}>
       // Twitter 공유
       document
         .getElementById("share-twitter-btn")
@@ -291,6 +293,8 @@ const readingTime = Math.ceil(wordCount / 200);
             adContainer.innerHTML = `
               <ins class="adsbygoogle"
                    style="display:block"
+                   data-ad-client="${adConfig.client}"
+                   data-ad-slot="${adConfig.slot}"
                    data-ad-format="auto"
                    data-full-width-responsive="true"></ins>
             `;

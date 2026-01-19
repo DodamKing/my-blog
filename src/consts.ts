@@ -83,3 +83,8 @@ export const CATEGORY_INFO = {
 export type CategoryKey = keyof typeof CATEGORY_INFO;
 export type Language = 'ko' | 'en';
 export const DEFAULT_LANG: Language = 'ko';
+
+export const ADSENSE_CONFIG = {
+  client: 'ca-pub-7892198097991803',
+  slot: '4105774619'
+} as const;

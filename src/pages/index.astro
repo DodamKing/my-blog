@@ -32,7 +32,7 @@ const latestPosts = allPosts.slice(0, 6);
 		<Header />
 		<main>
 			<div class="container">
-				<!-- 언어 전환 버튼 (개선) -->
+				<!-- 언어 전환 버튼 -->
 				<div class="lang-switcher">
 					<button class="lang-btn active" data-lang="ko">
 						<span class="lang-text">KO</span>
@@ -53,8 +53,24 @@ const latestPosts = allPosts.slice(0, 6);
 					</p>
 				</section>
 
-				<!-- 카테고리 -->
-				<section class="categories">
+				<!-- 카테고리 - 모바일 (칩 스타일) -->
+				<section class="categories-mobile">
+					<div class="category-chips">
+						{categories.map(cat => (
+							<CategoryCard
+								name={cat.name}
+								description={cat.description}
+								count={cat.count}
+								categoryKey={cat.key}
+								color={cat.color}
+								variant="chip"
+							/>
+						))}
+					</div>
+				</section>
+
+				<!-- 카테고리 - 데스크톱 (카드 스타일) -->
+				<section class="categories-desktop">
 					<h2 class="section-title" data-i18n="explore_topics">주제별 탐색</h2>
 					<div class="category-grid">
 						{categories.map(cat => (
@@ -64,6 +80,7 @@ const latestPosts = allPosts.slice(0, 6);
 								count={cat.count}
 								categoryKey={cat.key}
 								color={cat.color}
+								variant="card"
 							/>
 						))}
 					</div>
@@ -136,6 +153,7 @@ const latestPosts = allPosts.slice(0, 6);
 					}
 				});
 
+				// CategoryCard 번역 (데스크톱)
 				document.querySelectorAll('[data-i18n-container]').forEach(card => {
 					const h3 = card.querySelector('h3');
 					const p = card.querySelector('p');
@@ -150,6 +168,17 @@ const latestPosts = allPosts.slice(0, 6);
 						const descKey = `data-i18n-desc-${lang}`;
 						const desc = p.getAttribute(descKey);
 						if (desc) p.textContent = desc;
+					}
+				});
+
+				// CategoryChip 번역 (모바일)
+				document.querySelectorAll('[data-i18n-chip]').forEach(chip => {
+					const nameSpan = chip.querySelector('.chip-name');
+					
+					if (nameSpan) {
+						const nameKey = `data-i18n-name-${lang}`;
+						const name = nameSpan.getAttribute(nameKey);
+						if (name) nameSpan.textContent = name;
 					}
 				});
 
@@ -172,7 +201,7 @@ const latestPosts = allPosts.slice(0, 6);
 		position: relative;
 	}
 
-	/* 언어 전환 버튼 (개선) */
+	/* 언어 전환 버튼 */
 	.lang-switcher {
 		position: absolute;
 		top: 1rem;
@@ -263,7 +292,22 @@ const latestPosts = allPosts.slice(0, 6);
 		color: #1f2937;
 	}
 
-	.categories {
+	/* 모바일 카테고리 (칩) - 기본 숨김 */
+	.categories-mobile {
+		display: none;
+		padding: 1rem 0 2rem;
+	}
+
+	.category-chips {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	/* 데스크톱 카테고리 (카드) - 기본 보임 */
+	.categories-desktop {
+		display: block;
 		padding: 2rem 0 3rem;
 	}
 
@@ -347,7 +391,15 @@ const latestPosts = allPosts.slice(0, 6);
 			font-size: 1.125rem;
 		}
 
-		.category-grid,
+		/* 모바일에서 칩 보이고 카드 숨김 */
+		.categories-mobile {
+			display: block;
+		}
+
+		.categories-desktop {
+			display: none;
+		}
+
 		.posts-grid {
 			grid-template-columns: 1fr;
 			gap: 1rem;
