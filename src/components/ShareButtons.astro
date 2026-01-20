@@ -1,0 +1,147 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = "ko" } = Astro.props;
+---
+
+<div class="share-section">
+  <p class="share-text">
+    {lang === "ko" ? "이 글이 도움이 되셨나요? 공유해보세요!" : "Found this helpful? Share it!"}
+  </p>
+  <div class="share-buttons">
+    <button class="share-button twitter" id="share-twitter-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+      </svg>
+      Twitter
+    </button>
+    <button class="share-button facebook" id="share-facebook-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+      </svg>
+      Facebook
+    </button>
+    <button class="share-button link" id="copy-link-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"></path>
+        <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"></path>
+      </svg>
+      {lang === "ko" ? "링크 복사" : "Copy Link"}
+    </button>
+  </div>
+</div>
+
+<script define:vars={{ lang }}>
+  // Twitter 공유
+  document.getElementById("share-twitter-btn")?.addEventListener("click", function () {
+    const url = window.location.href;
+    const title = document.title;
+    window.open(
+      `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+      "_blank",
+    );
+  });
+
+  // Facebook 공유
+  document.getElementById("share-facebook-btn")?.addEventListener("click", function () {
+    const url = window.location.href;
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+      "_blank",
+    );
+  });
+
+  // 링크 복사
+  document.getElementById("copy-link-btn")?.addEventListener("click", function (event) {
+    const url = window.location.href;
+    const button = event.currentTarget;
+
+    const copiedText = lang === "ko" ? "복사됨!" : "Copied!";
+    const failMessage = lang === "ko" ? "복사 실패. 수동으로 복사해주세요." : "Failed to copy. Please copy manually.";
+
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        const originalHTML = button.innerHTML;
+        button.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> ${copiedText}`;
+
+        setTimeout(() => {
+          button.innerHTML = originalHTML;
+        }, 2000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy:", err);
+        alert(failMessage);
+      });
+  });
+</script>
+
+<style>
+  .share-section {
+    margin-bottom: 2rem;
+  }
+
+  .share-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 1rem;
+  }
+
+  .share-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .share-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #4b5563;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .share-button.twitter:hover {
+    border-color: #1da1f2;
+    color: #1da1f2;
+    background: rgba(29, 161, 242, 0.05);
+  }
+
+  .share-button.facebook:hover {
+    border-color: #4267b2;
+    color: #4267b2;
+    background: rgba(66, 103, 178, 0.05);
+  }
+
+  .share-button.link:hover {
+    border-color: #667eea;
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+  }
+
+  @media (max-width: 768px) {
+    .share-buttons {
+      flex-direction: column;
+    }
+
+    .share-button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
