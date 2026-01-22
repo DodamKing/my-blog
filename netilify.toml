@@ -1,2 +1,7 @@
 [[plugins]]
   package = "./plugins/indexnow"
+
+[[headers]]
+  for = "/rss.xml"
+  [headers.values]
+    Content-Type = "application/rss+xml; charset=UTF-8"  

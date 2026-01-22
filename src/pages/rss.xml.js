@@ -4,23 +4,13 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 export async function GET(context) {
 	const posts = await getCollection('blog');
-	
-	const rssContent = await rss({
+	return rss({
 		title: SITE_TITLE,
 		description: SITE_DESCRIPTION,
-		site: context.site,
+		site: 'https://blog.dimad.kr',
 		items: posts.map((post) => ({
-			title: post.data.title,
-			description: post.data.description,
-			pubDate: post.data.pubDate,
+			...post.data,
 			link: `/blog/${post.id}/`,
 		})),
-		customData: `<language>ko-kr</language>`,
-	});
-
-	return new Response(rssContent.body, {
-		headers: {
-			'Content-Type': 'application/xml; charset=utf-8',
-		},
 	});
 }
