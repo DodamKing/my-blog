@@ -16,7 +16,11 @@ export async function GET(context) {
 		customData: `<language>ko-kr</language>`,
 	});
 
-	return new Response(rssContent.body, {
+	// UTF-8 BOM 추가
+	const utf8BOM = '\uFEFF';
+	const body = utf8BOM + rssContent.body;
+
+	return new Response(body, {
 		headers: {
 			'Content-Type': 'application/xml; charset=utf-8',
 		},
