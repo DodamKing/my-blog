@@ -10,17 +10,15 @@ export async function GET(context) {
 		description: SITE_DESCRIPTION,
 		site: context.site,
 		items: posts.map((post) => ({
-			...post.data,
+			title: post.data.title,
+			description: post.data.description,
+			pubDate: post.data.pubDate,
 			link: `/blog/${post.id}/`,
 		})),
 		customData: `<language>ko-kr</language>`,
 	});
 
-	// UTF-8 BOM 추가
-	const utf8BOM = '\uFEFF';
-	const body = utf8BOM + rssContent.body;
-
-	return new Response(body, {
+	return new Response(rssContent.body, {
 		headers: {
 			'Content-Type': 'application/xml; charset=utf-8',
 		},
