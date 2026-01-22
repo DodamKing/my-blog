@@ -9,18 +9,27 @@ export default {
     
     const { execSync } = await import('child_process');
     
-    // 변경된 블로그 글만 찾기
+    // Netlify 환경변수로 정확한 커밋 범위 설정
+    const current = process.env.COMMIT_REF || 'HEAD';
+    const previous = process.env.CACHED_COMMIT_REF;
+    const diffRange = previous ? `${previous} ${current}` : 'HEAD~1 HEAD';
+    
+    console.log('🔎 diffRange:', diffRange);
+    
+    // 변경된 블로그 글만 찾기 (폴더형만)
     let changedFiles = [];
     try {
       changedFiles = execSync(
-        'git diff --name-only HEAD~1 HEAD -- "src/content/blog/**/*.{md,mdx}"',
+        `git diff --name-only ${diffRange} -- "src/content/blog/**"`,
         { encoding: 'utf-8' }
       )
         .trim()
         .split('\n')
-        .filter(Boolean);
+        .filter(Boolean)
+        // 폴더형만: .../slug/index.mdx
+        .filter(f => /src\/content\/blog\/.+\/index\.(md|mdx)$/.test(f));
     } catch (e) {
-      console.log('⚠️ 변경된 파일 없음');
+      console.log('⚠️ git diff 실패:', e.message);
       return;
     }
     
@@ -29,12 +38,14 @@ export default {
       return;
     }
     
+    console.log('🧾 changedFiles:', changedFiles);
+    
     // 변경된 파일을 URL로 변환
     const urls = changedFiles.map(file => {
       const slug = file
         .replace('src/content/blog/', '')
-        .replace(/\.(md|mdx)$/, '');
-      return `https://blog.dimad.kr/blog/${slug}`;
+        .replace(/\/index\.(md|mdx)$/, '');
+      return `https://blog.dimad.kr/blog/${slug}/`;
     });
     
     // IndexNow API 호출
@@ -54,7 +65,9 @@ export default {
         console.log(`✅ IndexNow 제출 완료: ${urls.length}개 URL (Bing, Naver)`);
         urls.forEach(url => console.log(`   📄 ${url}`));
       } else {
-        console.log(`❌ IndexNow 오류: ${response.status}`);
+        const text = await response.text().catch(() => '');
+        console.log(`❌ IndexNow 오류: ${response.status} ${response.statusText}`);
+        if (text) console.log('↳ response:', text.slice(0, 500));
       }
     } catch (error) {
       console.log(`❌ IndexNow 실패: ${error.message}`);
