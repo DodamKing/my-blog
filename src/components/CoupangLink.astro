@@ -1,5 +1,4 @@
 ---
-// src/components/CoupangLink.astro
 interface Props {
   title: string;
   url: string;
@@ -9,76 +8,92 @@ interface Props {
 const { title, url, description } = Astro.props;
 ---
 
-<div class="smart-link">
-  <a href={url} target="_blank" rel="noopener noreferrer nofollow">
-    <div class="link-header">
-      <h4 class="link-title">{title}</h4>
-    </div>
-    <p class="link-desc">{description}</p>
-    <div class="link-footer">
-      <span class="cta">쿠팡 최저가 확인 →</span>
-    </div>
-  </a>
-</div>
+<a href={url} class="product-link" target="_blank" rel="noopener noreferrer nofollow">
+  <div class="product-content">
+    <h4 class="product-title">{title}</h4>
+    <p class="product-desc">{description}</p>
+  </div>
+  <span class="product-cta">
+    쿠팡 최저가 확인 
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M5 11L9 7L5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </span>
+</a>
 
 <style>
-  .smart-link {
+  .product-link {
+    display: block;
     margin: 1.75rem 0;
-    border: 1px solid #E2E8F0;
-    border-radius: 8px;
-    overflow: hidden;
+    padding: 1.25rem 1.5rem;
+    background: #FAFAFA;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    text-decoration: none;
+    color: inherit;
     transition: all 0.2s ease;
   }
 
-  .smart-link:hover {
-    border-color: #CBD5E1;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  .product-link:hover {
+    background: #F5F5F5;
+    border-color: #D1D5DB;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 
-  .smart-link a {
-    display: block;
-    padding: 1.25rem;
-    text-decoration: none;
-    color: inherit;
+  .product-content {
+    margin-bottom: 0.875rem;
   }
 
-  .link-header {
-    margin-bottom: 0.5rem;
-  }
-
-  .link-title {
+  .product-title {
     font-size: 1rem;
     font-weight: 700;
     color: #0F172A;
-    margin: 0;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.4;
   }
 
-  .link-desc {
+  .product-desc {
     font-size: 0.875rem;
     color: #64748B;
-    margin: 0 0 0.75rem 0;
-    line-height: 1.5;
+    margin: 0;
+    line-height: 1.6;
   }
 
-  .link-footer {
-    display: flex;
-    justify-content: flex-end;
+  .product-cta {
+    display: inline-flex;
     align-items: center;
-  }
-
-  .cta {
+    gap: 0.25rem;
     font-size: 0.875rem;
-    color: #3B82F6;
     font-weight: 600;
+    color: #3B82F6;
   }
 
-  .smart-link:hover .cta {
-    text-decoration: underline;
+  .product-link:hover .product-cta {
+    gap: 0.5rem;
   }
 
+  .product-cta svg {
+    transition: transform 0.2s ease;
+  }
+
+  .product-link:hover .product-cta svg {
+    transform: translateX(2px);
+  }
+
+  /* 모바일 최적화 */
   @media (max-width: 768px) {
-    .link-title {
+    .product-link {
+      padding: 1.125rem 1.25rem;
+    }
+
+    .product-title {
       font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+
+    .product-desc {
+      font-size: 0.8125rem;
+      line-height: 1.65;
     }
   }
 </style>
