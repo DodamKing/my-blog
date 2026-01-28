@@ -67,7 +67,14 @@ const readingTime = Math.ceil(wordCount / 200);
             <RelatedPosts lang={lang} />
 
             <a href="/" class="back-link">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M19 12H5M12 19l-7-7 7-7"></path>
               </svg>
               {lang === "ko" ? "홈으로 돌아가기" : "Back to Home"}
@@ -389,10 +396,10 @@ const readingTime = Math.ceil(wordCount / 200);
     margin: 2rem 0;
     font-size: 0.95rem;
     overflow-x: auto;
-    display: block;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    table-layout: fixed;
   }
 
   .prose :global(thead) {
@@ -402,7 +409,7 @@ const readingTime = Math.ceil(wordCount / 200);
   .prose :global(th) {
     color: white;
     padding: 1rem;
-    text-align: left;
+    text-align: center;
     font-weight: 600;
     white-space: nowrap;
   }
@@ -410,6 +417,12 @@ const readingTime = Math.ceil(wordCount / 200);
   .prose :global(td) {
     padding: 0.875rem 1rem;
     border-bottom: 1px solid #e5e7eb;
+    text-align: center;
+  }
+
+  .prose :global(td:first-child),
+  .prose :global(th:first-child) {
+    text-align: left;
   }
 
   .prose :global(tbody tr:hover) {
@@ -487,6 +500,9 @@ const readingTime = Math.ceil(wordCount / 200);
 
     .prose :global(table) {
       font-size: 0.875rem;
+      display: block;
+      overflow-x: auto;
+      table-layout: auto;
     }
 
     .prose :global(th),
