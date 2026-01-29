@@ -1,6 +1,9 @@
 [[plugins]]
   package = "./plugins/indexnow"
 
+[[plugins]]
+  package = "./plugins/sitemap-lastmod"
+
 [[headers]]
   for = "/rss.xml"
   [headers.values]
