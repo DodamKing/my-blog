@@ -139,7 +139,10 @@ lang: '${lang}'
 ## 쿠팡 링크 예시
 
 {/* 
+import CoupangDisclosure from '../../../components/CoupangDisclosure.astro';
 import CoupangLink from '../../../components/CoupangLink.astro';
+
+<CoupangDisclosure />
 
 <CoupangLink
   title="제품명"
