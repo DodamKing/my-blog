@@ -498,16 +498,37 @@ const readingTime = Math.ceil(wordCount / 200);
       padding: 2.25rem 1rem 1rem;
     }
 
+    /* 테이블 모바일 최적화 - 심플하게 */
     .prose :global(table) {
       font-size: 0.875rem;
       display: block;
       overflow-x: auto;
-      table-layout: auto;
+      -webkit-overflow-scrolling: touch;
+      table-layout: fixed;
+    }
+
+    .prose :global(thead),
+    .prose :global(tbody) {
+      display: table-row-group;
+      width: 100%;
+    }
+
+    .prose :global(tr) {
+      display: table-row;
+      width: 100%;
     }
 
     .prose :global(th),
     .prose :global(td) {
+      display: table-cell;
       padding: 0.625rem 0.75rem;
+      white-space: nowrap;
+    }
+
+    .prose :global(td:first-child),
+    .prose :global(th:first-child) {
+      white-space: normal;
+      min-width: 100px;
     }
   }
 </style>
