@@ -138,7 +138,6 @@ lang: '${lang}'
 
 ## 쿠팡 링크 예시
 
-{/* 
 import CoupangDisclosure from '../../../components/CoupangDisclosure.astro';
 import CoupangLink from '../../../components/CoupangLink.astro';
 
@@ -149,7 +148,6 @@ import CoupangLink from '../../../components/CoupangLink.astro';
   url="https://link.coupang.com/..."
   description="제품 설명"
 />
-*/}
 `;
 
   fs.writeFileSync(path.join(blogDir, 'index.mdx'), template);
