@@ -128,14 +128,6 @@ category: '${category}'
 lang: '${lang}'
 ---
 
-## 소개
-
-여기에 내용을 작성하세요.
-
-## 본문
-
-내용...
-
 ## 쿠팡 링크 예시
 
 import CoupangDisclosure from '../../../components/CoupangDisclosure.astro';
@@ -148,6 +140,14 @@ import CoupangLink from '../../../components/CoupangLink.astro';
   url="https://link.coupang.com/..."
   description="제품 설명"
 />
+
+## 소개
+
+여기에 내용을 작성하세요.
+
+## 본문
+
+내용...
 `;
 
   fs.writeFileSync(path.join(blogDir, 'index.mdx'), template);
