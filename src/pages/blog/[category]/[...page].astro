@@ -46,7 +46,7 @@ const categoryCounts = Object.entries(CATEGORY_INFO).map(([key, info]) => ({
 	<head>
 		<BaseHead 
 			title={`${categoryInfo.name.ko} - Page ${page.currentPage} | ${SITE_TITLE}`} 
-			description={SITE_DESCRIPTION} 
+			description={`${categoryInfo.name.ko} 관련 글 모음 - ${categoryInfo.description.ko} | ${page.currentPage}페이지`}
 		/>
 	</head>
 	<body>
