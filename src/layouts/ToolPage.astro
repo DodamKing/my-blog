@@ -1,0 +1,304 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import AdSense from "../components/AdSense.astro";
+import { ADSENSE_CONFIG } from "../consts";
+
+interface ToolLink {
+  url: string;
+  title: string;
+  desc: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  relatedBlogPost?: {
+    url: string;
+    title: string;
+  };
+  otherTools?: ToolLink[];
+}
+
+const { title, description, relatedBlogPost, otherTools } = Astro.props;
+---
+
+<html lang="ko">
+  <head>
+    <BaseHead title={title} description={description} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": title,
+      "description": description,
+      "url": new URL(Astro.url.pathname, Astro.site).href,
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      }
+    })} />
+  </head>
+
+  <body>
+    <Header />
+    <main>
+      <div class="tool-container">
+        <nav class="tool-breadcrumb">
+          <a href="/">홈</a>
+          <span class="tool-breadcrumb-sep">/</span>
+          <span>금융 도구</span>
+          <span class="tool-breadcrumb-sep">/</span>
+          <span>{title}</span>
+        </nav>
+
+        <h1 class="tool-title">{title}</h1>
+        <p class="tool-desc">{description}</p>
+
+        <AdSense />
+
+        <div class="tool-content">
+          <slot />
+        </div>
+
+        <AdSense />
+
+        {otherTools && otherTools.length > 0 && (
+          <div class="tool-others">
+            <h2 class="tool-others-title">다른 대출 계산기</h2>
+            <div class="tool-others-grid">
+              {otherTools.map((tool) => (
+                <a href={tool.url} class="tool-others-card">
+                  <span class="tool-others-card-title">{tool.title}</span>
+                  <span class="tool-others-card-desc">{tool.desc}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {relatedBlogPost && (
+          <a href={relatedBlogPost.url} class="tool-related">
+            <span class="tool-related-label">관련 가이드</span>
+            <span class="tool-related-title">{relatedBlogPost.title}</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        )}
+
+        <button class="back-link" onclick="history.back()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"></path>
+          </svg>
+          돌아가기
+        </button>
+      </div>
+    </main>
+    <Footer />
+
+    <script define:vars={{ adConfig: ADSENSE_CONFIG }}>
+      function initAllAds() {
+        const insList = document.querySelectorAll("ins.adsbygoogle");
+        insList.forEach((ins) => {
+          const status =
+            ins.getAttribute("data-adsbygoogle-status") ||
+            ins.getAttribute("data-ad-status");
+          if (status) return;
+          try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (e) {
+            console.error("AdSense init error:", e);
+          }
+        });
+      }
+      window.addEventListener("DOMContentLoaded", initAllAds);
+    </script>
+  </body>
+</html>
+
+<style>
+  :root {
+    --content-width: 720px;
+    --accent: #667eea;
+    --accent-dark: #5a67d8;
+  }
+
+  body {
+    background: #fafafa;
+  }
+
+  main {
+    width: 100%;
+    background: #ffffff;
+  }
+
+  .tool-container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+
+  .tool-breadcrumb {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    margin-bottom: 1.5rem;
+  }
+
+  .tool-breadcrumb a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .tool-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .tool-breadcrumb-sep {
+    margin: 0 0.5rem;
+  }
+
+  .tool-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+
+  .tool-desc {
+    font-size: 1.05rem;
+    color: #6b7280;
+    margin: 0 0 2rem;
+    line-height: 1.6;
+  }
+
+  .tool-content {
+    margin: 2rem 0;
+  }
+
+  .tool-related {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(90, 103, 216, 0.05));
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    border-radius: 12px;
+    text-decoration: none;
+    color: #1a1a1a;
+    transition: all 0.2s;
+    margin-bottom: 2rem;
+  }
+
+  .tool-related:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+  }
+
+  .tool-related-label {
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .tool-related-title {
+    flex: 1;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .tool-related svg {
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .tool-others {
+    margin-bottom: 2rem;
+  }
+
+  .tool-others-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 1rem;
+  }
+
+  .tool-others-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .tool-others-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #1a1a1a;
+    transition: all 0.2s;
+  }
+
+  .tool-others-card:hover {
+    border-color: var(--accent);
+    background: rgba(102, 126, 234, 0.04);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .tool-others-card-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--accent-dark);
+  }
+
+  .tool-others-card-desc {
+    font-size: 0.8rem;
+    color: #9ca3af;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  }
+
+  .back-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .tool-container {
+      padding: 1.5rem 1.5rem 3rem;
+    }
+
+    .tool-title {
+      font-size: 1.625rem;
+    }
+
+    .tool-related {
+      flex-wrap: wrap;
+      padding: 1rem;
+    }
+  }
+</style>

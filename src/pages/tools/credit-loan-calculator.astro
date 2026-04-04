@@ -1,0 +1,17 @@
+---
+import ToolPage from '../../layouts/ToolPage.astro';
+import CreditLoanCalculator from '../../components/calculators/CreditLoanCalculator';
+---
+
+<ToolPage
+  title="신용대출 계산기 - 기간별 이자 비교"
+  description="신용대출 금액과 금리를 입력하면 상환 기간별 월 상환액과 총이자를 비교합니다."
+  relatedBlogPost={{ url: '/blog/loan-calculator-guide', title: '대출 계산기 완전정복: 상환방식 비교부터 실전 계산까지' }}
+  otherTools={[
+    { url: '/tools/loan-calculator', title: '일반 대출 계산기', desc: '상환방식별 비교' },
+    { url: '/tools/mortgage-calculator', title: '주택담보대출 계산기', desc: 'LTV·DSR 한도 확인' },
+    { url: '/tools/jeonse-loan-calculator', title: '전세대출 계산기', desc: '월 이자·총 비용 계산' },
+  ]}
+>
+  <CreditLoanCalculator client:load />
+</ToolPage>

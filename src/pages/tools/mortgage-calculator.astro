@@ -1,0 +1,17 @@
+---
+import ToolPage from '../../layouts/ToolPage.astro';
+import MortgageCalculator from '../../components/calculators/MortgageCalculator';
+---
+
+<ToolPage
+  title="주택담보대출 계산기 - LTV·DSR 한도 확인"
+  description="주택 가격과 소득을 입력하면 LTV 기반 대출 한도와 DSR 적합 여부를 확인하고, 월 상환액을 계산합니다."
+  relatedBlogPost={{ url: '/blog/loan-calculator-guide', title: '대출 계산기 완전정복: 상환방식 비교부터 실전 계산까지' }}
+  otherTools={[
+    { url: '/tools/loan-calculator', title: '일반 대출 계산기', desc: '상환방식별 비교' },
+    { url: '/tools/jeonse-loan-calculator', title: '전세대출 계산기', desc: '월 이자·총 비용 계산' },
+    { url: '/tools/credit-loan-calculator', title: '신용대출 계산기', desc: '기간별 이자 비교' },
+  ]}
+>
+  <MortgageCalculator client:load />
+</ToolPage>

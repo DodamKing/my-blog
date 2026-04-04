@@ -1,0 +1,17 @@
+---
+import ToolPage from '../../layouts/ToolPage.astro';
+import JeonseLoanCalculator from '../../components/calculators/JeonseLoanCalculator';
+---
+
+<ToolPage
+  title="전세대출 계산기 - 월 이자·총 비용 계산"
+  description="전세 보증금과 금리를 입력하면 매월 이자 납입액과 대출 기간별 총 비용을 계산합니다."
+  relatedBlogPost={{ url: '/blog/loan-calculator-guide', title: '대출 계산기 완전정복: 상환방식 비교부터 실전 계산까지' }}
+  otherTools={[
+    { url: '/tools/loan-calculator', title: '일반 대출 계산기', desc: '상환방식별 비교' },
+    { url: '/tools/mortgage-calculator', title: '주택담보대출 계산기', desc: 'LTV·DSR 한도 확인' },
+    { url: '/tools/credit-loan-calculator', title: '신용대출 계산기', desc: '기간별 이자 비교' },
+  ]}
+>
+  <JeonseLoanCalculator client:load />
+</ToolPage>
