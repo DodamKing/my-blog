@@ -71,8 +71,10 @@ src/content/blog/슬러그명/
 
 Step 5 완료 후 메인 에이전트가 직접 처리할 것:
 - 슬러그 결정 (기존 `src/content/blog/` 폴더 목록과 중복 검사 필수)
-- 파일 저장 (폴더 생성 + index.mdx 작성)
+- **반드시 `npm run new` 로 폴더 스캐폴드를 먼저 만든다.** Write 도구로 `src/content/blog/<슬러그>/index.mdx` 를 직접 만들지 말 것 — `images/` 폴더가 누락된다. `npm run new` 가 폴더 + `images/` + frontmatter 채워진 빈 `index.mdx` 를 한 번에 생성한다. 그 다음 Write로 `index.mdx` 를 finalizer 결과로 덮어쓴다
 - `npm run coupang -- 슬러그명 --apply` 실행 → 쿠팡 딥링크 자동 교체 (결과 표를 사용자에게 보여줄 것)
+  - **단, 한정 PB / 인디 콜라보 / 공식 직판 전용 글은 처음부터 CoupangLink가 없는 경우가 정상이므로 이 단계 건너뛴다** (writer 단계에서 placeholder 자체가 안 나와야 함 — 03-writer.md 참조)
+  - 매칭 결과가 명백히 카테고리가 어긋나면 (예: "히퍼 피규어" → "골전도 이어폰") --apply된 결과를 되돌리고 해당 CoupangLink 섹션을 통째로 제거할 것
 - 아래 형식으로 이미지 프롬프트 + 변환 안내를 함께 제공:
 
 ```
