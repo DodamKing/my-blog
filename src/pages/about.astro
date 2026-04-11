@@ -1,0 +1,196 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+
+const title = `About | ${SITE_TITLE}`;
+const description = 'Laon 블로그 소개 — 취미로 운영하는 개인 학습 기록, 궁금한 것을 직접 비교·정리합니다.';
+---
+
+<html lang="ko">
+  <head>
+    <BaseHead title={title} description={description} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": title,
+      "description": description,
+      "url": "https://blog.dimad.kr/about/",
+      "mainEntity": {
+        "@type": "Person",
+        "name": "Laon",
+        "url": "https://blog.dimad.kr",
+        "email": "dimad.contact@gmail.com"
+      }
+    })} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <article class="about">
+        <header class="about-header">
+          <h1>About</h1>
+          <p class="subtitle">취미로 운영하는 개인 학습 기록</p>
+        </header>
+
+        <section>
+          <h2>어떤 블로그인가요?</h2>
+          <p>
+            안녕하세요, <strong>Laon</strong>입니다. 이 블로그는 취미로 운영하는
+            개인 학습 기록입니다. 일상에서 궁금한 것이 생기면 직접 찾아보고,
+            제품·기법·서비스를 비교해보고, 정리한 내용을 글로 남깁니다.
+          </p>
+          <p>
+            뭔가를 사거나 선택하기 전에 "이게 정말 나을까?" 가 궁금한 분들에게
+            도움이 되었으면 하는 마음으로 씁니다. 광고 문구 대신 장단점과
+            대안을 함께 정리하려고 합니다.
+          </p>
+        </section>
+
+        <section>
+          <h2>주로 다루는 주제</h2>
+          <ul>
+            <li><strong>건강 &amp; 피트니스</strong> — 보충제, 스킨케어, 시술·기법 비교, 홈 케어</li>
+            <li><strong>기술</strong> — Windows 팁, 개발 도구, 소프트웨어 설정</li>
+            <li><strong>재테크</strong> — 대출·연금 계산기, 세제 혜택 정리</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>카테고리별 보기</h2>
+          <ul>
+            <li><a href="/blog/health/">건강 &amp; 피트니스</a></li>
+            <li><a href="/blog/tech/">기술</a></li>
+            <li><a href="/blog/finance/">재테크</a></li>
+            <li><a href="/blog/">전체 글 목록</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>연락처</h2>
+          <p>
+            문의나 제보는 이메일로 보내주세요.<br />
+            <a href="mailto:dimad.contact@gmail.com">dimad.contact@gmail.com</a>
+          </p>
+        </section>
+      </article>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  main {
+    background: #ffffff;
+  }
+
+  .about {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: #374151;
+  }
+
+  .about-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .about-header h1 {
+    font-size: 2.75rem;
+    font-weight: 800;
+    margin: 0 0 0.75rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+  }
+
+  .about-header .subtitle {
+    font-size: 1.125rem;
+    color: #6b7280;
+    margin: 0;
+  }
+
+  .about section {
+    margin: 2.5rem 0;
+  }
+
+  .about h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 2rem 0 1rem;
+    color: #1a1a1a;
+    letter-spacing: -0.01em;
+    position: relative;
+    padding-left: 1.25rem;
+  }
+
+  .about h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.25rem;
+    bottom: 0.25rem;
+    width: 4px;
+    background: linear-gradient(180deg, #667eea, #5a67d8);
+    border-radius: 3px;
+  }
+
+  .about p {
+    margin: 1rem 0;
+  }
+
+  .about strong {
+    color: #1a1a1a;
+    font-weight: 700;
+  }
+
+  .about ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 1rem 0;
+  }
+
+  .about li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin: 0.75rem 0;
+  }
+
+  .about li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: bold;
+  }
+
+  .about a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  .about a:hover {
+    border-bottom-color: #667eea;
+  }
+
+  @media (max-width: 768px) {
+    .about {
+      padding: 2rem 1.5rem 4rem;
+      font-size: 1rem;
+    }
+
+    .about-header h1 {
+      font-size: 2.25rem;
+    }
+  }
+</style>

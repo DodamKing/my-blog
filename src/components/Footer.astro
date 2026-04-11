@@ -5,7 +5,12 @@
 	<div class="container">
 		<div class="footer-content">
 			<p class="copyright">© {new Date().getFullYear()} <span class="gradient-text">Laon</span>. All rights reserved.</p>
-			<p class="contact">Contact: <a href="mailto:laonlog@gmail.com">dimad.contact@gmail.com</a></p>
+			<ul class="footer-links">
+				<li><a href="/about/">About</a></li>
+				<li><a href="/blog/">전체 글</a></li>
+				<li><a href="/rss.xml">RSS</a></li>
+			</ul>
+			<p class="contact">Contact: <a href="mailto:dimad.contact@gmail.com">dimad.contact@gmail.com</a></p>
 		</div>
 	</div>
 </footer>
@@ -55,10 +60,35 @@
 		display: inline-block;
 	}
 
+	.footer-links {
+		list-style: none;
+		display: flex;
+		justify-content: center;
+		gap: 1.25rem;
+		margin: 0.75rem 0 0;
+		padding: 0;
+	}
+
+	.footer-links li {
+		margin: 0;
+	}
+
+	.footer-links a {
+		font-size: 0.875rem;
+		color: #6b7280;
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.2s;
+	}
+
+	.footer-links a:hover {
+		color: #667eea;
+	}
+
 	.contact {
 		font-size: 0.875rem;
 		color: #9ca3af;
-		margin: 0.5rem 0 0 0;
+		margin: 0.75rem 0 0 0;
 	}
 
 	.contact a {

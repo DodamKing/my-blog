@@ -7,6 +7,12 @@
 			<span class="logo-text">Laon</span>
 			<span class="logo-dot"></span>
 		</a>
+		<ul class="nav-links">
+			<li><a href="/blog/health/">건강</a></li>
+			<li><a href="/blog/tech/">기술</a></li>
+			<li><a href="/blog/finance/">재테크</a></li>
+			<li><a href="/about/">About</a></li>
+		</ul>
 	</nav>
 </header>
 
@@ -72,13 +78,73 @@
 		}
 	}
 
+	.nav-links {
+		list-style: none;
+		display: flex;
+		gap: 1.5rem;
+		margin: 0;
+		padding: 0;
+	}
+
+	.nav-links li {
+		margin: 0;
+	}
+
+	.nav-links a {
+		color: #4b5563;
+		text-decoration: none;
+		font-size: 0.9375rem;
+		font-weight: 600;
+		padding: 0.5rem 0;
+		transition: color 0.2s ease;
+		position: relative;
+	}
+
+	.nav-links a::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 0;
+		height: 2px;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		transition: width 0.2s ease;
+	}
+
+	.nav-links a:hover {
+		color: #667eea;
+	}
+
+	.nav-links a:hover::after {
+		width: 100%;
+	}
+
 	@media (max-width: 768px) {
 		nav {
-			padding: 1.125rem 1.5rem;
+			padding: 1rem 1.25rem;
 		}
 
 		.logo-text {
 			font-size: 1.375rem;
+		}
+
+		.nav-links {
+			gap: 0.875rem;
+		}
+
+		.nav-links a {
+			font-size: 0.8125rem;
+			font-weight: 600;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.nav-links {
+			gap: 0.625rem;
+		}
+
+		.nav-links a {
+			font-size: 0.75rem;
 		}
 	}
 </style>
