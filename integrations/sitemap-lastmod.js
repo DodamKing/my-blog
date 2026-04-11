@@ -1,6 +1,7 @@
 // integrations/sitemap-lastmod.js
 import { readFileSync, writeFileSync, readdirSync } from 'fs';
 import { join } from 'path';
+import { fileURLToPath } from 'url';
 import matter from 'gray-matter';
 
 export default function sitemapLastmod() {
@@ -39,7 +40,7 @@ export default function sitemapLastmod() {
           });
           
           // 3. sitemap 수정
-          const sitemapPath = join(dir.pathname, 'sitemap-0.xml');
+          const sitemapPath = join(fileURLToPath(dir), 'sitemap-0.xml');
           let sitemap = readFileSync(sitemapPath, 'utf-8');
           
           dateMap.forEach((date, url) => {
