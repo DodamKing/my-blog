@@ -5,6 +5,7 @@
 ## 전략
 
 - [content-strategy.md](./content-strategy.md) — 콘텐츠 방향, 승리 패턴, 안티 패턴, 측정 루프. 새 글 기획 전 반드시 확인.
+- [posts-ledger.md](./posts-ledger.md) — **자동 생성** 전체 글 목록 (카테고리별). 새 키워드 기획 시 의미 중복 검사 용도. 직접 수정 금지.
 
 ## 데이터 스냅샷
 

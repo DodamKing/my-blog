@@ -9,6 +9,7 @@
     "astro": "astro",
     "new": "node scripts/create-post.js",
     "delete": "node scripts/delete-post.js",
+    "ledger": "node scripts/build-posts-ledger.js",
     "webp": "node scripts/pipeline/convert-webp.js",
     "coupang": "node scripts/pipeline/coupang-deeplink.js"
   },

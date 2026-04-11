@@ -11,6 +11,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import readline from 'readline';
+import { buildLedger } from './build-posts-ledger.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -326,7 +327,17 @@ async function main() {
   }
   
   console.log(`\n✅ 총 ${successCount}개 삭제 완료!\n`);
-  
+
+  // 글 목록 자동 갱신
+  if (successCount > 0) {
+    try {
+      buildLedger({ silent: true });
+      console.log('📚 docs/posts-ledger.md 갱신됨\n');
+    } catch (err) {
+      console.warn(`⚠️  ledger 갱신 실패: ${err.message}\n`);
+    }
+  }
+
   rl.close();
 }
 

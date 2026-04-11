@@ -10,8 +10,9 @@ Astro 5, MDX, React (Islands), TypeScript, sharp (이미지 최적화)
 
 - `npm run dev` — 개발 서버
 - `npm run build` — 빌드
-- `npm run new` — 새 글 생성 스크립트
-- `npm run delete` — 글 삭제 스크립트
+- `npm run new` — 새 글 생성 스크립트 (완료 후 `docs/posts-ledger.md` 자동 갱신)
+- `npm run delete` — 글 삭제 스크립트 (완료 후 `docs/posts-ledger.md` 자동 갱신)
+- `npm run ledger` — `docs/posts-ledger.md` 수동 재생성 (전체 `src/content/blog/*/index.mdx` frontmatter 스캔)
 - `npm run webp` — 이미지 webp 변환 (`npm run webp -- input.png output.webp`)
 
 ## 프로젝트 구조
@@ -60,6 +61,7 @@ src/content/blog/슬러그명/
 
 - 진입점: `docs/INDEX.md`
 - 핵심 방향: `docs/content-strategy.md` (승리 패턴 3가지 + 안티 패턴 + 측정 루프)
+- 중복 방지: `docs/posts-ledger.md` (자동 생성, 카테고리별 전체 글 목록). 새 키워드 기획 시 Step 1 에이전트가 먼저 읽어 의미 중복을 차단한다.
 - 새 글 기획 시 Step 1 키워드 에이전트가 하드 필터를 적용한다. 안티 패턴 키워드는 거절하거나 재정의를 유도할 것.
 
 ### 스냅샷 리뷰 일정 ⏰

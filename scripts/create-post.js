@@ -11,6 +11,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import readline from 'readline';
+import { buildLedger } from './build-posts-ledger.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -151,14 +152,22 @@ import CoupangLink from '../../../components/CoupangLink.astro';
 `;
 
   fs.writeFileSync(path.join(blogDir, 'index.mdx'), template);
-  
+
+  // 글 목록 자동 갱신
+  try {
+    buildLedger({ silent: true });
+    console.log('📚 docs/posts-ledger.md 갱신됨');
+  } catch (err) {
+    console.warn(`⚠️  ledger 갱신 실패: ${err.message}`);
+  }
+
   console.log('\n✅ 생성 완료!\n');
   console.log(`📁 위치: src/content/blog/${slug}/`);
   console.log(`\n💡 다음 단계:`);
   console.log(`  1. ${slug}/images/hero.webp 추가`);
   console.log(`  2. ${slug}/index.mdx 편집`);
   console.log(`  3. npm run dev 로 확인\n`);
-  
+
   rl.close();
 }
 
