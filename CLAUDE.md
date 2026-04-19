@@ -11,6 +11,8 @@ Astro 5, MDX, React (Islands), TypeScript, sharp (이미지 최적화)
 - `npm run dev` — 개발 서버
 - `npm run build` — 빌드
 - `npm run new` — 새 글 생성 스크립트 (완료 후 `docs/posts-ledger.md` 자동 갱신)
+  - Interactive 모드 (사용자 직접): `npm run new`
+  - Non-interactive 모드 (Claude 자동화): `npm run new -- --slug=my-post --title=제목 --category=tech --description=설명 [--lang=ko|en]` — 인자 없는 값은 기본값(`temp`/`ko`) 사용. Claude가 병렬로 여러 슬러그 생성할 때 이 모드 필수.
 - `npm run delete` — 글 삭제 스크립트 (완료 후 `docs/posts-ledger.md` 자동 갱신)
 - `npm run ledger` — `docs/posts-ledger.md` 수동 재생성 (전체 `src/content/blog/*/index.mdx` frontmatter 스캔)
 - `npm run webp` — 이미지 webp 변환 (`npm run webp -- input.png output.webp`)
@@ -76,6 +78,9 @@ src/content/blog/슬러그명/
 글 작성 요청 시 `agents/` 폴더의 프롬프트를 순서대로 따른다:
 
 1. **01-keyword-strategist** — 키워드 전략 수립 (data/keywords/ JSON 활용 가능)
+   - **Mode A(JSON 큐레이션)의 경우 필수**: 결과 확정 전 **독립 심사 에이전트를 병렬 호출해 비판적 교차 검증**. 메인의 큐레이션 결과는 비공개로 유지(독립 판단 보장). 같은 JSON + 블로그 상황(카테고리 편수·외부 도메인 패널티)만 공유하고 "비판적 현실주의 관점에서 실제 상위 진입 가능한 편수만 선별"을 지시한다.
+   - 비교 결과 처리: **교집합 키워드만 확정**. 메인만 제안한 키워드는 낙관 편향 가능성 재고, 독립 에이전트만 제안한 키워드는 놓친 가능성 검토.
+   - 이 단계를 건너뛰면 낙관 편향으로 발행 편수 과다 위험.
 2. **02-researcher** — 자료조사
 3. **03-writer** — 초안 작성 (체류시간 최적화, 쿠팡 플레이스홀더 포함)
 4. **04-reviewer** — 검토 + 피드백
@@ -87,6 +92,7 @@ src/content/blog/슬러그명/
 Step 5 완료 후 메인 에이전트가 직접 처리할 것:
 - 슬러그 결정 (기존 `src/content/blog/` 폴더 목록과 중복 검사 필수)
 - **반드시 `npm run new` 로 폴더 스캐폴드를 먼저 만든다.** Write 도구로 `src/content/blog/<슬러그>/index.mdx` 를 직접 만들지 말 것 — `images/` 폴더가 누락된다. `npm run new` 가 폴더 + `images/` + frontmatter 채워진 빈 `index.mdx` 를 한 번에 생성한다. 그 다음 Write로 `index.mdx` 를 finalizer 결과로 덮어쓴다
+  - Claude가 자동화할 때는 **CLI 인자 모드** 사용: `npm run new -- --slug=xxx --category=tech` (title/description은 어차피 Write로 덮어쓰므로 생략하면 `temp` 기본값). **여러 슬러그는 한 번에 병렬 Bash 호출** 가능
 - `npm run coupang -- 슬러그명 --apply` 실행 → 쿠팡 딥링크 자동 교체 (결과 표를 사용자에게 보여줄 것)
   - **단, 한정 PB / 인디 콜라보 / 공식 직판 전용 글은 처음부터 CoupangLink가 없는 경우가 정상이므로 이 단계 건너뛴다** (writer 단계에서 placeholder 자체가 안 나와야 함 — 03-writer.md 참조)
   - 매칭 결과가 명백히 카테고리가 어긋나면 (예: "히퍼 피규어" → "골전도 이어폰") --apply된 결과를 되돌리고 해당 CoupangLink 섹션을 통째로 제거할 것
