@@ -39,20 +39,32 @@ export default function sitemapLastmod() {
             }
           });
           
-          // 3. sitemap 수정
+          // 3. sitemap-0.xml 수정
           const sitemapPath = join(fileURLToPath(dir), 'sitemap-0.xml');
           let sitemap = readFileSync(sitemapPath, 'utf-8');
-          
+
           dateMap.forEach((date, url) => {
             const locTag = `<loc>${url}</loc>`;
             if (sitemap.includes(locTag)) {
               sitemap = sitemap.replace(locTag, `${locTag}\n<lastmod>${date}</lastmod>`);
             }
           });
-          
+
           writeFileSync(sitemapPath, sitemap, 'utf-8');
-          
-          console.log(`✅ Sitemap lastmod 추가 완료: ${dateMap.size}개 URL`);
+
+          // 4. sitemap-index.xml 에도 lastmod 주입 (자식 sitemap 중 가장 최신 날짜)
+          const latestDate = [...dateMap.values()].sort().pop();
+          if (latestDate) {
+            const indexPath = join(fileURLToPath(dir), 'sitemap-index.xml');
+            let index = readFileSync(indexPath, 'utf-8');
+            const childLoc = '<loc>https://blog.dimad.kr/sitemap-0.xml</loc>';
+            if (index.includes(childLoc) && !index.includes('<lastmod>')) {
+              index = index.replace(childLoc, `${childLoc}<lastmod>${latestDate}</lastmod>`);
+              writeFileSync(indexPath, index, 'utf-8');
+            }
+          }
+
+          console.log(`✅ Sitemap lastmod 추가 완료: ${dateMap.size}개 URL (index lastmod: ${latestDate || 'none'})`);
         } catch (error) {
           console.error('❌ 실패:', error.message);
         }
