@@ -55,20 +55,27 @@ export default function sitemapLastmod() {
           writeFileSync(sitemapPath, sitemap, 'utf-8');
 
           // 4. sitemap-index.xml lastmod 결정
-          // - 슬러그 목록이 직전 빌드와 다르면(추가/삭제) 오늘 날짜
-          // - 같으면 글 frontmatter 최신값 사용 (수정은 updatedDate로 자동 반영)
+          // - 슬러그 목록이 직전 빌드와 다르면(추가/삭제) lastChangedAt = 오늘
+          // - 메타 파일을 git에 commit하므로 Netlify 빌드에서도 lastChangedAt 보존됨
+          // - lastmod = max(글 frontmatter 최신값, lastChangedAt)
           const today = new Date().toISOString().split('T')[0];
           const latestPostDate = [...dateMap.values()].sort().pop();
 
           const currentSlugs = [...folders].sort();
           let prevSlugs = [];
+          let prevChangedAt = null;
           if (existsSync(META_PATH)) {
             try {
-              prevSlugs = JSON.parse(readFileSync(META_PATH, 'utf-8')).slugs || [];
+              const meta = JSON.parse(readFileSync(META_PATH, 'utf-8'));
+              prevSlugs = meta.slugs || [];
+              prevChangedAt = meta.lastChangedAt || null;
             } catch {}
           }
           const slugsChanged = JSON.stringify(currentSlugs) !== JSON.stringify(prevSlugs);
-          const indexLastmod = slugsChanged ? today : (latestPostDate || today);
+          const lastChangedAt = slugsChanged ? today : (prevChangedAt || today);
+
+          const candidates = [latestPostDate, lastChangedAt].filter(Boolean).sort();
+          const indexLastmod = candidates.pop() || today;
 
           const indexPath = join(fileURLToPath(dir), 'sitemap-index.xml');
           let index = readFileSync(indexPath, 'utf-8');
@@ -78,8 +85,12 @@ export default function sitemapLastmod() {
             writeFileSync(indexPath, index, 'utf-8');
           }
 
-          // 5. 메타 파일 갱신 (다음 빌드의 비교 기준)
-          writeFileSync(META_PATH, JSON.stringify({ slugs: currentSlugs }, null, 2) + '\n', 'utf-8');
+          // 5. 메타 파일 갱신 (다음 빌드의 비교 기준 + lastChangedAt 보존)
+          writeFileSync(
+            META_PATH,
+            JSON.stringify({ slugs: currentSlugs, lastChangedAt }, null, 2) + '\n',
+            'utf-8'
+          );
 
           const changeNote = slugsChanged ? ' — 슬러그 변경 감지' : '';
           console.log(`✅ Sitemap lastmod 완료: ${dateMap.size}개 URL (index lastmod: ${indexLastmod}${changeNote})`);
