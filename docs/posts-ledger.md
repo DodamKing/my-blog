@@ -1,6 +1,6 @@
 # 글 목록
 
-**자동 생성**: 2026-05-02 (`src/content/blog/*/index.mdx` frontmatter 기반)
+**자동 생성**: 2026-05-07 (`src/content/blog/*/index.mdx` frontmatter 기반)
 **총 편수**: 116편
 
 > ⚠️ 이 파일은 `npm run new` · `npm run delete` · `npm run ledger` 실행 시 자동 생성됩니다. 직접 수정하지 마세요.
