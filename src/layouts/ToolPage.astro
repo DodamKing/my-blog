@@ -41,6 +41,29 @@ const { title, description, relatedBlogPost, otherTools } = Astro.props;
         "priceCurrency": "KRW"
       }
     })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "홈",
+          "item": new URL("/", Astro.site).href
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "금융 도구"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": title,
+          "item": new URL(Astro.url.pathname, Astro.site).href
+        }
+      ]
+    })} />
   </head>
 
   <body>

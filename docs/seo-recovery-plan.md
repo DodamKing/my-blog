@@ -110,6 +110,23 @@
     - GSC > 페이지 경험 탭 확인
     - LCP, CLS, INP 경고 있으면 해결
 
+### Phase 4: 점진적 SEO 위생 (백로그 — 2026-05-11 추가)
+
+색인 회복과는 별개로, 정기 점검에서 발견된 점진적 개선 항목. 우선순위 낮음 — 시간 날 때 처리.
+
+11. **Title 길이 audit** (중간)
+    - 배경: `BaseHead.astro` 가 모든 페이지 title 끝에 ` | Laon` 자동 접미사를 붙임 (7자). frontmatter title 이 53자를 넘으면 SERP 에서 잘림 (구글 ~60자 기준).
+    - 작업: `docs/posts-ledger.md` 보고 53자 초과 글 식별 → 글 frontmatter title 단축. 본문 h1 은 건드리지 않아도 됨 (검색결과는 frontmatter title 기준).
+
+12. **BlogPosting JSON-LD image 객체화** (중간)
+    - 배경: `BlogPost.astro:56` 의 `"image": absoluteImage` 는 문자열. 구글 Rich Results 권장 형식은 `{"@type":"ImageObject", url, width, height}` 객체.
+    - 작업: heroImage 가 ImageMetadata 객체이므로 `width`, `height` 속성을 함께 전달.
+    - 영향: Rich Results 자격 안정성. 필수 아님.
+
+13. **Hero image alt 속성 강화** (낮음 — 보류)
+    - 배경: `HeroImage.astro:20` 의 `alt={title}` 은 제목 그대로 사용. 이미지 검색 노출엔 OK지만, 이미지 자체 묘사 없이 제목 반복은 약한 신호.
+    - 작업: frontmatter 에 `heroImageAlt` 필드 신설 검토. 단 119편 backfill 비용 큼. 신규 글만 적용 후 자연 축적.
+
 ## 측정 지표
 
 **Phase 1 완료 후 2주 시점** 확인:

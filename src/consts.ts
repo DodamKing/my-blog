@@ -2,7 +2,7 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 export const SITE_TITLE = 'Laon';
-export const SITE_DESCRIPTION = 'Sharing insights on Health, Tech, and Finance';
+export const SITE_DESCRIPTION = '운동·보충제·개발 도구·재테크까지, 직접 비교하고 검증한 실용 정보를 정리하는 한국어 블로그입니다.';
 
 // 다국어 텍스트
 export const UI_TEXT = {
