@@ -11,8 +11,7 @@
 
 ## 측정 & 실험
 
-- `snapshots/naver-search/YYYY-MM-DD-pages.png` — 네이버 서치 어드바이저 글별 TOP 30
-- `snapshots/naver-search/YYYY-MM-DD-keywords.png` — 네이버 서치 어드바이저 키워드별 TOP 30
+- `snapshots/naver-search/YYYY-MM-DD.md` — 네이버 서치 어드바이저 스냅샷 (키워드 + 페이지 TOP 30 + 직전 대비 변화 + 발견). 2026-05-18부터 마크다운, 그 이전은 PNG로 보존.
 - `experiments/YYYY-MM-DD-{name}.md` — 발행 실험 가설·예측·측정·결론. 새 글 발행 시 가설 문서 추가, 측정 사이클마다 결과 기록 후 `content-strategy.md`의 승리 패턴/폐기된 가설 섹션에 반영.
 
 측정 루프 2주마다 추가. 기존 파일은 지우지 말고 누적해서 diff 가능하게 유지.
