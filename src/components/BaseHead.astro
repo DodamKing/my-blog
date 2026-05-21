@@ -7,9 +7,10 @@ interface Props {
   description: string;
   image?: string;
   canonicalPath?: string;
+  noindex?: boolean;
 }
 
-const { title, description, image = "/og-default.webp", canonicalPath } = Astro.props;
+const { title, description, image = "/og-default.webp", canonicalPath, noindex = false } = Astro.props;
 
 const canonicalURL = new URL(canonicalPath ?? Astro.url.pathname, Astro.site);
 
@@ -40,6 +41,8 @@ const fullTitle = title.includes(SITE_TITLE) ? title : `${title} | ${SITE_TITLE}
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
+
+{noindex && <meta name="robots" content="noindex, follow" />}
 
 <!-- Primary Meta Tags -->
 <title>{fullTitle}</title>
