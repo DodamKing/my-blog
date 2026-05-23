@@ -1,7 +1,7 @@
 # 글 목록
 
-**자동 생성**: 2026-05-15 (`src/content/blog/*/index.mdx` frontmatter 기반)
-**총 편수**: 121편
+**자동 생성**: 2026-05-23 (`src/content/blog/*/index.mdx` frontmatter 기반)
+**총 편수**: 122편
 
 > ⚠️ 이 파일은 `npm run new` · `npm run delete` · `npm run ledger` 실행 시 자동 생성됩니다. 직접 수정하지 마세요.
 
@@ -108,8 +108,9 @@
 - `google-search-console-indexing-not-working-fix` (2026-01-18) — **구글 서치콘솔 색인 안됨 해결: 상태별 원인과 체크리스트** — 구글 서치콘솔에서 '색인되지 않음', 'Discovered - currently not indexed', 'Crawled - currently not indexed'가 뜰 때 원인과 해결 방법을 상태별로 정리했습니다. URL 검사, robots/noindex, 사이트맵, 내부링크까지 한 번에 점검하세요.
 - `netlify-404-refresh` (2026-01-16) — **Netlify 배포 후 새로고침하면 404 뜨는 이유? (네트리파이/SPA/Astro/Nuxt/React 1분 해결)** — Netlify에 배포는 됐는데 /about 같은 페이지에서 새로고침하면 404가 뜨는 문제. 원인부터 _redirects, netlify.toml 설정까지 한 번에 정리.
 
-## finance (8편)
+## finance (9편)
 
+- `home-electricity-rate-reform` (2026-05-24) — **가정용 전기세 개편? 일반 가정은 시간대 신경 안 써도 됩니다 — 진짜 바뀐 건 따로 있어요** — 가정용 전기세 개편이라고 보도되지만 시간대 요금제는 산업용·전기차 충전기에 먼저 시행됐고, 일반 가정은 적용 대상이 아닙니다. 누진제 단가표와 향후 가정용 도입 전망까지 정리했습니다.
 - `pension-savings-tax-deduction-guide` (2026-04-09) — **소득공제용 연금저축, 지금은 세액공제입니다 — 개설부터 수령까지 정리** — 연금저축 세액공제 한도, 증권사별 계좌 개설, 계좌 2개 운영, 자녀 개설, 이전 이벤트, 수령 방법까지 한 번에 정리했습니다.
 - `loan-calculator-guide` (2026-04-04) — **대출 계산기 완전정복 — 상환방식별 이자 차이, 직접 계산해봤습니다** — 대출 계산기 활용법부터 원리금균등·원금균등·체증식 상환방식 비교, 3억 대출 시뮬레이션 결과, 무료 계산기 추천까지. 최신 금리 기준으로 정리했습니다. 대출 전 반드시 확인하세요.
 - `domestic-dividend-stocks-ranking-guide` (2026-03-23) — **국내 배당주 순위, 숫자만 보면 실패하는 이유 — 진짜 고르는 기준까지** — 국내 배당주 순위 확인 방법부터 배당주 뜻, 배당성향과 연속배당 기준으로 우량 배당주 고르는 법, ETF로 한 번에 담는 방법까지. 초보도 바로 써먹을 수 있는 실전 가이드.
