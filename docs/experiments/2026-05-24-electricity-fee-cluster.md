@@ -6,6 +6,21 @@
 **1차 목적**: 1페이지 진입 경험 누적 + finance 카테고리 권위 강화
 **2차 목적**: redill 폭락 후 트래픽 회복
 
+## 진행 상태 (Progress)
+
+발행할 때마다 이 표를 업데이트한다. 다음 작업이 뭔지 한눈에 보이게 유지.
+
+| Phase | 슬러그 | 상태 | 발행일 | 다음 액션 |
+|---|---|---|---|---|
+| Phase 1 | `home-electricity-rate-reform` | ✅ 발행 완료 | 2026-05-24 | 측정 대기 (+1·2·4주) |
+| Phase 2 | `newborn-electricity-discount-application` | ✅ 발행 완료 | 2026-05-24 | 측정 대기 |
+| Phase 2 | `multi-child-electricity-discount` | ✅ 발행 완료 | 2026-05-24 | 측정 대기 |
+| Phase 3 | `newborn-electricity-discount-guide` (허브) | ⏳ **대기** | — | Phase 2 스포크 노출/클릭 데이터 확인 후 발행 결정 (다음 스냅샷 리뷰일 `2026-06-01`) |
+| Phase 4 | `oneroom-electricity-payment` | ⏳ 대기 | — | Phase 3 결과 본 후 |
+| Phase 4 | `electricity-peak-time` | ⏳ 대기 | — | Phase 3 결과 본 후 |
+
+**현재 다음 액션**: 2026-06-01 스냅샷 리뷰 시 Phase 2 스포크 2편의 노출/클릭 확인 → Phase 3 허브 발행 시점 결정.
+
 ## 배경
 
 2026-05-22 즈음 redill-zero-purchase-guide(사이트 노출 70% 점유)가 우리의 5/18 히어로 이미지 교체 + 색인 재요청 조합으로 노출 폭락. 일 노출 2,500 → 200. 학습: 잘 나가는 글은 건드리지 않는다 ([[feedback_dont_touch_winning_posts]]). 진행 룰 갱신: **1면 진입 경험 + 1면 글 다수 확보가 1차 목적, 체류는 2차.**
