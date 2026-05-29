@@ -1,7 +1,7 @@
 # 글 목록
 
-**자동 생성**: 2026-05-28 (`src/content/blog/*/index.mdx` frontmatter 기반)
-**총 편수**: 132편
+**자동 생성**: 2026-05-29 (`src/content/blog/*/index.mdx` frontmatter 기반)
+**총 편수**: 133편
 
 > ⚠️ 이 파일은 `npm run new` · `npm run delete` · `npm run ledger` 실행 시 자동 생성됩니다. 직접 수정하지 마세요.
 
@@ -90,8 +90,9 @@
 - `stairmaster-workout-effect` (2026-01-08) — **천국의 계단 운동, 힘들기만 한데 진짜 효과 있을까?** — 천국의 계단 운동이 유산소에 효과 있는지, 몇 분이 적당한지. 계단 오르기 관련 연구를 직접 찾아 정리했습니다.
 - `protein-comparison-bpi-optimum-syntha6` (2026-01-04) — **단백질 보충제 추천 기준｜BPI·옵티멈·신타6 직접 먹어본 비교** — BPI ISO HD, 옵티멈 골드스탠다드, 신타6를 직접 먹어보고 비교했습니다. 맛, 성분, 가격까지 솔직 후기.
 
-## tech (17편)
+## tech (18편)
 
+- `airpods-washing-machine` (2026-05-29) — **temp** — temp
 - `claude-cowork-vs-claude-code` (2026-04-19) — **클로드 코워크란? Claude Code와 뭐가 다른지 비교해봤습니다** — 클로드 코워크는 비개발자용 업무 자동화 AI입니다. Claude Code와의 핵심 차이, 정식 출시로 달라진 점, 한국 실사용 사례와 국내 가격까지 비교 정리했습니다.
 - `claude-desktop-app-windows` (2026-04-19) — **클로드 데스크탑 앱 재설계 — Windows 설치와 병렬 세션 정리** — 클로드 데스크탑 앱의 Windows 설치 순서, Git 선행 설치, 병렬 세션 재설계 변경점, 설치 오류와 토큰 소진 같은 자주 막히는 지점을 정리했습니다.
 - `claude-dispatch-scenarios` (2026-04-19) — **클로드 디스패치, 언제 쓰면 좋을까 (실제 시나리오 4가지)** — 클로드 디스패치(Claude Dispatch)로 모바일에서 데스크탑에 작업을 지시하는 법을 정리했습니다. 출근길·출장·외출 시나리오 4가지와 작동 조건, 성공률까지 짚었습니다.
