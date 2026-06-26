@@ -10,7 +10,19 @@ const { lang = "ko" } = Astro.props;
   <p class="share-text">
     {lang === "ko" ? "이 글이 도움이 되셨나요? 공유해보세요!" : "Found this helpful? Share it!"}
   </p>
-  <div class="share-buttons">
+
+  <button class="share-button native" id="share-native-btn" hidden>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="18" cy="5" r="3"></circle>
+      <circle cx="6" cy="12" r="3"></circle>
+      <circle cx="18" cy="19" r="3"></circle>
+      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+    </svg>
+    {lang === "ko" ? "공유하기" : "Share"}
+  </button>
+
+  <div class="share-buttons" id="share-buttons-fallback">
     <button class="share-button twitter" id="share-twitter-btn">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
         <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
@@ -34,48 +46,69 @@ const { lang = "ko" } = Astro.props;
 </div>
 
 <script define:vars={{ lang }}>
-  // Twitter 공유
-  document.getElementById("share-twitter-btn")?.addEventListener("click", function () {
-    const url = window.location.href;
-    const title = document.title;
-    window.open(
-      `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
-      "_blank",
-    );
-  });
+  const nativeBtn = document.getElementById("share-native-btn");
+  const fallback = document.getElementById("share-buttons-fallback");
 
-  // Facebook 공유
-  document.getElementById("share-facebook-btn")?.addEventListener("click", function () {
-    const url = window.location.href;
-    window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-      "_blank",
-    );
-  });
+  // 모바일 등 OS 자체 공유창(카카오톡 포함) 지원 시 그쪽으로 위임
+  if (navigator.share) {
+    fallback.style.display = "none";
+    nativeBtn.hidden = false;
 
-  // 링크 복사
-  document.getElementById("copy-link-btn")?.addEventListener("click", function (event) {
-    const url = window.location.href;
-    const button = event.currentTarget;
+    nativeBtn.addEventListener("click", async function () {
+      try {
+        await navigator.share({
+          title: document.title,
+          url: window.location.href,
+        });
+      } catch (err) {
+        // 사용자가 공유를 취소한 경우 등 — 무시
+      }
+    });
+  } else {
+    // 데스크톱 등 미지원 환경: 기존 버튼 유지
+    // Twitter 공유
+    document.getElementById("share-twitter-btn")?.addEventListener("click", function () {
+      const url = window.location.href;
+      const title = document.title;
+      window.open(
+        `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+        "_blank",
+      );
+    });
 
-    const copiedText = lang === "ko" ? "복사됨!" : "Copied!";
-    const failMessage = lang === "ko" ? "복사 실패. 수동으로 복사해주세요." : "Failed to copy. Please copy manually.";
+    // Facebook 공유
+    document.getElementById("share-facebook-btn")?.addEventListener("click", function () {
+      const url = window.location.href;
+      window.open(
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+        "_blank",
+      );
+    });
 
-    navigator.clipboard
-      .writeText(url)
-      .then(() => {
-        const originalHTML = button.innerHTML;
-        button.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> ${copiedText}`;
+    // 링크 복사
+    document.getElementById("copy-link-btn")?.addEventListener("click", function (event) {
+      const url = window.location.href;
+      const button = event.currentTarget;
 
-        setTimeout(() => {
-          button.innerHTML = originalHTML;
-        }, 2000);
-      })
-      .catch((err) => {
-        console.error("Failed to copy:", err);
-        alert(failMessage);
-      });
-  });
+      const copiedText = lang === "ko" ? "복사됨!" : "Copied!";
+      const failMessage = lang === "ko" ? "복사 실패. 수동으로 복사해주세요." : "Failed to copy. Please copy manually.";
+
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          const originalHTML = button.innerHTML;
+          button.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> ${copiedText}`;
+
+          setTimeout(() => {
+            button.innerHTML = originalHTML;
+          }, 2000);
+        })
+        .catch((err) => {
+          console.error("Failed to copy:", err);
+          alert(failMessage);
+        });
+    });
+  }
 </script>
 
 <style>

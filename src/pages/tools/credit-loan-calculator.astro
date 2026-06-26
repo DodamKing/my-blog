@@ -1,6 +1,6 @@
 ---
 import ToolPage from '../../layouts/ToolPage.astro';
-import CreditLoanCalculator from '../../components/calculators/CreditLoanCalculator';
+import CreditLoanCalculatorWidget from '../../components/calculators/CreditLoanCalculator';
 ---
 
 <ToolPage
@@ -13,5 +13,5 @@ import CreditLoanCalculator from '../../components/calculators/CreditLoanCalcula
     { url: '/tools/jeonse-loan-calculator', title: '전세대출 계산기', desc: '월 이자·총 비용 계산' },
   ]}
 >
-  <CreditLoanCalculator client:load />
+  <CreditLoanCalculatorWidget client:load />
 </ToolPage>

@@ -1,0 +1,136 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const tools = [
+  {
+    url: '/tools/loan-calculator',
+    title: '대출 계산기',
+    desc: '상환방식별(원리금균등·원금균등·만기일시) 월 상환액과 총이자 비교',
+  },
+  {
+    url: '/tools/mortgage-calculator',
+    title: '주택담보대출 계산기',
+    desc: 'LTV·DSR 한도 확인과 월 상환액 계산',
+  },
+  {
+    url: '/tools/jeonse-loan-calculator',
+    title: '전세대출 계산기',
+    desc: '전세 보증금 기준 월 이자·총 비용 계산',
+  },
+  {
+    url: '/tools/credit-loan-calculator',
+    title: '신용대출 계산기',
+    desc: '상환 기간별 월 상환액·총이자 비교',
+  },
+];
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead
+			title="금융 도구 모음 | Laon"
+			description="대출·주택담보대출·전세대출·신용대출 계산기를 한 곳에서 확인하세요."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="container">
+				<h1 class="page-title">금융 도구</h1>
+				<p class="page-desc">상환액과 이자를 빠르게 확인할 수 있는 계산기 모음입니다.</p>
+
+				<div class="tools-grid">
+					{tools.map((tool) => (
+						<a href={tool.url} class="tool-card">
+							<span class="tool-card-title">{tool.title}</span>
+							<span class="tool-card-desc">{tool.desc}</span>
+						</a>
+					))}
+				</div>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	:global(body) {
+		margin: 0;
+		padding: 0;
+		background: #fafafa;
+	}
+
+	.container {
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 3rem 2rem 4rem;
+	}
+
+	.page-title {
+		font-size: 2.25rem;
+		font-weight: 800;
+		text-align: center;
+		margin: 0 0 0.75rem;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.page-desc {
+		text-align: center;
+		color: #6b7280;
+		font-size: 1.05rem;
+		margin: 0 0 2.5rem;
+	}
+
+	.tools-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: 1.25rem;
+	}
+
+	.tool-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		padding: 1.5rem;
+		background: #ffffff;
+		border: 1px solid #e5e7eb;
+		border-radius: 12px;
+		text-decoration: none;
+		color: #1a1a1a;
+		transition: all 0.2s ease;
+	}
+
+	.tool-card:hover {
+		border-color: #667eea;
+		transform: translateY(-2px);
+		box-shadow: 0 8px 20px rgba(102, 126, 234, 0.12);
+	}
+
+	.tool-card-title {
+		font-weight: 700;
+		font-size: 1.0625rem;
+		color: #1a1a1a;
+	}
+
+	.tool-card-desc {
+		font-size: 0.875rem;
+		color: #6b7280;
+		line-height: 1.5;
+	}
+
+	@media (max-width: 768px) {
+		.container {
+			padding: 2.5rem 1.5rem 3rem;
+		}
+
+		.page-title {
+			font-size: 1.75rem;
+		}
+	}
+</style>

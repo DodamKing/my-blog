@@ -1,6 +1,6 @@
 ---
 import ToolPage from '../../layouts/ToolPage.astro';
-import MortgageCalculator from '../../components/calculators/MortgageCalculator';
+import MortgageCalculatorWidget from '../../components/calculators/MortgageCalculator';
 ---
 
 <ToolPage
@@ -13,5 +13,5 @@ import MortgageCalculator from '../../components/calculators/MortgageCalculator'
     { url: '/tools/credit-loan-calculator', title: '신용대출 계산기', desc: '기간별 이자 비교' },
   ]}
 >
-  <MortgageCalculator client:load />
+  <MortgageCalculatorWidget client:load />
 </ToolPage>
