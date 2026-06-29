@@ -1,0 +1,132 @@
+---
+interface Props {
+  code: string;
+}
+const { code } = Astro.props;
+---
+
+<div class="copyable-code">
+  <button type="button" class="copy-btn">복사</button>
+  <pre><code>{code}</code></pre>
+</div>
+
+<style>
+  .copyable-code {
+    position: relative;
+    margin: 2rem 0;
+  }
+
+  .copyable-code pre {
+    margin: 0;
+    padding: 2.5rem 1.5rem 1.5rem;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .copyable-code pre::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: rgba(102, 126, 234, 0.1);
+    border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+  }
+
+  .copyable-code pre code {
+    display: block;
+    background: transparent;
+    padding: 0;
+    border: none;
+    color: #e2e8f0;
+    font-family: "Monaco", "Consolas", monospace;
+    font-size: 0.9375rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.75rem;
+    z-index: 1;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .copy-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
+
+  .copy-btn.copied {
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.4);
+  }
+</style>
+
+<script>
+  function bindCopyButtons() {
+    document.querySelectorAll<HTMLButtonElement>(".copyable-code .copy-btn").forEach((btn) => {
+      if (btn.dataset.bound) return;
+      btn.dataset.bound = "true";
+
+      btn.addEventListener("click", async () => {
+        const wrapper = btn.closest(".copyable-code");
+        const codeEl = wrapper?.querySelector("code");
+        const text = codeEl?.textContent ?? "";
+
+        const original = btn.textContent;
+        const showResult = (ok: boolean) => {
+          btn.textContent = ok ? "복사됨" : "복사 실패";
+          btn.classList.toggle("copied", ok);
+          setTimeout(() => {
+            btn.textContent = original;
+            btn.classList.remove("copied");
+          }, 1500);
+        };
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            showResult(true);
+          } else {
+            throw new Error("clipboard API unavailable");
+          }
+        } catch (err) {
+          console.error("clipboard API 복사 실패, execCommand로 재시도", err);
+          const textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.style.position = "fixed";
+          textarea.style.left = "-9999px";
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          let fallbackOk = false;
+          try {
+            fallbackOk = document.execCommand("copy");
+          } catch (fallbackErr) {
+            console.error("execCommand 복사도 실패", fallbackErr);
+          }
+          document.body.removeChild(textarea);
+          showResult(fallbackOk);
+        }
+      });
+    });
+  }
+
+  bindCopyButtons();
+  document.addEventListener("astro:page-load", bindCopyButtons);
+</script>
