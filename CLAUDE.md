@@ -145,7 +145,9 @@ Step 5 완료 후 메인 에이전트가 직접 처리할 것:
 
 `src/pages/tools/`에 인터랙티브 도구 페이지를 만든다. Astro Islands + React로 구현.
 
-- 레이아웃: `ToolPage.astro` (SEO, JSON-LD, AdSense 포함)
-- 계산기 컴포넌트: `src/components/calculators/` (공통 로직은 `shared/`)
-- 새 도구 추가 시: Astro 페이지 + React 컴포넌트 + `client:load` 디렉티브
-- 관련 블로그 글과 양방향 내부 링크 필수
+- 레이아웃: `ToolPage.astro` — `slug` 하나만 넘기면 관련 계산기·브레드크럼·JSON-LD 카테고리가 자동 파생 (SEO, AdSense 포함)
+- 도구 레지스트리: `src/data/tools.ts` (단일 소스) — 도구 목록 + 카테고리(finance/labor…) 정의. `/tools/` 인덱스 카드·관련 링크·카테고리 섹션이 모두 여기서 파생
+- 계산기 컴포넌트: `src/components/calculators/` (공통 로직·입력필드는 `shared/`)
+- **새 도구 추가 = `src/data/tools.ts`에 1줄 + `src/pages/tools/<slug>.astro`(ToolPage에 slug 전달) + React 컴포넌트(`client:load`).** 인덱스·관련 계산기·브레드크럼·카테고리는 자동 처리됨
+- 설명·FAQ는 **도구 페이지 본문에 통합**(별도 짝 글 X — tool+info 한 URL로 체류·viewability↑). `relatedBlogPost`는 진짜 관련 글이 있을 때만 선택적으로
+- 모바일 우선 표준 준수(숫자 `inputMode`, 16px 입력, 반응형 그리드, 넓은 표 스크롤 래퍼) — 상세: `docs/monetization-pivot-backlog.md`

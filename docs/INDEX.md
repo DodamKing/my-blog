@@ -8,6 +8,8 @@
 - [research-backlog.md](./research-backlog.md) — 다음 조사 키워드 후보 + 진행 상태 추적. 측정 대기 기간에 병렬 조사 진행하기 위한 큐.
 - [seo-recovery-plan.md](./seo-recovery-plan.md) — 구글 색인 회복 계획 (About 페이지 부재 등 구조 문제 진단 + Phase 1~3 복구 단계). 색인 이슈 관련 논의 시 먼저 확인.
 - [posts-ledger.md](./posts-ledger.md) — **자동 생성** 전체 글 목록 (카테고리별). 새 키워드 기획 시 의미 중복 검사 용도. 직접 수정 금지.
+- [monetization-pivot-backlog.md](./monetization-pivot-backlog.md) — **수익화 도구 피벗 실행 백로그 + 진행 상태**. 다음 세션 픽업 포인트. 계산기 빌드 큐·키워드 검증 결과·목표 프레이밍·다음 액션.
+- [keyword-radar-upgrade-spec.md](./keyword-radar-upgrade-spec.md) — keyword-radar 도구 업그레이드 전달 문서(별도 레포로 반출). SERP 도메인 3분류(노이즈/권위 인컴번트/소형툴) + 추가 신호로 "쉬움 라벨 착시"를 해소. API 자동화 판정 함수의 전제.
 
 ## 측정 & 실험
 

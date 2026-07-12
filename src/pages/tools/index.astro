@@ -2,54 +2,39 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import { getToolsByCategory } from '../../data/tools';
 
-const tools = [
-  {
-    url: '/tools/loan-calculator',
-    title: '대출 계산기',
-    desc: '상환방식별(원리금균등·원금균등·만기일시) 월 상환액과 총이자 비교',
-  },
-  {
-    url: '/tools/mortgage-calculator',
-    title: '주택담보대출 계산기',
-    desc: 'LTV·DSR 한도 확인과 월 상환액 계산',
-  },
-  {
-    url: '/tools/jeonse-loan-calculator',
-    title: '전세대출 계산기',
-    desc: '전세 보증금 기준 월 이자·총 비용 계산',
-  },
-  {
-    url: '/tools/credit-loan-calculator',
-    title: '신용대출 계산기',
-    desc: '상환 기간별 월 상환액·총이자 비교',
-  },
-];
+const groups = getToolsByCategory();
 ---
 
 <!doctype html>
 <html lang="ko">
 	<head>
 		<BaseHead
-			title="금융 도구 모음 | Laon"
-			description="대출·주택담보대출·전세대출·신용대출 계산기를 한 곳에서 확인하세요."
+			title="계산기 모음 | Laon"
+			description="대출·전세·주택담보·신용대출부터 근무시간까지, 자주 쓰는 계산기를 한 곳에서 확인하세요."
 		/>
 	</head>
 	<body>
 		<Header />
 		<main>
 			<div class="container">
-				<h1 class="page-title">금융 도구</h1>
-				<p class="page-desc">상환액과 이자를 빠르게 확인할 수 있는 계산기 모음입니다.</p>
+				<h1 class="page-title">계산기 모음</h1>
+				<p class="page-desc">필요한 값을 빠르게 확인할 수 있는 계산기 모음입니다.</p>
 
-				<div class="tools-grid">
-					{tools.map((tool) => (
-						<a href={tool.url} class="tool-card">
-							<span class="tool-card-title">{tool.title}</span>
-							<span class="tool-card-desc">{tool.desc}</span>
-						</a>
-					))}
-				</div>
+				{groups.map((group) => (
+					<section class="tools-section">
+						<h2 class="section-title">{group.meta.label}</h2>
+						<div class="tools-grid">
+							{group.items.map((tool) => (
+								<a href={`/tools/${tool.slug}`} class="tool-card">
+									<span class="tool-card-title">{tool.title}</span>
+									<span class="tool-card-desc">{tool.desc}</span>
+								</a>
+							))}
+						</div>
+					</section>
+				))}
 			</div>
 		</main>
 		<Footer />
@@ -87,9 +72,22 @@ const tools = [
 		margin: 0 0 2.5rem;
 	}
 
+	.tools-section {
+		margin-bottom: 2.5rem;
+	}
+
+	.section-title {
+		font-size: 1.25rem;
+		font-weight: 700;
+		color: #1a1a1a;
+		margin: 0 0 1rem;
+		padding-left: 0.75rem;
+		border-left: 4px solid #667eea;
+	}
+
 	.tools-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 		gap: 1.25rem;
 	}
 

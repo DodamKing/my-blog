@@ -5,24 +5,29 @@ import Header from "../components/Header.astro";
 import AdSense from "../components/AdSense.astro";
 import ShareButtons from "../components/ShareButtons.astro";
 import { ADSENSE_CONFIG } from "../consts";
-
-interface ToolLink {
-  url: string;
-  title: string;
-  desc: string;
-}
+import { getTool, getRelatedTools, categories } from "../data/tools";
 
 interface Props {
+  /** src/data/tools.ts 레지스트리의 slug. 카테고리·관련 계산기·브레드크럼·JSON-LD가 여기서 파생된다. */
+  slug: string;
+  /** SEO/H1용 긴 제목 (레지스트리 카드 제목과 별개) */
   title: string;
   description: string;
   relatedBlogPost?: {
     url: string;
     title: string;
   };
-  otherTools?: ToolLink[];
 }
 
-const { title, description, relatedBlogPost, otherTools } = Astro.props;
+const { slug, title, description, relatedBlogPost } = Astro.props;
+
+const tool = getTool(slug);
+const catMeta = tool ? categories[tool.category] : categories.finance;
+const otherTools = getRelatedTools(slug).map((t) => ({
+  url: `/tools/${t.slug}`,
+  title: t.title,
+  desc: t.desc,
+}));
 ---
 
 <html lang="ko">
@@ -34,7 +39,7 @@ const { title, description, relatedBlogPost, otherTools } = Astro.props;
       "name": title,
       "description": description,
       "url": new URL(Astro.url.pathname, Astro.site).href,
-      "applicationCategory": "FinanceApplication",
+      "applicationCategory": catMeta.schema,
       "operatingSystem": "Web",
       "offers": {
         "@type": "Offer",
@@ -55,7 +60,7 @@ const { title, description, relatedBlogPost, otherTools } = Astro.props;
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "금융 도구"
+          "name": catMeta.breadcrumb
         },
         {
           "@type": "ListItem",
@@ -74,7 +79,7 @@ const { title, description, relatedBlogPost, otherTools } = Astro.props;
         <nav class="tool-breadcrumb">
           <a href="/">홈</a>
           <span class="tool-breadcrumb-sep">/</span>
-          <span>금융 도구</span>
+          <span>{catMeta.breadcrumb}</span>
           <span class="tool-breadcrumb-sep">/</span>
           <span>{title}</span>
         </nav>
@@ -94,7 +99,7 @@ const { title, description, relatedBlogPost, otherTools } = Astro.props;
 
         {otherTools && otherTools.length > 0 && (
           <div class="tool-others">
-            <h2 class="tool-others-title">다른 대출 계산기</h2>
+            <h2 class="tool-others-title">다른 {catMeta.label}</h2>
             <div class="tool-others-grid">
               {otherTools.map((tool) => (
                 <a href={tool.url} class="tool-others-card">
