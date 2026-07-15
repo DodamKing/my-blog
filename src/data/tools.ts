@@ -57,6 +57,12 @@ export const tools: Tool[] = [
     desc: '출퇴근·휴게 시간으로 일·주·월 실근무시간 계산',
     category: 'labor',
   },
+  {
+    slug: 'part-time-wage-calculator',
+    title: '알바비 계산기',
+    desc: '시급·근무시간으로 주휴수당 포함 일급·주급·월급 계산',
+    category: 'labor',
+  },
 ];
 
 /** slug로 도구 조회 */
