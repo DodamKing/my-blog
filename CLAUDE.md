@@ -81,7 +81,7 @@ src/content/blog/슬러그명/
 1. **01-keyword-strategist** — 키워드 전략 수립 (data/keywords/ JSON 활용 가능)
    - **Mode A(JSON 큐레이션)의 경우 필수**: 결과 확정 전 **독립 심사 에이전트를 병렬 호출해 비판적 교차 검증**. 메인의 큐레이션 결과는 비공개로 유지(독립 판단 보장). 같은 JSON + 블로그 상황(카테고리 편수·외부 도메인 패널티)만 공유하고 "비판적 현실주의 관점에서 실제 상위 진입 가능한 편수만 선별"을 지시한다.
    - 비교 결과 처리: **교집합 키워드만 확정**. 메인만 제안한 키워드는 낙관 편향 가능성 재고, 독립 에이전트만 제안한 키워드는 놓친 가능성 검토.
-   - **SERP 실측 검증 (필수)**: 데이터 필터를 통과한 최종 후보 중 월 검색량 1,000 이상 키워드는 1면 도메인 분포를 WebSearch/WebFetch로 직접 확인한다. 데이터상 "쉬움"이어도 1면을 의료·공공·대형미디어가 점유 중이면 거절. 자세한 룰은 `agents/01-keyword-strategist.md` 의 "SERP 실측 검증" 섹션 참조.
+   - **SERP 실측 검증 (필수)**: 데이터 필터를 통과한 최종 후보 중 월 검색량 1,000 이상 키워드는 keyword-radar `POST /api/judge` 로 진입 판정을 받는다 (⛔ 거절 / △ 앵글 살아있으면 진행 / ✅ 진행). 데이터상 "쉬움"·기회점수 만점이어도 1면이 점유 중이면 ⛔가 나온다 — 점수만 보고 발행 결정 금지. 자세한 룰은 `agents/01-keyword-strategist.md` 의 "SERP 실측 검증" 섹션 참조.
    - 이 단계를 건너뛰면 낙관 편향으로 발행 편수 과다 위험.
 2. **02-researcher** — 자료조사
 3. **03-writer** — 초안 작성 (체류시간 최적화, 쿠팡 플레이스홀더 포함)
@@ -130,9 +130,23 @@ Step 5 완료 후 메인 에이전트가 직접 처리할 것:
 - 시점 정보는 frontmatter의 pubDate/updatedDate로 관리
 
 ### 키워드 데이터
-- `data/keywords/`에 JSON 파일을 넣으면 Step 1에서 활용
-- JSON은 키워드 분석 도구에서 export한 파일
-- 사용 후 수동 정리
+
+**keyword-radar API** (`https://keyword-radar-rho.vercel.app`) 를 Claude가 직접 호출한다. 사용자에게 도구 실행·export를 요청하지 말 것.
+
+| 엔드포인트 | 용도 |
+|---|---|
+| `POST /api/judge` | **진입 판정 ⛔/△/✅ — 발행 결정의 최종 근거** |
+| `POST /api/analyze` | 키워드 배열 → 검색량·경쟁률·기회지수 (추림용) |
+| `POST /api/expand` | 시드 1개 → 연관 키워드 발굴 (`maxResults` 30 내외 필수) |
+| `POST /api/domains` | 1면 도메인 목록 원자료 (판정은 judge가 함) |
+| `POST /api/postdates` | 상위 10건 발행일 분포 |
+
+- 인증: `Authorization: Bearer $AUTH_SECRET` 헤더. 값은 이 프로젝트 `.env` 에 있음 (**커밋 금지**)
+- ⚠️ 한글은 **UTF-8 파일로 저장해 `--data-binary @file`** 로 넘길 것. `-d '{...}'` 인라인은 Git Bash에서 깨져 빈 결과가 온다
+- ⚠️ 진입 판정을 외부에서 재현하지 말 것 — `/api/judge` 가 단일 출처다
+- 네이버 API 무료 쿼터 공유: 루프에서 `expand`/`trend` 남발 금지. `analyze` 로 배치 추림 → 후보만 `judge`
+- API 원문 문서: `../keyword-radar/docs/api.md`
+- `data/keywords/` 에 JSON 파일이 있으면 그것도 활용 가능 (사용 후 수동 정리)
 
 ### 에이전트 개선
 글 작성 파이프라인 실행 후, 비효율이나 품질 문제를 발견하면 해당 에이전트 프롬프트를 즉시 수정한다:

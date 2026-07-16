@@ -9,7 +9,7 @@
 - [seo-recovery-plan.md](./seo-recovery-plan.md) — 구글 색인 회복 계획 (About 페이지 부재 등 구조 문제 진단 + Phase 1~3 복구 단계). 색인 이슈 관련 논의 시 먼저 확인.
 - [posts-ledger.md](./posts-ledger.md) — **자동 생성** 전체 글 목록 (카테고리별). 새 키워드 기획 시 의미 중복 검사 용도. 직접 수정 금지.
 - [monetization-pivot-backlog.md](./monetization-pivot-backlog.md) — **수익화 도구 피벗 실행 백로그 + 진행 상태**. 다음 세션 픽업 포인트. 계산기 빌드 큐·키워드 검증 결과·목표 프레이밍·다음 액션.
-- [keyword-radar-upgrade-spec.md](./keyword-radar-upgrade-spec.md) — keyword-radar 도구 업그레이드 전달 문서(별도 레포로 반출). SERP 도메인 3분류(노이즈/권위 인컴번트/소형툴) + 추가 신호로 "쉬움 라벨 착시"를 해소. **2026-07-15 구현 완료 — 층2(계산기) 판정 검증 통과, 층1(트렌드 시드) 판정은 미구현이라 사용 금지.** 검증 결과·2차 보강 항목은 `monetization-pivot-backlog.md` 참조.
+- [keyword-radar-upgrade-spec.md](./keyword-radar-upgrade-spec.md) — keyword-radar 도구 업그레이드 전달 문서(별도 레포로 반출). SERP 도메인 3분류(노이즈/권위 인컴번트/소형툴) + 추가 신호로 "쉬움 라벨 착시"를 해소. **2026-07-16 완료 — `POST /api/judge` 로 판정이 API 노출되어 Claude가 직접 호출한다.** 층1(트렌드 시드) 판정은 여전히 미구현. 설계 근거 기록용이며, **실사용법은 `../CLAUDE.md` "키워드 데이터" 참조.**
 
 ## 측정 & 실험
 
