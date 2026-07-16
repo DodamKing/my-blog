@@ -52,6 +52,12 @@ export const tools: Tool[] = [
     category: 'finance',
   },
   {
+    slug: 'prepayment-fee-calculator',
+    title: '중도상환수수료 계산기',
+    desc: '대출 조기 상환 시 예상 수수료와 면제 시점 확인',
+    category: 'finance',
+  },
+  {
     slug: 'work-hours-calculator',
     title: '근무시간 계산기',
     desc: '출퇴근·휴게 시간으로 일·주·월 실근무시간 계산',

@@ -1,0 +1,138 @@
+---
+import ToolPage from '../../layouts/ToolPage.astro';
+import PrepaymentFeeCalculatorWidget from '../../components/calculators/PrepaymentFeeCalculator';
+---
+
+<ToolPage
+  slug="prepayment-fee-calculator"
+  title="중도상환수수료 계산기 - 예상 수수료·면제 시점 확인"
+  description="중도상환 금액과 수수료율, 대출 경과 기간을 입력하면 예상 중도상환수수료와 면제까지 남은 기간을 바로 계산합니다."
+>
+  <PrepaymentFeeCalculatorWidget client:load />
+
+  <section class="pfc-article">
+    <h2>중도상환수수료는 어떻게 계산되나?</h2>
+    <p>
+      대출을 만기 전에 갚으면 은행이 예정된 이자 수익을 잃습니다. 그 손실을 메우려고 받는 게
+      중도상환수수료입니다. 계산식은 대체로 이렇습니다.
+    </p>
+    <p class="pfc-formula">
+      중도상환수수료 = 중도상환 금액 × 수수료율 × (잔여기간 ÷ 수수료 부과기간)
+    </p>
+    <p>
+      핵심은 <strong>시간이 지날수록 줄어든다</strong>는 점입니다. 부과기간이 36개월인데 12개월
+      만에 갚으면 남은 24개월분, 즉 요율의 3분의 2만 냅니다. 24개월을 채우고 갚으면 3분의 1이고요.
+      같은 금액을 갚아도 <strong>언제 갚느냐에 따라 수수료가 배로 차이납니다.</strong>
+    </p>
+
+    <h2>면제 시점 — 보통 3년이 기준선</h2>
+    <p>
+      수수료 부과기간이 끝나면 중도상환수수료는 <strong>0원</strong>이 됩니다. 대부분의 가계대출은
+      이 기간을 <strong>3년(36개월)</strong>으로 잡습니다. 3년을 채운 뒤에는 전액을 한 번에 갚아도
+      수수료가 붙지 않습니다.
+    </p>
+    <p>
+      그래서 상환 시점이 면제까지 얼마 안 남았다면, 기다렸다 갚는 쪽이 유리한 경우가 많습니다.
+      다만 그 기간에 내는 이자와 아끼는 수수료를 비교해야 합니다. 남은 기간이 길고 금리가 높다면
+      수수료를 물더라도 빨리 갚는 편이 총액에서 이득일 수 있습니다.
+    </p>
+    <p>
+      부과기간은 상품마다 다릅니다. 3년이 관행일 뿐 법으로 정해진 게 아니라서, 대출 약정서를
+      직접 확인해야 정확합니다.
+    </p>
+
+    <h2>수수료율은 상품마다 다르다</h2>
+    <p>
+      중도상환수수료율은 담보 종류와 상품에 따라 갈립니다. 통상 <strong>0.5~1.5%</strong> 범위에서
+      정해지며, 주택담보대출이 신용대출보다 높은 편입니다. 고정금리인지 변동금리인지에 따라서도
+      달라집니다.
+    </p>
+    <p>
+      이 계산기가 요율을 미리 채워두지 않는 이유가 여기 있습니다. 은행·상품·시점마다 다른 값을
+      고정해두면 틀린 답을 주게 됩니다. <strong>본인 대출 약정서에 적힌 요율</strong>을 넣어야
+      실제와 맞는 결과가 나옵니다.
+    </p>
+
+    <h2>수수료를 안 내는 경우</h2>
+    <ul>
+      <li><strong>부과기간 경과</strong> — 통상 3년이 지나면 면제</li>
+      <li><strong>일부 상환 한도 내</strong> — 연간 원금의 10% 등 일정 비율까지 수수료 없이 갚게 해주는 상품이 있습니다</li>
+      <li><strong>수수료 없는 상품</strong> — 일부 정책 대출이나 특약 상품은 처음부터 부과하지 않습니다</li>
+    </ul>
+    <p>
+      본인 대출이 어디에 해당하는지는 약정서나 은행 문의로 확인할 수 있습니다.
+    </p>
+
+    <h2>자주 묻는 질문</h2>
+    <p class="pfc-faq-q">Q. 일부만 갚아도 수수료가 붙나요?</p>
+    <p>
+      네, 갚는 금액에 비례해 붙습니다. 다만 상품에 따라 연간 일정 비율까지는 면제해주는 경우가
+      있으니 약정서를 확인하세요. 계산기에는 실제로 갚을 금액만 넣으면 됩니다.
+    </p>
+    <p class="pfc-faq-q">Q. 대출을 갈아타도 중도상환수수료를 내나요?</p>
+    <p>
+      기존 대출을 상환하는 것이므로 원칙적으로 부과됩니다. 대환으로 아끼는 이자가 수수료보다 큰지
+      따져봐야 합니다. 새 대출의 금리와 남은 기간을 함께 계산해 비교하세요.
+    </p>
+    <p class="pfc-faq-q">Q. 3년이 지나면 정말 한 푼도 안 내나요?</p>
+    <p>
+      부과기간이 3년으로 설정된 상품이라면 그렇습니다. 다만 부과기간은 상품마다 달라서 5년인
+      경우도 있습니다. 약정서의 "중도상환수수료" 항목에 기간이 명시돼 있습니다.
+    </p>
+    <p class="pfc-faq-q">Q. 경과 기간은 어디서부터 세나요?</p>
+    <p>
+      대출 실행일(돈이 나온 날)이 기준입니다. 약정일이 아니라 실제 대출금이 입금된 날부터
+      계산합니다.
+    </p>
+  </section>
+</ToolPage>
+
+<style>
+  .pfc-article {
+    margin-top: 3rem;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #374151;
+  }
+
+  .pfc-article h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 2rem 0 0.75rem;
+  }
+
+  .pfc-article p {
+    margin: 0 0 1rem;
+  }
+
+  .pfc-article ul {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+  }
+
+  .pfc-article li {
+    margin-bottom: 0.375rem;
+  }
+
+  .pfc-article strong {
+    color: #1a1a1a;
+    font-weight: 700;
+  }
+
+  .pfc-formula {
+    background: #f8fafc;
+    border-left: 3px solid #2563eb;
+    padding: 0.875rem 1rem;
+    border-radius: 6px;
+    font-weight: 700;
+    color: #1a1a1a;
+    overflow-x: auto;
+  }
+
+  .pfc-faq-q {
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.375rem !important;
+  }
+</style>
