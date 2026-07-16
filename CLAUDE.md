@@ -164,4 +164,8 @@ Step 5 완료 후 메인 에이전트가 직접 처리할 것:
 - 계산기 컴포넌트: `src/components/calculators/` (공통 로직·입력필드는 `shared/`)
 - **새 도구 추가 = `src/data/tools.ts`에 1줄 + `src/pages/tools/<slug>.astro`(ToolPage에 slug 전달) + React 컴포넌트(`client:load`).** 인덱스·관련 계산기·브레드크럼·카테고리는 자동 처리됨
 - 설명·FAQ는 **도구 페이지 본문에 통합**(별도 짝 글 X — tool+info 한 URL로 체류·viewability↑). `relatedBlogPost`는 진짜 관련 글이 있을 때만 선택적으로
+- **title = 실측 검색어 그대로 박을 것.** 설명적 카피 금지. `/api/analyze` 로 검색량을 확인한 문구만 쓰고, 여러 키워드가 겹쳐 걸리도록 조합한다
+  - ✅ `대출이자 계산기 - 원리금균등·원금균등 월 상환액 비교` (4개 키워드 동시 커버)
+  - ⛔ `대출 계산기 - 상환방식별 월 상환액·총이자 비교` — 아무도 검색 안 하는 문구. **이 title로 3개월 반 노출 0** (근거: `docs/monetization-pivot-backlog.md` "대출이자 title 진단")
+  - 도구 title이 기존 **글 title과 같은 키워드를 물면 안 된다**(자기잠식). 짝 글을 안 쓰는 이유가 이것
 - 모바일 우선 표준 준수(숫자 `inputMode`, 16px 입력, 반응형 그리드, 넓은 표 스크롤 래퍼) — 상세: `docs/monetization-pivot-backlog.md`
