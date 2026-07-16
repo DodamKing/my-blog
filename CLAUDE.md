@@ -169,3 +169,12 @@ Step 5 완료 후 메인 에이전트가 직접 처리할 것:
   - ⛔ `대출 계산기 - 상환방식별 월 상환액·총이자 비교` — 아무도 검색 안 하는 문구. **이 title로 3개월 반 노출 0** (근거: `docs/monetization-pivot-backlog.md` "대출이자 title 진단")
   - 도구 title이 기존 **글 title과 같은 키워드를 물면 안 된다**(자기잠식). 짝 글을 안 쓰는 이유가 이것
 - 모바일 우선 표준 준수(숫자 `inputMode`, 16px 입력, 반응형 그리드, 넓은 표 스크롤 래퍼) — 상세: `docs/monetization-pivot-backlog.md`
+
+### 도구 색인 전략 (2026-07-16 전환)
+
+**도구는 도구대로 직접 노출을 노린다.** 진입점 글을 따로 쓰지 않는다.
+
+- `plugins/indexnow/index.js` 가 **글(`src/content/blog/**/index.mdx`) + 도구(`src/pages/tools/*.astro`)** 변경분을 배포 시 IndexNow(Bing·Naver)에 자동 제출한다
+- 이전 설계(글만 색인 → 글 타고 도구 유입)는 **폐기**. 진입점 글 `loan-calculator-guide` 가 3개월 반 무노출이었고, 정보성 키워드는 문서 수십만짜리 벽이라 애초에 뜰 수 없다. 반면 tool-intent 키워드는 뚫려 있다(전세 도구 단독 노출 13,420 실증)
+- ⚠️ **잘 나가는 도구 페이지의 파일을 수정하지 말 것 — 이제 수정 = 자동 재색인이다.** 수동 요청 시절엔 "요청 안 하면 그만"이었으나 지금은 파일만 건드려도 요청이 나간다. redill 붕괴(잘 나가는 글 편집 + 재색인)가 실수 한 번으로 재현될 수 있다. 현재 보호 대상: `jeonse-loan-calculator`(노출 13,420)
+  - `src/data/tools.ts` 변경은 IndexNow를 트리거하지 않는다(diff 대상 아님). 단 렌더 결과는 바뀌므로 측정 교란은 남음
