@@ -16,6 +16,7 @@ Astro 5, MDX, React (Islands), TypeScript, sharp (이미지 최적화)
 - `npm run delete` — 글 삭제 스크립트 (완료 후 `docs/posts-ledger.md` 자동 갱신)
 - `npm run ledger` — `docs/posts-ledger.md` 수동 재생성 (전체 `src/content/blog/*/index.mdx` frontmatter 스캔)
 - `npm run webp` — 이미지 webp 변환 (`npm run webp -- input.png output.webp`)
+- `npm run scan -- <시드>` — 시드 키워드 스캔 (`scripts/pipeline/scan-seed.js`). keyword-radar API 호출 순서(analyze → expand → analyze → judge)를 자동 실행해 발행 후보를 추린다. **읽기 전용 조사 도구** — 파일을 쓰지 않는다. 상세는 아래 "키워드 데이터" 참조
 
 ## 프로젝트 구조
 
@@ -81,7 +82,7 @@ src/content/blog/슬러그명/
 1. **01-keyword-strategist** — 키워드 전략 수립 (data/keywords/ JSON 활용 가능)
    - **Mode A(JSON 큐레이션)의 경우 필수**: 결과 확정 전 **독립 심사 에이전트를 병렬 호출해 비판적 교차 검증**. 메인의 큐레이션 결과는 비공개로 유지(독립 판단 보장). 같은 JSON + 블로그 상황(카테고리 편수·외부 도메인 패널티)만 공유하고 "비판적 현실주의 관점에서 실제 상위 진입 가능한 편수만 선별"을 지시한다.
    - 비교 결과 처리: **교집합 키워드만 확정**. 메인만 제안한 키워드는 낙관 편향 가능성 재고, 독립 에이전트만 제안한 키워드는 놓친 가능성 검토.
-   - **SERP 실측 검증 (필수)**: 데이터 필터를 통과한 최종 후보 중 월 검색량 1,000 이상 키워드는 keyword-radar `POST /api/judge` 로 진입 판정을 받는다 (⛔ 거절 / △ 앵글 살아있으면 진행 / ✅ 진행). 데이터상 "쉬움"·기회점수 만점이어도 1면이 점유 중이면 ⛔가 나온다 — 점수만 보고 발행 결정 금지. 자세한 룰은 `agents/01-keyword-strategist.md` 의 "SERP 실측 검증" 섹션 참조.
+   - **SERP 실측 검증 (필수)**: 데이터 필터를 통과한 최종 후보는 keyword-radar `POST /api/judge` 로 진입 판정을 받는다 (⛔ 거절 / △ 앵글 살아있으면 진행 / ✅ 진행). 데이터상 "쉬움"·기회점수 만점이어도 1면이 점유 중이면 ⛔가 나온다 — 점수만 보고 발행 결정 금지. **judge는 호출 순서상 마지막이다** (analyze 게이트 → expand → analyze → judge, 후보 최대 3개). 검색량으로 judge 대상을 컷하지 말 것 — 위 "키워드 데이터 → 호출 순서" 참조. 자세한 룰은 `agents/01-keyword-strategist.md` 의 "SERP 실측 검증" 섹션 참조.
    - 이 단계를 건너뛰면 낙관 편향으로 발행 편수 과다 위험.
 2. **02-researcher** — 자료조사
 3. **03-writer** — 초안 작성 (체류시간 최적화, 쿠팡 플레이스홀더 포함)
@@ -140,6 +141,22 @@ Step 5 완료 후 메인 에이전트가 직접 처리할 것:
 | `POST /api/expand` | 시드 1개 → 연관 키워드 발굴 (`maxResults` 30 내외 필수) |
 | `POST /api/domains` | 1면 도메인 목록 원자료 (판정은 judge가 함) |
 | `POST /api/postdates` | 상위 10건 발행일 분포 |
+| `POST /api/trend` | 키워드 12개월 추이 + 성/연령 분포 — **검증용(발굴 아님)**. 키워드를 입력으로 받는다 |
+
+⚠️ **엔드포인트 6개 전부 "키워드를 이미 알 때" 쓰는 도구다. 시드는 도구 밖에서 와야 한다.** `/api/trend` 도 시드 발굴에 쓸 수 없다 (2026-07-17 실측 — 상세: `docs/content-strategy.md` 폐기된 가설).
+
+#### 호출 순서 (2026-07-17 실측 확정 — 싼 것 먼저, 비싼 건 게이트 뒤로)
+
+`npm run scan -- <시드>` 가 아래를 자동 실행한다. 수동 호출 시에도 이 순서를 지킬 것.
+
+1. **`/api/analyze` 배치** (시드 + 템플릿 롱테일, **배치 상한 10개**. 4.6s / 캐시히트 0.8s) → **진단 롱테일 볼륨이 전부 월 10 이하면 즉시 킬**
+2. **`/api/expand`** (12~15.7s, `maxResults` 30) — 게이트 통과 시드만. **우리가 예측 못 한 질문축을 찾는 유일한 도구** (레딜의 실제 승리 키워드 "목아픔"·"가래"는 템플릿으로 안 나온다). **반환 3건 이하 = 생태계 없음 → 킬**
+3. **`/api/analyze`** — expand가 찾은 신규 키워드
+4. **`/api/judge`** — 최종 후보 3개 (1.2~3.5s, 병렬 불필요)
+
+- **"월검색 1,000 이상만 judge" 룰은 폐기.** 역효과였음 — 제로엔 킬 근거는 judge(△)가 아니라 ①단계 진단 롱테일 analyze에서 나왔다. 게이트는 볼륨 컷이 아니라 순서다
+- **쿼터**: analyze 12개 배치에서 429가 2회 발생(서버 백오프가 흡수). 배치는 10개를 넘기지 말 것
+- **동음이의어 판별은 `document_count > 500,000`** 으로 한다. `competition_ratio > 100` 은 오발함 — 경쟁률 = 문서수÷검색량이라 검색량 10~15인 저볼륨 롱테일은 문서 1,000건만 있어도 100을 넘는다 ("크레아틴 효과 없음" 검색 15 / 문서 2,342 → 156이 오분류)
 
 - 인증: `Authorization: Bearer $AUTH_SECRET` 헤더. 값은 이 프로젝트 `.env` 에 있음 (**커밋 금지**)
 - ⚠️ 한글은 **UTF-8 파일로 저장해 `--data-binary @file`** 로 넘길 것. `-d '{...}'` 인라인은 Git Bash에서 깨져 빈 결과가 온다

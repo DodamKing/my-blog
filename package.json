@@ -12,7 +12,8 @@
     "ledger": "node scripts/build-posts-ledger.js",
     "webp": "node scripts/pipeline/convert-webp.js",
     "hero": "node scripts/pipeline/generate-hero-image.js",
-    "coupang": "node scripts/pipeline/coupang-deeplink.js"
+    "coupang": "node scripts/pipeline/coupang-deeplink.js",
+    "scan": "node scripts/pipeline/scan-seed.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
