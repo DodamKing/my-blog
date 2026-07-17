@@ -58,6 +58,12 @@ export const tools: Tool[] = [
     category: 'finance',
   },
   {
+    slug: 'property-tax-calculator',
+    title: '재산세 계산기',
+    desc: '아파트 공시가격으로 재산세·도시지역분·지방교육세 계산',
+    category: 'finance',
+  },
+  {
     slug: 'work-hours-calculator',
     title: '근무시간 계산기',
     desc: '출퇴근·휴게 시간으로 일·주·월 실근무시간 계산',

@@ -1,0 +1,195 @@
+---
+import ToolPage from '../../layouts/ToolPage.astro';
+import PropertyTaxCalculatorWidget from '../../components/calculators/PropertyTaxCalculator';
+
+const faqs = [
+  {
+    q: '재산세는 공시가격으로 계산하나요, 매매가로 계산하나요?',
+    a: '공시가격입니다. 과세표준은 공시가격에 공정시장가액비율을 곱해 구합니다. 1세대 1주택은 공시가격 3억원 이하 43%, 3억~6억원 44%, 6억원 초과 45%가 적용되고, 다주택이나 법인은 60%입니다. 공시가격은 부동산공시가격 알리미에서 조회할 수 있습니다.',
+  },
+  {
+    q: '6월에 집을 팔았는데 재산세 고지서가 왔습니다. 왜 그런가요?',
+    a: '재산세 과세기준일이 6월 1일이기 때문입니다. 그날 등기부상 소유자가 그 해 재산세 전액을 부담합니다. 6월 1일 이후에 팔았다면 그 해 재산세는 매도인 몫입니다. 반대로 잔금일을 5월 31일 이전으로 맞추면 매수인이 부담합니다.',
+  },
+  {
+    q: '1주택이면 재산세가 얼마나 줄어드나요?',
+    a: '두 가지가 동시에 적용됩니다. 첫째, 공정시장가액비율이 60%에서 43~45%로 낮아져 과세표준 자체가 줄어듭니다. 둘째, 공시가격 9억원 이하면 구간별 세율이 0.05%p 인하됩니다. 다만 세율 특례는 9억원 이하만 적용되고, 공정시장가액비율 45%는 9억원을 넘는 1주택에도 그대로 적용됩니다.',
+  },
+  {
+    q: '공시가격이 크게 올랐는데 재산세도 그만큼 오르나요?',
+    a: '아닙니다. 과세표준상한제가 적용되어 주택 과세표준은 직전 연도 과세표준 상당액 대비 연 5%를 넘겨 오를 수 없습니다. 참고로 과거의 세부담상한(105~130%) 제도는 주택에 대해서는 폐지되어 이 상한제로 대체됐습니다. 아직 옛 세부담상한을 안내하는 계산기가 많으니 주의하세요.',
+  },
+  {
+    q: '9월에는 고지서가 오지 않았는데 정상인가요?',
+    a: '연간 주택분 재산세액이 20만원 이하면 조례에 따라 7월에 전액을 한 번에 부과하고 9월 고지가 없습니다. 20만원을 넘으면 7월과 9월에 절반씩 나뉘어 부과됩니다. 납부기간은 7월 16일~31일, 9월 16일~30일입니다.',
+  },
+  {
+    q: '계산 결과보다 고지서 금액이 조금 많습니다.',
+    a: '고지서에는 재산세 본세, 도시지역분, 지방교육세 외에 지역자원시설세(소방분)가 함께 찍힙니다. 지역자원시설세는 공시가격이 아니라 지자체가 별도로 산정한 건축물 부분 시가표준액을 기준으로 하므로 공시가격만으로는 계산할 수 없어 이 계산기에서는 제외했습니다. 또한 지자체가 조례로 도시지역분 세율을 0.23%까지 달리 정할 수 있습니다.',
+  },
+];
+---
+
+<ToolPage
+  slug="property-tax-calculator"
+  title="재산세 계산기 - 아파트 공시가격으로 세율·공정시장가액비율 자동 계산"
+  description="아파트 공시가격을 입력하면 주택 재산세와 도시지역분·지방교육세를 즉시 계산합니다. 1세대 1주택 특례세율과 공정시장가액비율 43~45%가 자동 적용됩니다."
+  relatedBlogPost={{
+    url: '/blog/samsung-woori-property-tax-card-installment',
+    title: '삼성카드 재산세 무이자할부 12개월? 카드사별 실제 무이자 구간 비교',
+  }}
+>
+  <PropertyTaxCalculatorWidget client:load />
+
+  <section class="tool-faq">
+    <h2>재산세는 이렇게 계산됩니다</h2>
+    <ol class="tool-steps">
+      <li><strong>과세표준</strong> = 공시가격 × 공정시장가액비율 (1주택 43~45%, 그 외 60%)</li>
+      <li><strong>재산세 본세</strong> = 과세표준 × 세율 − 누진공제 (1주택 9억원 이하는 특례세율)</li>
+      <li><strong>도시지역분</strong> = 과세표준 × 0.14%</li>
+      <li><strong>지방교육세</strong> = 재산세 본세 × 20% (도시지역분은 제외하고 계산)</li>
+    </ol>
+
+    <h2>주택 재산세 세율표</h2>
+    <div class="tool-table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>과세표준</th>
+            <th>표준세율</th>
+            <th>1주택 특례세율<br /><small>공시가격 9억원 이하</small></th>
+            <th>누진공제</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>6천만원 이하</td><td>0.1%</td><td>0.05%</td><td>—</td></tr>
+          <tr><td>6천만원~1.5억원</td><td>0.15%</td><td>0.1%</td><td>3만원</td></tr>
+          <tr><td>1.5억원~3억원</td><td>0.25%</td><td>0.2%</td><td>18만원</td></tr>
+          <tr><td>3억원 초과</td><td>0.4%</td><td>0.35%</td><td>63만원</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>자주 묻는 질문</h2>
+    {faqs.map((faq) => (
+      <details class="tool-faq-item">
+        <summary>{faq.q}</summary>
+        <p>{faq.a}</p>
+      </details>
+    ))}
+
+    <p class="tool-faq-note">
+      이 계산기는 지방세법에 따른 예상 세액을 산출합니다. 지역자원시설세는 포함되지 않으며,
+      지자체 조례에 따라 도시지역분 세율이 달라질 수 있어 실제 고지 세액과 차이가 날 수 있습니다.
+      정확한 세액은 위택스나 관할 지자체에서 확인하세요.
+    </p>
+  </section>
+
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.q,
+        acceptedAnswer: { '@type': 'Answer', text: faq.a },
+      })),
+    })}
+  />
+</ToolPage>
+
+<style>
+  .tool-faq {
+    margin-top: 3rem;
+  }
+
+  .tool-faq h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 2.5rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .tool-steps {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: #374151;
+    line-height: 1.8;
+  }
+
+  .tool-steps strong {
+    color: #1a1a1a;
+  }
+
+  .tool-table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tool-table-scroll table {
+    width: 100%;
+    min-width: 420px;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .tool-table-scroll th,
+  .tool-table-scroll td {
+    padding: 0.7rem 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+  }
+
+  .tool-table-scroll th {
+    background: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.85rem;
+  }
+
+  .tool-table-scroll th small {
+    font-weight: 400;
+    color: #9ca3af;
+  }
+
+  .tool-faq-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 0.6rem;
+    background: #ffffff;
+  }
+
+  .tool-faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #1a1a1a;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .tool-faq-item summary::marker {
+    color: #667eea;
+  }
+
+  .tool-faq-item p {
+    margin: 0.75rem 0 0;
+    color: #4b5563;
+    line-height: 1.75;
+    font-size: 0.92rem;
+  }
+
+  .tool-faq-note {
+    margin-top: 2rem;
+    padding: 1rem 1.15rem;
+    background: #f9fafb;
+    border-left: 3px solid #d1d5db;
+    border-radius: 6px;
+    color: #6b7280;
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+</style>
