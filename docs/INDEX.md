@@ -16,6 +16,7 @@
 - `snapshots/naver-search/YYYY-MM-DD.md` — 네이버 서치 어드바이저 스냅샷 (키워드 + 페이지 TOP 30 + 직전 대비 변화 + 발견). 2026-05-18부터 마크다운, 그 이전은 PNG로 보존.
 - `experiments/YYYY-MM-DD-{name}.md` — 발행 실험 가설·예측·측정·결론. 새 글 발행 시 가설 문서 추가, 측정 사이클마다 결과 기록 후 `content-strategy.md`의 승리 패턴/폐기된 가설 섹션에 반영.
   - [experiments/2026-07-17-property-tax-seasonal.md](./experiments/2026-07-17-property-tax-seasonal.md) — 재산세 시즌 키워드 테스트 + 도구/글 동시 진입. **관공서 도메인 카테고리 벽** 발견(정보성 축 전멸, 브랜드명 붙으면 열림) + 문서수 127건이 기회가 아니라 경고였던 사례. **7/31 측정 필수 — 관측 창 2주**.
+  - [experiments/2026-07-18-volume-vs-sideeffect-bet.md](./experiments/2026-07-18-volume-vs-sideeffect-bet.md) — 요리 볼륨(초당옥수수 삶는법) vs 부작용 패턴(세포랩 부작용) **정면 대결 발행**. 사용자가 "다 발행해 결과로 검증" 선택. 볼륨과 패턴 정합 중 뭐가 클릭으로 환산되는지 A/B 실측. **8/1 측정 — 옥수수는 시즌 후반이라 창 짧음**.
 
 측정 루프 2주마다 추가. 기존 파일은 지우지 말고 누적해서 diff 가능하게 유지.
 
