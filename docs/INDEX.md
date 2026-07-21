@@ -19,6 +19,7 @@
   - [experiments/2026-07-17-property-tax-seasonal.md](./experiments/2026-07-17-property-tax-seasonal.md) — 재산세 시즌 키워드 테스트 + 도구/글 동시 진입. **관공서 도메인 카테고리 벽** 발견(정보성 축 전멸, 브랜드명 붙으면 열림) + 문서수 127건이 기회가 아니라 경고였던 사례. **7/31 측정 필수 — 관측 창 2주**.
   - [experiments/2026-07-18-volume-vs-sideeffect-bet.md](./experiments/2026-07-18-volume-vs-sideeffect-bet.md) — 요리 볼륨(초당옥수수 삶는법) vs 부작용 패턴(세포랩 부작용) **정면 대결 발행**. 사용자가 "다 발행해 결과로 검증" 선택. 볼륨과 패턴 정합 중 뭐가 클릭으로 환산되는지 A/B 실측. **8/1 측정 — 옥수수는 시즌 후반이라 창 짧음**.
   - [experiments/2026-07-19-summer-appliance-senior-seed.md](./experiments/2026-07-19-summer-appliance-senior-seed.md) — 여름 가전 2편(제습기 10리터 · 선풍기 냉감조끼) 발행. **`senior-shopping` 시드("오늘의 키워드")의 첫 산출** — 시드 경로 유효성 + 시즌 피크 타이밍 + "오해 해소형" 공통 앵글 검증. **8/2 측정 — 시즌형, 여름 내 유효**.
+  - [experiments/2026-07-21-senior-gardening-game-keyword-test.md](./experiments/2026-07-21-senior-gardening-game-keyword-test.md) — 플럼바고(첫 원예 글) + 블루베리 농장 효율 2편. **핵심: 블루베리 농장 효율은 메이플스토리 게임 검색어(점수 99.4·경쟁 0.06은 커뮤니티 트래픽 착시) — 검색의도에 맞춘 게임 공략 글로 발행해, 인벤·에펨 등 커뮤니티가 점유한 SERP를 신생 블로그가 뚫는지 실측**. senior-shopping 시드의 원예 확장도 겸증. **8/4 측정**.
 
 측정 루프 2주마다 추가. 기존 파일은 지우지 말고 누적해서 diff 가능하게 유지.
 
