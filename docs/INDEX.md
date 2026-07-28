@@ -21,6 +21,7 @@
   - [experiments/2026-07-19-summer-appliance-senior-seed.md](./experiments/2026-07-19-summer-appliance-senior-seed.md) — 여름 가전 2편(제습기 10리터 · 선풍기 냉감조끼) 발행. **`senior-shopping` 시드("오늘의 키워드")의 첫 산출** — 시드 경로 유효성 + 시즌 피크 타이밍 + "오해 해소형" 공통 앵글 검증. **8/2 측정 — 시즌형, 여름 내 유효**.
   - [experiments/2026-07-27-tigerbean-sunstick-cluster.md](./experiments/2026-07-27-tigerbean-sunstick-cluster.md) — 호랑이콩 2편(삶기·보관법) + 썬스틱 2편(다이소·오브제). **핵심: `daiso-sunstick`은 식약처 조사가 진행 중인 SPF 미달 논란을 "미결" 상태 그대로 중립 정리한 첫 글 — 결론 발표 시 즉시 본문 갱신이 필요한 유지비가 있다.** 검색량 최대 후보(호랑이콩 심는시기 2,600)를 시즌 밖이라 버린 판단, 워싱소다 4편째를 자기잠식으로 버린 판단도 함께 검증. **8/10 측정, 호랑이콩은 9월 수확기 재상승까지 관측 창 연장**.
   - [experiments/2026-07-21-senior-gardening-game-keyword-test.md](./experiments/2026-07-21-senior-gardening-game-keyword-test.md) — 플럼바고(첫 원예 글) + 블루베리 농장 효율 2편. **핵심: 블루베리 농장 효율은 메이플스토리 게임 검색어(점수 99.4·경쟁 0.06은 커뮤니티 트래픽 착시) — 검색의도에 맞춘 게임 공략 글로 발행해, 인벤·에펨 등 커뮤니티가 점유한 SERP를 신생 블로그가 뚫는지 실측**. senior-shopping 시드의 원예 확장도 겸증. **8/4 측정**.
+  - [experiments/2026-07-28-unjudged-candidate-batch.md](./experiments/2026-07-28-unjudged-candidate-batch.md) — 쿠쿠 압력밥솥 3인용 + 헤라 블랙쿠션. **핵심 두 가지: ① 써본 적 없는 화장품을 "후기 출처별 반복 패턴 집계 → 선택 기준 도출"로 쓸 수 있는가 — 미사용 큐레이션 톤을 체험 후기 선호가 가장 강한 커머스 키워드에 처음 적용. ② "오늘의 키워드" 상위 노출 ≠ 판정 통과** — 추천 10개 중 6개가 judge 미실행 상태로 점수 순 노출됐고, 직접 judge를 돌리자 점수 3위 `자두 효능`이 ⛔로 뒤집혔다(자기잠식·시드 오염도 미필터). **8/11 측정**.
 
 측정 루프 2주마다 추가. 기존 파일은 지우지 말고 누적해서 diff 가능하게 유지.
 
