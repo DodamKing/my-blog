@@ -6,6 +6,7 @@
 
 - [content-strategy.md](./content-strategy.md) — 콘텐츠 방향, 승리 패턴, 안티 패턴, 측정 루프. 새 글 기획 전 반드시 확인.
 - [research-backlog.md](./research-backlog.md) — 다음 조사 키워드 후보 + 진행 상태 추적. **최상단 "⚡ 판정 완료 큐"가 실사용 진입점** — judge ✅ 를 받고 아직 안 쓴 키워드, 재판정 금지 ⛔ 목록, 미확장 시드가 표로 있다. "오늘의 키워드"에 쓸 게 없거나 주말에 바로 쓰고 싶을 때 여기서 꺼낸다.
+- [keyword-recommender-feedback.md](./keyword-recommender-feedback.md) — **"오늘의 키워드" 추천기 로직 개선 피드백**. 실측 적중률(07-30 기준 10개 중 1개) + 구조적 원인 3가지(판정 이력 미보유·쇼핑 SERP 미구분·볼륨 미환산) + 우선순위별 수정 제안. 추천 목록을 받았을 때, 그리고 도구를 고칠 때 진입점.
 - [seo-recovery-plan.md](./seo-recovery-plan.md) — 구글 색인 회복 계획 (About 페이지 부재 등 구조 문제 진단 + Phase 1~3 복구 단계). 색인 이슈 관련 논의 시 먼저 확인.
 - [posts-ledger.md](./posts-ledger.md) — **자동 생성** 전체 글 목록 (카테고리별). 새 키워드 기획 시 의미 중복 검사 용도. 직접 수정 금지.
 - [monetization-pivot-backlog.md](./monetization-pivot-backlog.md) — **수익화 도구 피벗 실행 백로그 + 진행 상태**. 다음 세션 픽업 포인트. 계산기 빌드 큐·키워드 검증 결과·목표 프레이밍·다음 액션.
@@ -29,5 +30,5 @@
 
 ## 관련 파이프라인 파일
 
-- `../agents/01-keyword-strategist.md` — 키워드 단계의 하드 필터는 content-strategy.md 에 따른다.
+- `../agents/01-keyword-strategist.md` — 키워드 단계의 하드 필터는 content-strategy.md 에 따른다. **발행 하한(기대클릭 300)은 3축 동적 판단보다 우선** — 2026-07-30 축 2 전면 개정(문서수 단독 거절 폐지).
 - `../CLAUDE.md` — 프로젝트 전반 규칙.
