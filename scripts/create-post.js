@@ -18,6 +18,7 @@
  *    --category     health | tech | finance | other | 1 | 2 | 3 | 4. 생략 시 "tech"
  *    --description  설명. 생략 시 "temp"
  *    --lang         ko | en. 생략 시 "ko"
+ *    --target       발행 시 노린 키워드. 2주·4주 뒤 1면 진입 검증에 쓴다 (docs/keyword-algorithm.md)
  */
 
 import fs from 'fs';
@@ -42,14 +43,18 @@ process.argv.slice(2).forEach(arg => {
 });
 const isBatchMode = Boolean(argMap.slug);
 
-function buildTemplate({ title, description, date, category, lang }) {
+function buildTemplate({ title, description, date, category, lang, targetKeyword }) {
+  // targetKeyword: 발행 시 노린 키워드. 2주·4주 뒤 1면 진입 검증(serp-audit.mjs)의 입력이다.
+  // 기록하지 않으면 사후 검증이 불가능하다 — docs/keyword-algorithm.md
+  const target = targetKeyword ? `
+targetKeyword: '${targetKeyword}'` : '';
   return `---
 title: '${title}'
 description: '${description}'
 pubDate: ${date}
 heroImage: './images/hero.webp'
 category: '${category}'
-lang: '${lang}'
+lang: '${lang}'${target}
 ---
 
 ## 쿠팡 링크 예시
@@ -75,7 +80,7 @@ import CoupangLink from '../../../components/CoupangLink.astro';
 `;
 }
 
-function writePost({ slug, title, description, category, lang }) {
+function writePost({ slug, title, description, category, lang, targetKeyword }) {
   const blogDir = path.join(__dirname, '..', 'src', 'content', 'blog', slug);
   const imagesDir = path.join(blogDir, 'images');
   const date = new Date().toISOString().split('T')[0];
@@ -83,7 +88,7 @@ function writePost({ slug, title, description, category, lang }) {
   fs.mkdirSync(blogDir, { recursive: true });
   fs.mkdirSync(imagesDir, { recursive: true });
 
-  const template = buildTemplate({ title, description, date, category, lang });
+  const template = buildTemplate({ title, description, date, category, lang, targetKeyword });
   fs.writeFileSync(path.join(blogDir, 'index.mdx'), template);
 
   // 글 목록 자동 갱신
@@ -121,8 +126,8 @@ function runBatch(args) {
     process.exit(1);
   }
 
-  writePost({ slug, title, description, category, lang });
-  console.log(`✅ ${slug} (${category}) 생성 완료`);
+  writePost({ slug, title, description, category, lang, targetKeyword: args.target });
+  console.log(`✅ ${slug} (${category})${args.target ? ` · target="${args.target}"` : ''} 생성 완료`);
 }
 
 // ========================================

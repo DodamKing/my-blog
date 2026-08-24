@@ -1,0 +1,432 @@
+[
+  {
+    "slug": "persinin-body-wash",
+    "date": "2026-08-11",
+    "title": "퍼시닌 바디워시, 단감 바디워시와 뭐가 다른가 — 감 추출물 2배와 실제 지불 가격",
+    "kw": "퍼시닌 바디워시",
+    "rank": null,
+    "sampled": 10,
+    "v": 38230,
+    "d": 423
+  },
+  {
+    "slug": "milbon-hair-dye",
+    "date": "2026-07-29",
+    "title": "밀본 염색약, 1제만 사면 염색이 안 됩니다 — 산화제·조합 기준 정리",
+    "kw": "밀본 염색약",
+    "rank": null,
+    "sampled": 11,
+    "v": 32680,
+    "d": 39330
+  },
+  {
+    "slug": "triconix-tricox-shampoo",
+    "date": "2026-08-20",
+    "title": "이시언 샴푸, 이시언이 만든 게 아닙니다 — 트리코닉스 트리코엑스 정체와 두 종류 구분법",
+    "kw": "이시언 샴푸",
+    "rank": null,
+    "sampled": 14,
+    "v": 31720,
+    "d": 542
+  },
+  {
+    "slug": "returnity-yulmu-pack",
+    "date": "2026-08-18",
+    "title": "리터니티 율무팩, 주 1~2회입니다 — 후기마다 다른 사용법과 120g 가격·200g 구분법",
+    "kw": "리터니티 율무팩",
+    "rank": null,
+    "sampled": 11,
+    "v": 28250,
+    "d": 1544
+  },
+  {
+    "slug": "plantar-fasciitis-insole",
+    "date": "2026-07-31",
+    "title": "족저근막염 깔창, 맞춤 26만원이 기성품에 진 비교가 있습니다",
+    "kw": "족저근막염 깔창",
+    "rank": null,
+    "sampled": 12,
+    "v": 18600,
+    "d": 78509
+  },
+  {
+    "slug": "hair-dye-stain-removal",
+    "date": "2026-07-29",
+    "title": "염색약 지우는법 — 피부·얼굴·옷·장판, 묻은 자리마다 정답이 다릅니다",
+    "kw": "염색약 지우는법",
+    "rank": null,
+    "sampled": 20,
+    "v": 10480,
+    "d": 11708
+  },
+  {
+    "slug": "ballop-acupressure-slipper",
+    "date": "2026-07-31",
+    "title": "밸롭 지압슬리퍼, 하루 3분입니다 — 종일 신는 실내화가 아니에요",
+    "kw": "밸롭 지압슬리퍼",
+    "rank": null,
+    "sampled": 12,
+    "v": 8430,
+    "d": 9541
+  },
+  {
+    "slug": "daiso-hair-dye",
+    "date": "2026-07-29",
+    "title": "다이소 염색약, 만드는 곳은 LG생활건강·애경인데 왜 5,000원일까",
+    "kw": "다이소 염색약",
+    "rank": null,
+    "sampled": 10,
+    "v": 7800,
+    "d": 18947
+  },
+  {
+    "slug": "haskap-berry-seedling",
+    "date": "2026-08-04",
+    "title": "하스카프베리 묘목, 한 그루만 사면 열매가 안 달립니다 — 가격·구매처 정리",
+    "kw": "하스카프베리 묘목",
+    "rank": null,
+    "sampled": 10,
+    "v": 7330,
+    "d": 1367
+  },
+  {
+    "slug": "cepolab-biogenic-lineup",
+    "date": "2026-08-15",
+    "title": "세포랩 바이오제닉, 공식몰 99,000원이 오픈마켓엔 48,190원 — 라인업 6종 가격 정리",
+    "kw": "세포랩 바이오제닉",
+    "rank": null,
+    "sampled": 10,
+    "v": 6970,
+    "d": 7487
+  },
+  {
+    "slug": "ollenolshot-nmn-formula",
+    "date": "2026-08-10",
+    "title": "올레놀샷 NMN 포뮬러, 올레톤샷과 한 글자 차이입니다 — 15ml 앰플 가격·구입처 정리",
+    "kw": "올레놀샷 NMN 포뮬러",
+    "rank": null,
+    "sampled": 10,
+    "v": 5920,
+    "d": 135
+  },
+  {
+    "slug": "cuckoo-rice-cooker-3-person",
+    "date": "2026-07-28",
+    "title": "쿠쿠 압력밥솥 3인용, 6인용보다 비쌉니다 — 그래도 맞는 사람은 따로 있어요",
+    "kw": "쿠쿠 압력밥솥 3인용",
+    "rank": null,
+    "sampled": 10,
+    "v": 4130,
+    "d": 29420
+  },
+  {
+    "slug": "jsoop-dyeing-shampoo",
+    "date": "2026-08-15",
+    "title": "제이숲 염색샴푸, 사실 샴푸가 아닙니다 — 커버업 새치 염색 300ml 5분 사용법·가격 정리",
+    "kw": "제이숲 염색샴푸",
+    "rank": null,
+    "sampled": 11,
+    "v": 2230,
+    "d": 3956
+  },
+  {
+    "slug": "brushcutter-blade-line-replacement",
+    "date": "2026-08-03",
+    "title": "예초기 줄날 교체법 — 줄통 교체부터 금속날 교체법까지",
+    "kw": "예초기 줄날 교체법",
+    "rank": null,
+    "sampled": 20,
+    "v": 870,
+    "d": 1143
+  },
+  {
+    "slug": "dambaekharu-omega3-1000",
+    "date": "2026-08-04",
+    "title": "담백하루 오메가3 1000, 이름에 1000이 붙은 제품이 두 개입니다 — 초임계 알티지 고르는 법",
+    "kw": "담백하루 오메가3 1000",
+    "rank": null,
+    "sampled": 20,
+    "v": 280,
+    "d": 653
+  },
+  {
+    "slug": "cuckoo-service-center-location",
+    "date": "2026-07-28",
+    "title": "쿠쿠 서비스센터 위치 찾기 — 이름만 보고 가면 헛걸음합니다",
+    "kw": "쿠쿠 서비스센터 위치 찾기",
+    "rank": null,
+    "sampled": 11,
+    "v": 10,
+    "d": 3751
+  },
+  {
+    "slug": "cuckoo-water-purifier-cold-water-lukewarm",
+    "date": "2026-07-28",
+    "title": "쿠쿠 정수기 냉수 미지근할 때 — 4~10℃면 정상입니다",
+    "kw": "쿠쿠 정수기 냉수 미지근할 때",
+    "rank": null,
+    "sampled": 20,
+    "v": 10,
+    "d": 1013
+  },
+  {
+    "slug": "hera-sunscreen-comparison",
+    "date": "2026-08-03",
+    "title": "헤라 썬크림 뭘 사야 하나 — 헤라톤업선크림 vs UV프로텍터, 자차 방식부터 다릅니다",
+    "kw": "헤라 썬크림 뭘 사야 하나",
+    "rank": null,
+    "sampled": 20,
+    "v": 10,
+    "d": 1857
+  },
+  {
+    "slug": "meditold-body-wash",
+    "date": "2026-08-11",
+    "title": "메디톨드 바디워시 어디서 사야 싼가 — 같은 500ml가 개당 22,470원에서 48,620원까지",
+    "kw": "메디톨드 바디워시 어디서 사야 싼가",
+    "rank": 1,
+    "sampled": 19,
+    "v": 10,
+    "d": 0
+  },
+  {
+    "slug": "loreal-hair-dye",
+    "date": "2026-08-18",
+    "title": "로레알 염색약 6개 라인 차이 — 색상 번호 읽는 법과 새치용 고르는 기준",
+    "kw": "로레알 염색약 6개 라인 차이",
+    "rank": 1,
+    "sampled": 16,
+    "v": 10,
+    "d": 174
+  },
+  {
+    "slug": "nizoral-back-acne-pharmacy-price",
+    "date": "2026-08-20",
+    "title": "니조랄 등드름에 써도 되나 — 니조랄 가격, 니조랄 샴푸는 국내에서 2%입니다",
+    "kw": "니조랄 등드름에 써도 되나",
+    "rank": 3,
+    "sampled": 20,
+    "v": 10,
+    "d": 168
+  },
+  {
+    "slug": "ifam-baby-room",
+    "date": "2026-08-22",
+    "title": "아이팜 베이비룸 버치는 원목이 아닙니다 — ㄷ자로 놓으면 흔들리는 이유까지",
+    "kw": "아이팜 베이비룸 버치는 원목이 아닙니다",
+    "rank": 2,
+    "sampled": 20,
+    "v": 10,
+    "d": 63
+  },
+  {
+    "slug": "ifam-baby-sink",
+    "date": "2026-08-22",
+    "title": "아이팜 세면대는 수도 연결이 아닙니다 — 7L 물탱크와 리폼으로 가는 이유",
+    "kw": "아이팜 세면대는 수도 연결이 아닙니다",
+    "rank": 1,
+    "sampled": 20,
+    "v": 10,
+    "d": 20
+  },
+  {
+    "slug": "daiso-creatine",
+    "date": "2026-07-17",
+    "title": "다이소 크레아틴 5,000원, 익스트림 300g이랑 뭐가 다를까",
+    "kw": "다이소 크레아틴 5,000원",
+    "rank": null,
+    "sampled": 19,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "samsung-woori-property-tax-card-installment",
+    "date": "2026-07-17",
+    "title": "삼성카드 재산세 무이자할부 12개월? 우리카드·현대·국민 회차별 실제 무이자 구간 비교",
+    "kw": "삼성카드 재산세 무이자할부 12개월 우리카드·현대·국민 회차별 실제 무이자 구간 비교",
+    "rank": null,
+    "sampled": 20,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "cepolab-side-effects",
+    "date": "2026-07-18",
+    "title": "세포랩 부작용, 진짜 있을까? 에센스·비누 반응 사례와 안전하게 쓰는 법",
+    "kw": "세포랩 부작용",
+    "rank": null,
+    "sampled": 18,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "chodang-corn-boiling",
+    "date": "2026-07-18",
+    "title": "초당옥수수 삶는법, 사실은 찌는 게 정답 — 찌기·전자레인지 시간 정리",
+    "kw": "초당옥수수 삶는법",
+    "rank": null,
+    "sampled": 13,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "cooling-fan-vest",
+    "date": "2026-07-19",
+    "title": "선풍기 냉감조끼 진짜 시원할까 — 에어컨 아닌 땀 증발 원리와 고르는 기준",
+    "kw": "선풍기 냉감조끼 진짜 시원할까",
+    "rank": null,
+    "sampled": 20,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "dehumidifier-10l",
+    "date": "2026-07-19",
+    "title": "제습기 10리터 몇 평? 하루 제습량·전기세·10L vs 12L 정리했습니다",
+    "kw": "제습기 10리터 몇 평 하루 제습량·전기세·10L vs 12L 정리했습니다",
+    "rank": null,
+    "sampled": 20,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "hongsan-garlic-price",
+    "date": "2026-07-20",
+    "title": "홍산마늘 가격, 한 접에 얼마일까 (한 접이 몇 kg인지부터)",
+    "kw": "홍산마늘 가격",
+    "rank": null,
+    "sampled": 3,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "oiji-jjalsuni-daiso",
+    "date": "2026-07-20",
+    "title": "오이지 짤순이 다이소에 있을까 — 야채탈수기로 되는지 정리",
+    "kw": "오이지 짤순이 다이소에 있을까",
+    "rank": null,
+    "sampled": 20,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "blueberry-farm-efficiency",
+    "date": "2026-07-21",
+    "title": "메이플 블루베리 농장 효율, 몇 레벨에 써야 이득일까 (279 캡 주의)",
+    "kw": "메이플 블루베리 농장 효율",
+    "rank": null,
+    "sampled": 24,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "plumbago-growing-guide",
+    "date": "2026-07-21",
+    "title": "플럼바고 키우기, 하늘색 꽃 잘 피우고 겨울나기까지",
+    "kw": "플럼바고 키우기",
+    "rank": null,
+    "sampled": 20,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "yang-hyeonjong-sunscreen",
+    "date": "2026-07-23",
+    "title": "양현종 썬크림 밈, 왜 하얗게? 야외 선크림 고르는 법까지",
+    "kw": "양현종 썬크림 밈",
+    "rank": 2,
+    "sampled": 20,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "cuckoo-water-purifier-customer-center",
+    "date": "2026-07-23",
+    "title": "쿠쿠정수기 고객센터 전화번호 — 렌탈은 1577, 일시불은 1588입니다",
+    "kw": "쿠쿠정수기 고객센터 전화번호",
+    "rank": null,
+    "sampled": 20,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "daiso-washing-soda",
+    "date": "2026-07-24",
+    "title": "다이소 워싱소다 파는 곳 - 사실은 과탄산소다, 진짜 워싱소다는 어디서",
+    "kw": "다이소 워싱소다 파는 곳 - 사실은 과탄산소다",
+    "rank": 2,
+    "sampled": 20,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "washing-soda",
+    "date": "2026-07-24",
+    "title": "워싱소다 vs 베이킹소다 vs 과탄산소다 차이 - 성분·pH·용도로 구분",
+    "kw": "워싱소다 vs 베이킹소다 vs 과탄산소다 차이 - 성분·pH·용도로 구분",
+    "rank": 2,
+    "sampled": 20,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "washing-soda-how-to-use",
+    "date": "2026-07-24",
+    "title": "워싱소다 사용법 - 세탁·청소 넣는 법과 희석 비율(물 1L:1큰술)",
+    "kw": "워싱소다 사용법 - 세탁·청소 넣는 법과 희석 비율",
+    "rank": null,
+    "sampled": 20,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "daiso-sunstick",
+    "date": "2026-07-27",
+    "title": "다이소 썬스틱 5,000원, 문제는 가격이 아니라 바르는 양입니다",
+    "kw": "다이소 썬스틱 5,000원",
+    "rank": null,
+    "sampled": 3,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "obge-sunstick",
+    "date": "2026-07-27",
+    "title": "오브제 썬스틱 4종 차이 — 포어 제로·스웨트프루프·톤업, 뭘 사야 하나",
+    "kw": "오브제 썬스틱 4종 차이",
+    "rank": 1,
+    "sampled": 20,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "tiger-bean-boiling",
+    "date": "2026-07-27",
+    "title": "호랑이콩 삶기, 팔팔 끓는 물에 20분 — 약불에 오래는 오히려 위험합니다",
+    "kw": "호랑이콩 삶기",
+    "rank": null,
+    "sampled": 20,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "tiger-bean-storage",
+    "date": "2026-07-27",
+    "title": "호랑이콩 보관법 — 깐 콩은 24시간, 마른 콩은 1년 (상태별 기준표)",
+    "kw": "호랑이콩 보관법",
+    "rank": null,
+    "sampled": 20,
+    "v": null,
+    "d": null
+  },
+  {
+    "slug": "hera-black-cushion",
+    "date": "2026-07-28",
+    "title": "헤라 블랙쿠션, 싱글 본품이 제일 손해입니다 — 호수·리필 고르는 기준",
+    "kw": "헤라 블랙쿠션",
+    "rank": null,
+    "sampled": 15,
+    "v": null,
+    "d": null
+  }
+]

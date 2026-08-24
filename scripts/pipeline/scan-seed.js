@@ -51,6 +51,10 @@ const HEAD_DOC_LIMIT = 20000; // 게이트 C (동적 판단 축 2)
 const HOMONYM_RATIO = 100; // 게이트 B
 const HOMONYM_DOCS = 500000; // 게이트 B ("제로엔 가격" doc=2,094,384)
 const DIAG_VOLUME_FLOOR = 10; // 게이트 A (하드 게이트 4)
+// 게이트 3a — 외부 슬롯 비율. 네이버 자사가 1면을 다 먹으면 문서수와 무관하게 못 들어간다.
+// 2026-08-24 실측 잠정 경계 (n=8, 성공 2). docs/keyword-algorithm.md "실측 누적" 으로 갱신할 것
+const SLOT_FLOOR = 0.4;
+const NAVER_OWNED = /(^|\.)naver\.com$/;
 const EXPAND_MIN_RESULTS = 3; // 3건 이하 = 생태계 없음
 
 // ─── 인증 ───────────────────────────────────────────────────────────
@@ -277,9 +281,48 @@ async function main() {
     return;
   }
 
-  console.log(`8️⃣  /api/judge — 최종 후보 ${candidates.length}개 (순차)`);
-  const judged = [];
+  // 7-b. 슬롯 게이트 — 검색량·문서수·경쟁률이 예측 못 하는 "들어갈 자리가 있는가"를 잰다.
+  // 2026-08-24 감사: 월검색 1,000↑ 에서 1면 진입 0/13. 문서 423건짜리에도 못 들어갔다.
+  // 상세: docs/keyword-algorithm.md
+  console.log(`7️⃣ b /api/domains — 슬롯 게이트 ${candidates.length}개`);
+  const slotPassed = [];
   for (const c of candidates) {
+    let d;
+    try {
+      d = await post('/api/domains', { keyword: c.keyword }, { timeoutMs: 60000 });
+    } catch (err) {
+      console.error(`   ❌ domains 실패 (${c.keyword}): ${err.message}`);
+      continue;
+    }
+    const ds = d.domains ?? [];
+    const sampled = d.sampled ?? 0;
+    const naver = ds.filter((x) => NAVER_OWNED.test(x.domain)).reduce((a, x) => a + x.count, 0);
+    const ratio = sampled ? (sampled - naver) / sampled : 0;
+    const top3 = ds.filter((x) => x.rank <= 3 && !NAVER_OWNED.test(x.domain)).map((x) => x.domain);
+    c.slotRatio = ratio;
+    c.top3External = top3;
+    if (ratio < SLOT_FLOOR) {
+      console.log(`   ⛔ ${c.keyword} — 외부 슬롯 ${(ratio * 100).toFixed(0)}% (기준 ${SLOT_FLOOR * 100}%)`);
+      continue;
+    }
+    // 3b 는 자동 판정하지 않는다 — "강한 도메인"은 카테고리 맥락이라 사람이 봐야 한다.
+    // judge 는 이들을 tool 버킷으로 통과시킨다(바이알루 실측). 아래 목록을 직접 읽을 것
+    console.log(`   ✅ ${c.keyword} — 외부 슬롯 ${(ratio * 100).toFixed(0)}% · rank1~3 외부: ${top3.join(', ') || '없음(네이버 독점)'}`);
+    slotPassed.push(c);
+  }
+  console.log('');
+
+  if (slotPassed.length === 0) {
+    printTable(evaluated, []);
+    log('');
+    log(`**결론: 발행 후보 없음** — 슬롯 게이트(외부 ${SLOT_FLOOR * 100}% 미만) 전멸. judge 호출하지 않음.`);
+    finish(started);
+    return;
+  }
+
+  console.log(`8️⃣  /api/judge — 최종 후보 ${slotPassed.length}개 (순차)`);
+  const judged = [];
+  for (const c of slotPassed) {
     const t = Date.now();
     let j;
     try {
