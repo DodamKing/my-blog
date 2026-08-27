@@ -13,7 +13,8 @@
     "webp": "node scripts/pipeline/convert-webp.js",
     "hero": "node scripts/pipeline/generate-hero-image.js",
     "coupang": "node scripts/pipeline/coupang-deeplink.js",
-    "scan": "node scripts/pipeline/scan-seed.js"
+    "scan": "node scripts/pipeline/scan-seed.js",
+    "factcheck": "node scripts/pipeline/fact-check.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",

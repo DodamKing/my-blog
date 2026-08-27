@@ -16,6 +16,8 @@
  *   5. 게이트 C: 헤드 키워드 제외
  *   6. /api/expand (게이트 A 통과 시드만, maxResults 30)
  *   7. /api/analyze (신규 키워드 배치)
+ *   7b. /api/domains 슬롯 게이트 (외부 슬롯 < 40% → 거절)
+ *   7c. /api/trend 계절 계수 (거절하지 않고 기대치를 깎아 정렬 — 2026-08-27 신설)
  *   8. /api/judge (최종 후보 최대 3개, 순차)
  *   9. 마크다운 표 출력
  *
@@ -54,6 +56,8 @@ const DIAG_VOLUME_FLOOR = 10; // 게이트 A (하드 게이트 4)
 // 게이트 3a — 외부 슬롯 비율. 네이버 자사가 1면을 다 먹으면 문서수와 무관하게 못 들어간다.
 // 2026-08-24 실측 잠정 경계 (n=8, 성공 2). docs/keyword-algorithm.md "실측 누적" 으로 갱신할 것
 const SLOT_FLOOR = 0.4;
+const SEASON_FLOOR = 0.7; // 계절 계수 하한 — 미만이면 기대치를 깎는다 (거절은 아님)
+const SEASON_HARD = 0.5; // 이 아래는 강한 경고
 const NAVER_OWNED = /(^|\.)naver\.com$/;
 const EXPAND_MIN_RESULTS = 3; // 3건 이하 = 생태계 없음
 
@@ -143,6 +147,31 @@ function homonymFlag(row) {
 }
 
 // ─── 메인 ───────────────────────────────────────────────────────────
+// 발행 후 노출이 시작되는 구간의 계절 계수.
+// 색인~노출에 약 2주 걸리므로(2026-08-10 실측) 지금 쓴 글은 다음 달부터 노출된다.
+// /api/trend 에 미래 값이 없으므로 전년 같은 달 패턴으로 대신한다:
+//   (전년 M+1, M+2 평균) ÷ (전년 M)
+// 2026-08-27 신설 — 추천기가 8월 검색량을 그대로 곱해 에어컨 기대클릭 1,343·1,756 을 냈으나
+// 실제 9월은 8월의 절반, 10월은 1/4 이었다. 상세: docs/research-backlog.md 2026-08-27 블록
+function seasonFactor(monthly) {
+  if (!Array.isArray(monthly)) return null;
+  const pts = monthly
+    .map((x) => ({
+      period: String(x.period ?? x.month ?? ''),
+      value: Number(x.ratio ?? x.value),
+    }))
+    .filter((x) => x.period && Number.isFinite(x.value));
+  if (pts.length < 4) return null;
+  const nowMonth = new Date().getMonth();
+  // 시계열은 오래된 달부터 온다. 이번 달과 월이 같은 첫 점 = 전년 같은 달
+  const idx = pts.findIndex((p) => new Date(p.period).getMonth() === nowMonth);
+  if (idx < 0 || idx + 2 >= pts.length) return null;
+  const base = pts[idx].value;
+  if (!base) return null;
+  const ahead = (pts[idx + 1].value + pts[idx + 2].value) / 2;
+  return { factor: ahead / base, basePeriod: pts[idx].period.slice(0, 7) };
+}
+
 const report = []; // --queue 용 라인 누적
 const log = (line = '') => {
   console.log(line);
@@ -319,6 +348,40 @@ async function main() {
     finish(started);
     return;
   }
+
+  // 7c. 계절 게이트 — 거절하지 않고 기대치를 깎아 정렬 순위를 내린다.
+  // 슬롯과 같은 취급이다: 게이트가 아니라 정렬 기준. 하드 거절은 08-20 실패 모드
+  // ("실패는 발굴이 아니라 사전 거절")를 반복할 위험이 있다.
+  console.log(`7️⃣ c /api/trend — 계절 계수 ${slotPassed.length}개`);
+  for (const c of slotPassed) {
+    let t;
+    try {
+      t = await post('/api/trend', { keyword: c.keyword }, { timeoutMs: 60000 });
+    } catch (err) {
+      console.error(`   ⚠️  trend 실패 (${c.keyword}): ${err.message} — 계절 보정 없이 진행`);
+      continue;
+    }
+    const monthly = t.monthly ?? t.results?.[0]?.monthly ?? t.data ?? t.trend ?? [];
+    const s = seasonFactor(monthly);
+    if (!s) {
+      console.log(`   ⚠️  ${c.keyword} — 계절 계수 산출 불가 (시계열 부족)`);
+      continue;
+    }
+    c.seasonFactor = s.factor;
+    const pct = (s.factor * 100).toFixed(0);
+    if (s.factor < SEASON_HARD) {
+      console.log(
+        `   ⛔ ${c.keyword} — 계절 계수 ${pct}% (${s.basePeriod} 기준 다음 2개월). ` +
+          `발행 후 노출 시점에 검색이 반토막 이하다. 기대치를 이 비율로 깎을 것`
+      );
+    } else if (s.factor < SEASON_FLOOR) {
+      console.log(`   ⚠️  ${c.keyword} — 계절 계수 ${pct}% (하강기). 기대치를 이 비율로 깎을 것`);
+    } else {
+      console.log(`   ✅ ${c.keyword} — 계절 계수 ${pct}%`);
+    }
+    await sleep(BATCH_DELAY_MS);
+  }
+  console.log('');
 
   console.log(`8️⃣  /api/judge — 최종 후보 ${slotPassed.length}개 (순차)`);
   const judged = [];
