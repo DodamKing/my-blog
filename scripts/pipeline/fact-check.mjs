@@ -367,15 +367,18 @@ function checkTargetKeyword() {
     return;
   }
   const title = fmGet('title') || '';
-  const inTitle = title.includes(tk);
+  // 검색엔진은 대소문자를 구분하지 않는다 — 영문 브랜드(AHC vs ahc)에서 오탐이 났다
+  const tkLower = tk.toLowerCase();
+  const inTitle = title.toLowerCase().includes(tkLower);
   // 본문에서 import 줄 제외
   const prose = body.replace(/^import .*$/gm, '');
-  const count = (prose.match(new RegExp(tk.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
+  const proseLower = prose.toLowerCase();
+  const count = (proseLower.match(new RegExp(tkLower.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
   if (count === 0) {
     add('error', '타겟키워드', `"${tk}" 가 본문에 0회 — 제목·description 에만 있으면 그 키워드로 안 잡힌다`);
   } else {
     // 첫 등장 위치 (앞 100단어 안인가)
-    const first = prose.indexOf(tk);
+    const first = proseLower.indexOf(tkLower);
     const head = prose.slice(0, first).split(/\s+/).length;
     if (head > 100) {
       add('warn', '타겟키워드', `"${tk}" 첫 등장이 ${head}단어째 (권장: 100단어 이내)`);
