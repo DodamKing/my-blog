@@ -297,10 +297,24 @@ async function main() {
   }
 
   // 8. judge — 최종 후보 최대 3개
+  //
+  // 2026-09-06 — 정렬 축을 기회점수에서 **문서수 오름차순**으로 바꿨다.
+  // 우리가 1면에 든 3건의 문서수가 0 / 1 / 23 이고, 못 든 것들이 135 / 423 / 542 /
+  // 1,205 / 1,235 / 5,497 / 5,615 다. 기회점수·검색량 순으로 정렬하면 문서 수십 건짜리
+  // 키워드가 목록 바닥에 깔려 한 번도 후보에 오르지 못한다 (0/22 의 구조적 원인).
+  //
+  // ⚠️ 문서수는 **정렬 기준이지 거절 기준이 아니다.** 하드 컷을 걸면 H6(사전 거절로
+  // 더 많이 잃는다)를 반복한다. 계절 계수와 같은 취급이다.
+  const docCount = (e) => e.row?.document_count ?? Number.POSITIVE_INFINITY;
   const candidates = evaluated
     .filter((e) => e.candidate)
-    .sort((a, b) => (b.row?.opportunity_score ?? 0) - (a.row?.opportunity_score ?? 0))
+    .sort((a, b) => docCount(a) - docCount(b)
+      || (b.row?.monthly_searches ?? 0) - (a.row?.monthly_searches ?? 0))
     .slice(0, JUDGE_MAX);
+  console.log('8️⃣  judge 후보 — 문서수 오름차순 (2026-09-06 변경, 기회점수 순 아님)');
+  for (const c of candidates) {
+    console.log(`   · ${c.keyword} — 문서 ${c.row?.document_count ?? '?'} · 검색 ${c.row?.monthly_searches ?? '?'}`);
+  }
 
   if (candidates.length === 0) {
     printTable(evaluated, []);
