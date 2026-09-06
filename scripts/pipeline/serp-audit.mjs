@@ -5,6 +5,12 @@
  * 발행 전 지표(judge ✅ 등)와 발행 후 결과 사이의 빠진 고리를 메운다.
  * /api/domains 가 반환하는 1면 도메인 목록에 blog.dimad.kr 이 있는지만 본다.
  *
+ * ⛔ 2026-09-06 — 진입률은 `targetKeyword` 가 frontmatter 에 있는 글로만 계산한다.
+ *    제목 역추정 키워드는 사람이 검색하지 않는 문자열이라 가짜 성공을 만든다.
+ *    08-24 감사의 "1면 진입 9편" 이 전원 역추정이었고, 키워드가
+ *    `아이팜 세면대는 수도 연결이 아닙니다` 같은 우리 글 제목 그대로였다.
+ *    역추정분은 ~ 로 표시하고 진입률 분모에서 뺀다.
+ *
  * 사용: node scripts/pipeline/serp-audit.mjs [--from=YYYY-MM-DD] [--limit=N] [--offset=N]
  */
 import fs from 'fs';
@@ -55,8 +61,20 @@ for (const p of batch) {
   console.log(`${(rank ? `${rank}위` : '  —').padStart(4)} | ${String(res.sampled ?? '').padStart(4)} | ${p.date} | ${p.exact ? '' : '~'}${p.kw} → ${p.slug}`);
   await sleep(700);
 }
-const inTop = out.filter(r => r.rank).length;
-console.log(`\n1면 진입 ${inTop}/${out.length} = ${(inTop / out.length * 100).toFixed(0)}%`);
+// 진입률은 실검색어(= frontmatter targetKeyword)만으로 낸다. 역추정분은 참고로만 표시한다.
+const real = out.filter(r => r.exact);
+const guessed = out.filter(r => !r.exact);
+const inTop = real.filter(r => r.rank).length;
+console.log(real.length
+  ? `
+1면 진입 ${inTop}/${real.length} = ${(inTop / real.length * 100).toFixed(0)}%  (targetKeyword 보유분만)`
+  : `
+1면 진입 판정 불가 — targetKeyword 를 가진 글이 0편이다`);
+if (guessed.length) {
+  const g = guessed.filter(r => r.rank).length;
+  console.log(`참고: 제목 역추정 ${guessed.length}편 중 ${g}편이 1면 — ⚠️ 실검색어가 아니므로 성공으로 세지 않는다`);
+}
+
 fs.mkdirSync('data/serp-audit', { recursive: true });
 const f = `data/serp-audit/${new Date().toISOString().slice(0, 10)}-${OFFSET}.json`;
 fs.writeFileSync(f, JSON.stringify(out, null, 2));

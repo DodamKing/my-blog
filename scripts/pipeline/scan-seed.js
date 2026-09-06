@@ -313,7 +313,11 @@ async function main() {
   // 7-b. 슬롯 게이트 — 검색량·문서수·경쟁률이 예측 못 하는 "들어갈 자리가 있는가"를 잰다.
   // 2026-08-24 감사: 월검색 1,000↑ 에서 1면 진입 0/13. 문서 423건짜리에도 못 들어갔다.
   // 상세: docs/keyword-algorithm.md
-  console.log(`7️⃣ b /api/domains — 슬롯 게이트 ${candidates.length}개`);
+  // ⚫ 2026-09-06 — 슬롯은 거절권을 잃었다. serp-audit 0/9 이고, 예초기 키워드 15개 실측에서
+  // 외부 슬롯 85·83·75·70% 인 자리에서도 우리가 전부 없었다. 슬롯은 "자리가 비었나"만 답하고
+  // "우리가 딸 수 있나"는 답하지 못한다. 이제 수치만 붙이고 아무도 떨어뜨리지 않는다.
+  // 대신 rank1~2 목록을 눈으로 보고 H8(그 의도에 정확히 답하는 네이버 블로그가 있나)을 판단할 것.
+  console.log(`7️⃣ b /api/domains — 외부 슬롯 측정 ${candidates.length}개 (참고 수치, 거절하지 않음)`);
   const slotPassed = [];
   for (const c of candidates) {
     let d;
@@ -330,13 +334,11 @@ async function main() {
     const top3 = ds.filter((x) => x.rank <= 3 && !NAVER_OWNED.test(x.domain)).map((x) => x.domain);
     c.slotRatio = ratio;
     c.top3External = top3;
-    if (ratio < SLOT_FLOOR) {
-      console.log(`   ⛔ ${c.keyword} — 외부 슬롯 ${(ratio * 100).toFixed(0)}% (기준 ${SLOT_FLOOR * 100}%)`);
-      continue;
-    }
+    // 낮은 슬롯도 떨어뜨리지 않는다 — 30% 로 거절했던 `예초기 줄날 교체법` 이 현 사이트 1위(120클릭)다.
     // 3b 는 자동 판정하지 않는다 — "강한 도메인"은 카테고리 맥락이라 사람이 봐야 한다.
     // judge 는 이들을 tool 버킷으로 통과시킨다(바이알루 실측). 아래 목록을 직접 읽을 것
-    console.log(`   ✅ ${c.keyword} — 외부 슬롯 ${(ratio * 100).toFixed(0)}% · rank1~3 외부: ${top3.join(', ') || '없음(네이버 독점)'}`);
+    const rank12 = ds.filter((x) => x.rank <= 2).map((x) => x.domain);
+    console.log(`   · ${c.keyword} — 외부 슬롯 ${(ratio * 100).toFixed(0)}% · rank1~2: ${rank12.join(', ') || '?'} · rank1~3 외부: ${top3.join(', ') || '없음(네이버 독점)'}`);
     slotPassed.push(c);
   }
   console.log('');
@@ -344,10 +346,13 @@ async function main() {
   if (slotPassed.length === 0) {
     printTable(evaluated, []);
     log('');
-    log(`**결론: 발행 후보 없음** — 슬롯 게이트(외부 ${SLOT_FLOOR * 100}% 미만) 전멸. judge 호출하지 않음.`);
+    log('**결론: 발행 후보 없음** — domains 호출이 전부 실패했다. judge 호출하지 않음.');
     finish(started);
     return;
   }
+
+  console.log('   ⚠️  위 rank1~2 를 직접 읽을 것 — 그 키워드 의도에 *정확히* 답하는 blog/cafe.naver 가 있으면 H8 상 ⛔ 다.');
+  console.log('');
 
   // 7c. 계절 게이트 — 거절하지 않고 기대치를 깎아 정렬 순위를 내린다.
   // 슬롯과 같은 취급이다: 게이트가 아니라 정렬 기준. 하드 거절은 08-20 실패 모드

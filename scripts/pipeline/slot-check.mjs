@@ -1,13 +1,19 @@
 #!/usr/bin/env node
 /**
- * 외부 슬롯 게이트 — 네이버 자사가 1면을 얼마나 먹는지 본다.
- * docs/keyword-algorithm.md 게이트 3번. 검색량·문서수·경쟁률이 예측 못 하는 진입 가능성을 잰다.
+ * 외부 슬롯 측정 — 네이버 자사가 1면을 얼마나 먹는지 본다.
+ *
+ * 2026-09-06 — 거절권 폐기. 이 수치는 진입을 예측하지 못한다.
+ *   serp-audit 0/9 이고, 예초기 키워드 15개 실측에서 외부 슬롯 85·83·75·70% 인
+ *   자리에서도 우리가 전부 없었다. 30% 로 거절했던 예초기 줄날 교체법이 현 사이트 1위(120클릭)다.
+ *   아래 통과/탈락 표시는 참고일 뿐 발행 결정 근거가 아니다.
+ *   진입 판정은 H8 — rank1~2 에 그 키워드 의도에 정확히 답하는 blog/cafe.naver 가 있는가.
+ *   → docs/hypothesis-ledger.md · docs/keyword-algorithm.md
  * 사용: node scripts/pipeline/slot-check.mjs "키워드1" "키워드2" ...
  */
 import fs from 'fs';
 const SECRET = (fs.readFileSync('.env', 'utf8').match(/^AUTH_SECRET=(.*)$/m) || [])[1].trim().replace(/^"|"$/g, '');
 const NAVER = /(^|\.)naver\.com$/;
-const THRESHOLD = 0.40; // 잠정 경계 (n=8). 실측 누적으로 고칠 것
+const THRESHOLD = 0.40; // 폐기된 경계 (2026-09-06). 표시용으로만 남긴다
 // 최소 표본 가드 (2026-09-03 신설) — 표본이 작으면 비율을 판정에 쓸 수 없다.
 // 표본이 작다는 것은 "외부가 앉을 자리 자체가 적다"는 뜻이기도 해서 작은 표본의 높은 비율이 특히 위험하다.
 // 실측 사고 3건: 도미나스 세럼 표본2→100% / 프로쉬 표본4→100% / 프로쉬 미니·라벤더 표본3→100%
@@ -23,7 +29,7 @@ for (let i = 0; i < kws.length; i += 10) {
   for (const k of (j.results || j.keywords || j.data || [])) vol.set(k.keyword, k);
   await new Promise(s => setTimeout(s, 1000));
 }
-console.log('판정 | 외부슬롯 | 샘플 | 월검색 | 문서수 | 키워드');
+console.log('참고 | 외부슬롯 | 샘플 | 월검색 | 문서수 | 키워드   (⚠️ 슬롯은 진입을 예측하지 못한다 — 2026-09-06)');
 const rows = [];
 for (const kw of kws) {
   const j = await post('/api/domains', { keyword: kw });
@@ -34,7 +40,7 @@ for (const kw of kws) {
   // 표본이 MIN_SAMPLED 미만이면 비율을 계산해도 판정에 쓰지 않는다 (통과도 거절도 아님)
   const verdict = sampled < MIN_SAMPLED ? 'unknown' : (ratio >= THRESHOLD ? 'pass' : 'fail');
   const weak = verdict === 'pass' && sampled < WEAK_SAMPLED;
-  const mark = { unknown: ' ⏸ ', pass: weak ? ' ❓ ' : ' ✅ ', fail: ' ⛔ ' }[verdict];
+  const mark = { unknown: ' ⏸ ', pass: weak ? ' ❓ ' : '높음 ', fail: '낮음 ' }[verdict];
   const shown = sampled < MIN_SAMPLED ? '?' : (ratio * 100).toFixed(0) + '%';
   rows.push({ kw, ratio, sampled, v: v.monthly_searches, d: v.document_count, verdict, weak });
   console.log(`${mark}| ${String(shown).padStart(8)} | ${String(sampled).padStart(4)} | ${String(v.monthly_searches ?? '?').padStart(6)} | ${String(v.document_count ?? '?').padStart(6)} | ${kw}`);
@@ -44,7 +50,7 @@ const byVol = (a, b) => (b.v || 0) - (a.v || 0);
 const pass = rows.filter(r => r.verdict === 'pass').sort(byVol);
 const unknown = rows.filter(r => r.verdict === 'unknown').sort(byVol);
 
-console.log(`\n통과 ${pass.length}/${rows.length} — 검색량 큰 순:`);
+console.log(`\n외부 슬롯 ${THRESHOLD*100}% 이상 ${pass.length}/${rows.length} — 검색량 큰 순 (참고 수치, 발행 근거 아님):`);
 pass.forEach(r => console.log(`  ${String(r.v ?? '?').padStart(6)} · 슬롯 ${(r.ratio * 100).toFixed(0)}%${r.weak ? ` ❓표본 ${r.sampled}` : ''} · ${r.kw}`));
 
 if (unknown.length) {
