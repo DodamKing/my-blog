@@ -41,6 +41,15 @@ const LONGTAIL_TEMPLATES = [
   { suffix: '가품', kind: 'diagnostic', pattern: '1 가품/정품 판별' },
   { suffix: '정품 확인법', kind: 'diagnostic', pattern: '1 가품/정품 판별' },
   { suffix: '차이', kind: 'diagnostic', pattern: '2 차이 비교' },
+  // 2026-09-06 추가 — 실사용·고장 축. 기존 9개가 전부 "구매 전 의심" 축이었고,
+  // 우리 최대 자산 둘이 그 축이 아니다: 예초기 120클릭은 `줄통 교환방법`(실사용·교체),
+  // 레딜 79클릭은 `목아픔`(증상). 비데 시드가 이것 때문에 오판 킬됐다 —
+  // 템플릿은 전부 월검색 10 인데 `노즐 청소` 840 / `노즐 안나옴` 540 / `물 안나옴` 480 이었다.
+  { suffix: '청소', kind: 'diagnostic', pattern: '실사용·정비' },
+  { suffix: '교체', kind: 'diagnostic', pattern: '실사용·정비' },
+  { suffix: '안나옴', kind: 'diagnostic', pattern: '실사용·고장' },
+  { suffix: '고장', kind: 'diagnostic', pattern: '실사용·고장' },
+  { suffix: '분리', kind: 'diagnostic', pattern: '실사용·정비' },
   { suffix: '구입처', kind: 'answer', pattern: '4 단일 답변형' },
   { suffix: '가격', kind: 'answer', pattern: '4 단일 답변형' },
   { suffix: '후기', kind: 'control', pattern: '안티(대조군)' },
@@ -225,7 +234,7 @@ async function main() {
     );
   }
   console.log(
-    `   → 진단 롱테일 최대 검색량 ${num(diagMax)} (기준 >${DIAG_VOLUME_FLOOR}): ${gateAPassed ? '통과' : '킬'}\n`
+    `   → 진단 롱테일 최대 검색량 ${num(diagMax)} (기준 >${DIAG_VOLUME_FLOOR}): ${gateAPassed ? '통과' : '⚠️ 미달 — 경고만, expand 진행'}\n`
   );
 
   // 5. 게이트 C 적용 + 후보 구성 (템플릿분)
@@ -235,7 +244,16 @@ async function main() {
     evaluated.push(buildEval(l.keyword, find(l.keyword), { source: '템플릿', kind: l.kind }));
   }
 
-  if (!gateAPassed) {
+  // ⚫ 2026-09-06 — 게이트 A 의 하드 킬을 제거했다.
+  //
+  // 템플릿이 전부 "구매 전 의심" 축이었는데 우리 최대 자산 둘이 그 축이 아니다
+  // (예초기 = 실사용·교체 / 레딜 = 증상). 그 템플릿 결과로 expand 를 막고 있었고,
+  // expand 는 CLAUDE.md 가 "템플릿으로 안 나오는 축을 찾는 유일한 도구" 로 규정한 호출이다.
+  // 비데 시드가 실제로 오판 킬됐다 — 템플릿 전부 10 인데 실사용 축은 410~840 이었다.
+  // H6(우리 게이트는 사전 거절로 더 많이 잃는다)의 사례이므로 경고로 강등한다.
+  //
+  // 하드 킬이 남는 곳은 expand 반환 3건 이하(생태계 없음)뿐이고, 그건 실측이지 예측이 아니다.
+  if (false) {
     printTable(evaluated, [], '게이트 A 킬 — 클러스터 전체 폐기');
     log('');
     log(
