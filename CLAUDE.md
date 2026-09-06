@@ -15,7 +15,7 @@ Astro 5, MDX, React (Islands), TypeScript, sharp (이미지 최적화)
   - Non-interactive 모드 (Claude 자동화): `npm run new -- --slug=my-post --title=제목 --category=tech --description=설명 [--lang=ko|en]` — 인자 없는 값은 기본값(`temp`/`ko`) 사용. Claude가 병렬로 여러 슬러그 생성할 때 이 모드 필수.
 - `npm run delete` — 글 삭제 스크립트 (완료 후 `docs/posts-ledger.md` 자동 갱신)
 - `npm run ledger` — `docs/posts-ledger.md` 수동 재생성 (전체 `src/content/blog/*/index.mdx` frontmatter 스캔)
-- `npm run webp` — 이미지 webp 변환 (`npm run webp -- input.png output.webp`)
+- `npm run webp` — 이미지 webp 변환 (`npm run webp -- <슬러그>`). **변환에 성공하면 `index.mdx` frontmatter 에 `heroImage` 줄을 자동으로 넣는다** (2026-09-06). 이미 있으면 건드리지 않는다 — 잘 나가는 글에 재실행해도 본문 파일이 안 바뀌어야 하기 때문
 - `npm run factcheck -- <슬러그> --note=<노트경로>` — **검토(04) 전 기계 검증.** 단가 검산·순번·노트 대조·타겟 키워드·금지 표현·MDX 파싱·내부링크·쿠팡 배치를 수초에 판정한다 (`--draft=<경로>` 로 미발행 초안도 검사 가능)
 - `node scripts/pipeline/slot-check.mjs "<키워드>" ...` — 외부 슬롯 비율 측정. ⚫ **2026-09-06 거절권 폐기 — 참고 수치이지 발행 근거가 아니다.** 진입 판정은 H8(rank1~2 에 그 의도에 정확히 답하는 blog/cafe.naver 가 있나)로 사람이 본다
 - `node scripts/pipeline/serp-audit.mjs [--from=YYYY-MM-DD]` — **발행 후 1면 진입 사후 감사.** 발행글의 `targetKeyword` 로 `/api/domains` 를 돌려 우리 도메인이 1면에 있는지 판정한다. 발행 2주·4주 뒤 실행
@@ -161,12 +161,29 @@ src/content/blog/슬러그명/
 npm run factcheck -- <슬러그> [--note=<조사노트경로>] [--draft=<초안경로>]
 ```
 
-검토(04)를 돌리기 **전에** 메인이 실행하고, 결과를 검토 프롬프트에 붙인다. 8가지를 기계 판정한다:
-표의 파생 단가 검산(`원/ml`·`10g당`) · `N번째` 순번을 노트 원문에서 세기 · 본문 금액(1,000↑)·용량이 노트에 있나 · 타겟 키워드 제목·본문 포함과 첫 등장 위치 · 법적 금지 표현 · MDX 파싱 위험 · 내부링크 404 · 쿠팡 배치.
+검토(04)를 돌리기 **전에** 메인이 실행하고, 결과를 검토 프롬프트에 붙인다. 9가지를 기계 판정한다:
+표의 파생 단가 검산(`원/ml`·`10g당`) · `N번째` 순번을 노트 원문에서 세기 · 본문 금액(1,000↑)·용량이 노트에 있나 · 타겟 키워드 제목·본문 포함과 첫 등장 위치 · 법적 금지 표현 · MDX 파싱 위험 · 내부링크 404 · 쿠팡 배치 · **히어로 이미지 유무**(2026-09-06 신설).
 
 - **회귀 케이스로 검증됐다** — `dominas-melasma-cream` 검토 전 초안의 "아데노신 42번째"를 **38번째**로 잡아낸다. 노트 요약표조차 42로 적혀 있어 **전성분 원문을 직접 세야만** 잡히는 건이다
 - ⚠️ **전성분에는 `1,2-헥산다이올` 처럼 이름 안에 콤마가 있는 성분이 섞여 있다.** 나이브하게 콤마로 자르면 그 뒤가 전부 +1 밀린다(실측: 39 vs 실제 38). 스크립트가 숫자 사이 콤마를 보호한다
 - 오늘 2편에 45건 단가 검산을 수초에 끝냈다 — 검토가 손으로 55건 세던 일이다
+
+
+#### 🖼 히어로 이미지 — 스캐폴드에 `heroImage` 를 미리 쓰지 않는다 (2026-09-06)
+
+`npm run new` 가 `heroImage: './images/hero.webp'` 를 먼저 써넣던 탓에, **이미지를 넣기 전까지 `npm run build` 가 죽었다** (Astro `image()` 가 경로를 해석하려다 `ImageNotFound`). 파이프라인 중간에 MDX 파싱을 검증할 방법이 없었다.
+
+`content.config.ts` 는 이미 `heroImage: image().optional()` 이고 `HeroImage.astro`·`BlogCard.astro`·`BlogPost.astro`(og:image)가 전부 부재를 처리한다. **줄이 없으면 빌드가 통과한다.**
+
+| 시점 | 동작 |
+|---|---|
+| `npm run new` | `heroImage` 줄을 쓰지 않는다 → 빌드 통과 |
+| 이미지 넣고 `npm run webp` | `hero.webp` 생성 + **`heroImage` 줄 자동 삽입** (`pubDate` 바로 뒤) |
+| `npm run factcheck` | `hero.webp` 없으면 **⛔** — 빌드가 하던 알림이 여기로 옮겨왔다 |
+
+⛔ **`npm run webp` 는 `heroImage` 가 이미 있으면 `index.mdx` 를 건드리지 않는다.** 잘 나가는 글에 재실행해도 본문이 바뀌면 안 된다(IndexNow 자동 재색인 → redill 붕괴 재현 경로). 회귀 검증으로 md5 불변을 확인했다.
+
+⚠️ **알림이 빌드에서 factcheck 로 옮겨간 것이지 사라진 게 아니다.** factcheck 를 건너뛰고 발행하면 히어로 없는 글이 나갈 수 있다.
 
 각 단계는 서브에이전트(Agent tool)로 실행한다. **단 4단계(`factcheck`)는 스크립트이고 메인이 직접 돌린다.**
 각 단계 에이전트는 **결과만 반환**하고 파일 저장을 시도하지 않는다. 파일 저장은 메인 에이전트가 한다.

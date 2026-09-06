@@ -453,6 +453,38 @@ function checkCoupang() {
   if (dup.length) add('warn', '쿠팡', `같은 딥링크가 2회 이상 — 매칭이 같은 상품으로 걸렸을 수 있다`);
 }
 
+
+// 2026-09-06 신설 — 히어로 이미지 게이트.
+// npm run new 가 heroImage 줄을 더 이상 쓰지 않으므로(그 줄이 있는데 파일이 없으면 빌드가 죽는다)
+// "이미지를 안 넣었다"는 알림이 빌드에서 여기로 옮겨왔다. 발행 직전이 맞는 타이밍이다.
+function checkHeroImage() {
+  if (draftArg) return; // 미발행 초안은 폴더가 없을 수 있다
+  const dir = join('src', 'content', 'blog', slug, 'images');
+  const heroPath = join(dir, 'hero.webp');
+  const hasFile = existsSync(heroPath);
+  const hasField = /^heroImage:/m.test(fm);
+
+  if (!hasFile && !hasField) {
+    add('error', '히어로', 'hero.webp 가 없다 — 이미지를 images/ 에 넣고 npm run webp -- ' + slug);
+    return;
+  }
+  if (hasFile && !hasField) {
+    add('error', '히어로', 'hero.webp 는 있는데 frontmatter 에 heroImage 가 없다 — npm run webp -- ' + slug + ' 재실행');
+    return;
+  }
+  if (!hasFile && hasField) {
+    add('error', '히어로', 'frontmatter 에 heroImage 가 있는데 파일이 없다 — 이 상태로는 빌드가 실패한다');
+    return;
+  }
+  // 남은 원본(png/jpg)이 있으면 변환이 덜 끝난 것이다
+  const leftovers = existsSync(dir)
+    ? readdirSync(dir).filter((f) => /\.(png|jpe?g)$/i.test(f))
+    : [];
+  if (leftovers.length) {
+    add('warn', '히어로', '변환 안 된 원본이 남아 있다 — ' + leftovers.join(', '));
+  }
+}
+
 // ── 실행 ────────────────────────────────────────────────────────────
 const rates = checkRates();
 const ord = checkOrdinals();
@@ -462,6 +494,7 @@ checkBanned();
 checkMdx();
 checkInternalLinks();
 checkCoupang();
+checkHeroImage();
 
 const name = draftArg ? draftArg : slug;
 console.log(`\n📋 fact-check — ${name}`);

@@ -52,7 +52,6 @@ targetKeyword: '${targetKeyword}'` : '';
 title: '${title}'
 description: '${description}'
 pubDate: ${date}
-heroImage: './images/hero.webp'
 category: '${category}'
 lang: '${lang}'${target}
 ---
