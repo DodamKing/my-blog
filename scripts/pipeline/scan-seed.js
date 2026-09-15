@@ -66,6 +66,7 @@ const DIAG_VOLUME_FLOOR = 10; // 게이트 A (하드 게이트 4)
 // 2026-08-24 실측 잠정 경계 (n=8, 성공 2). docs/keyword-algorithm.md "실측 누적" 으로 갱신할 것
 const SLOT_FLOOR = 0.4;
 const SEASON_FLOOR = 0.7; // 계절 계수 하한 — 미만이면 기대치를 깎는다 (거절은 아님)
+const SEASON_BASE_MIN = 0.1; // 전년 M 이 창 최댓값의 이 비율 미만이면 계수 판정 불가 (분모 바닥 가드, 2026-09-15)
 const SEASON_HARD = 0.5; // 이 아래는 강한 경고
 const NAVER_OWNED = /(^|\.)naver\.com$/;
 const EXPAND_MIN_RESULTS = 3; // 3건 이하 = 생태계 없음
@@ -178,6 +179,13 @@ function seasonFactor(monthly) {
   const base = pts[idx].value;
   if (!base) return null;
   const ahead = (pts[idx + 1].value + pts[idx + 2].value) / 2;
+  // 절대값 가드 (2026-09-15) — 분모가 바닥이면 비율이 무의미하다.
+  // `선풍기 청소방법` 은 전년 9·10·11 월이 1·1·2 라 계수 150% 로 통과 신호를 냈지만
+  // 26-08 이 100 이라 노출 시점 검색이 1/100 이었다. 전년 M 이 창 최댓값의 10% 미만이면 계수를 쓰지 않는다.
+  const peak = Math.max(...pts.map((p) => p.value));
+  if (peak > 0 && base / peak < SEASON_BASE_MIN) {
+    return { factor: null, floor: true, baseShare: base / peak, basePeriod: pts[idx].period.slice(0, 7) };
+  }
   return { factor: ahead / base, basePeriod: pts[idx].period.slice(0, 7) };
 }
 
@@ -402,6 +410,14 @@ async function main() {
     const s = seasonFactor(monthly);
     if (!s) {
       console.log(`   ⚠️  ${c.keyword} — 계절 계수 산출 불가 (시계열 부족)`);
+      continue;
+    }
+    if (s.floor) {
+      console.log(
+        `   ⏸ ${c.keyword} — 계절 계수 판정 불가: 전년 ${s.basePeriod} 이 창 최댓값의 ` +
+          `${(s.baseShare * 100).toFixed(1)}% (분모 바닥). 비율이 무의미하니 곡선을 직접 볼 것`
+      );
+      await sleep(BATCH_DELAY_MS);
       continue;
     }
     c.seasonFactor = s.factor;
