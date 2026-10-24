@@ -15,7 +15,8 @@
     "coupang": "node scripts/pipeline/coupang-deeplink.js",
     "scan": "node scripts/pipeline/scan-seed.js",
     "harvest": "node scripts/pipeline/harvest-seeds.mjs",
-    "factcheck": "node scripts/pipeline/fact-check.mjs"
+    "factcheck": "node scripts/pipeline/fact-check.mjs",
+    "risers": "node scripts/pipeline/shopping-risers.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
