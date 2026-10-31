@@ -16,7 +16,8 @@
     "scan": "node scripts/pipeline/scan-seed.js",
     "harvest": "node scripts/pipeline/harvest-seeds.mjs",
     "factcheck": "node scripts/pipeline/fact-check.mjs",
-    "risers": "node scripts/pipeline/shopping-risers.mjs"
+    "risers": "node scripts/pipeline/shopping-risers.mjs",
+    "traffic": "node scripts/pipeline/ga4-traffic.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",

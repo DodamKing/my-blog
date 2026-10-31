@@ -27,3 +27,5 @@ pnpm-debug.log*
 
 # keyword data (temp)
 data/keywords/*.json
+# secrets (GA4 service account key 등)
+.secrets/

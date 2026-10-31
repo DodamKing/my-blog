@@ -20,6 +20,7 @@ Astro 5, MDX, React (Islands), TypeScript, sharp (이미지 최적화)
 - `node scripts/pipeline/slot-check.mjs "<키워드>" ...` — 외부 슬롯 비율 측정. ⚫ **2026-09-06 거절권 폐기 — 참고 수치이지 발행 근거가 아니다.** 진입 판정은 H8(rank1~2 에 그 의도에 정확히 답하는 blog/cafe.naver 가 있나)로 사람이 본다
 - `node scripts/pipeline/serp-audit.mjs [--from=YYYY-MM-DD]` — **발행 후 1면 진입 사후 감사.** 발행글의 `targetKeyword` 로 `/api/domains` 를 돌려 우리 도메인이 1면에 있는지 판정한다. 발행 2주·4주 뒤 실행
 - `npm run scan -- <시드>` — 시드 키워드 스캔 (`scripts/pipeline/scan-seed.js`). keyword-radar API 호출 순서(analyze → expand → analyze → judge)를 자동 실행해 발행 후보를 추린다. **읽기 전용 조사 도구** — 파일을 쓰지 않는다. 상세는 아래 "키워드 데이터" 참조
+- `npm run traffic` — **GA4 글별 트래픽** (2026-10-31 신설). 서치 어드바이저 캡처 없이 "어느 글이 언제 올랐나"를 본다. 최근 N일 vs 직전 기간 증가폭 순 · `--naver` · `--sources` · `--daily=<슬러그>`. 검색어는 안 나온다(서치 어드바이저로). 셋업·사용법: [`docs/setup/ga4-api.md`](docs/setup/ga4-api.md)
 - `GLOBAL_MODULES="$(npm root -g)" npm run risers` — **레딜식 실험 시드 공급기** (2026-10-25 신설). 네이버 쇼핑인사이트 8개 분야 TOP200 을 최근 7일 vs 5~9주 전으로 비교해 **신규 진입·급상승 검색어**를 뽑는다. 고유명사만 사람이 골라 `analyze` → `trend` → `domains` 로 거른다. 상세는 스크립트 주석
 - `npm run harvest -- --terms=<제품명> --pages=3` — **흡수 가능성 측정기** (2026-09-21 신설). ⚠️ 10-24 히트 분석에서 **지식iN 질문 수는 히트를 가르지 못했다**(비히트가 오히려 많다) — 레딜식 실험에서는 쓰지 않는다. 그 제품의 실제 사용자 질문이 지식iN 에 몇 개나 있는지 **수 초에** 센다. 조사(02)가 48회 호출·9분 쓰던 일이다. ⛔ **시드 발굴용이 아니다**(그 용도로는 실패) — 상세는 아래 "흡수 가능성 측정기" 참조
 
@@ -90,15 +91,15 @@ src/content/blog/슬러그명/
 | ~~2026-09-28~~ | `centellian-madeca-cream-time-reverse` H8 판정 (문서 3,502) | ✅ **완료(09-28)** — ❌ 미진입 · 반증 조건 안 걸림. `serp-audit --from=2026-09-06` **0/7** |
 | ~~2026-10-01~~ | ~~`요소수 첨가제` 발행~~ | ✅ **09-21 에 앞당겨 발행** (`urea-solution-additive`, 흡수 설계 1편) |
 | ~~2026-10-12~~ | `jang-nara-domina-cream` H8 2주 판정 (문서 94) | ✅ **완료(10-14, 2일 지연)** — ❌ 미진입 → **H8 사망** (반증 조건 적중) · [`docs/hypothesis-ledger.md`](docs/hypothesis-ledger.md) "2026-10-14 H8 판정" |
-| **2026-10-28** | **흡수 설계 2편 30일 판정** — `jang-nara-domina-cream` 기록 질문 18개 중 몇 개가 잡혔나 (5↑ 산다 / 2↓ 죽는다) | 대기 |
+| ~~2026-10-28~~ | 흡수 설계 2편 30일 판정 (`jang-nara-domina-cream`) | ⛔ **완료(10-31, 3일 지연) — 2/18 · 죽음.** GA4 33일 PV 11. 단 타겟 `장나라 도미나크림` 은 **3위**(10-14 미진입 → 진입) |
 | ~~2026-10-01~~ | `acuster-side-effects` 1면 진입 2주 판정 | ✅ **완료(10-01)** — ❌ 미진입. `serp-audit --from=2026-09-17` **0/4** (아큐스터·뉴케어·요소수·도미나크림) |
 | ~~2026-10-02~~ | `nucare-allprotein-25g` 1면 진입 2주 판정 | ✅ **10-01 감사에 포함** — ❌ 미진입 |
 | ~~2026-10-15~~ | `acuster-side-effects` 4주 판정 (문서 61) + `amos-curling-essence-2x-04` 2주 판정 (문서 35) | ✅ **완료(10-14, 하루 앞당김)** — `serp-audit --from=2026-09-17` **1/6**. 아큐스터 ❌(H8 사망 근거 둘째) · ⭐ **아모스 3위 = `targetKeyword` 기록 이후 첫 진입** (누적 1/25) |
-| **2026-10-31** | **흡수 설계 3편 30일 판정** — `amos-curling-essence-2x-04` 기록 질문 17개 중 몇 개가 잡혔나 (5↑ 산다 / 2↓ 죽는다) | 대기 |
+| ~~2026-10-31~~ | 흡수 설계 3편 30일 판정 (`amos-curling-essence-2x-04`) | ✅ **완료(10-31) — 8/17 · 산다(1차).** 그러나 **GA4 30일 PV 9** → 2차(20↑) 실패. **1면에 떠도 질문 검색량이 없으면 트래픽이 안 온다** |
 | **2026-11-08** | **흡수 설계 4편 30일 판정** — `paradise-grain-effects` 기록 질문 18개를 네이버에 검색해 우리 글이 1면에 뜨는 개수 (5↑ 산다 / 2↓ 죽는다) | 대기 |
-| **2026-10-28** | `shelpur-food-waste-disposer-error` **2주 1면 진입 판정** (문서 43) — `serp-audit --from=2026-10-14` | 대기 |
+| ~~2026-10-28~~ | `shelpur-food-waste-disposer-error` 2주 1면 진입 판정 (문서 43) | ✅ **완료(10-31)** — ❌ 미진입 · GA4 PV 3 |
 | **2026-11-13** | **흡수 설계 5편 30일 판정** — `shelpur-food-waste-disposer-error` 기록 질문 20개 1면 출현 수 (5↑ 산다 / 2↓ 죽는다). ⚠️ 브랜드 검색 급락 교란 | 대기 |
-| **2026-10-31** | `sulwhasoo-ginseng-cream-rich` **2주 1면 진입 판정** (문서 643) — `serp-audit --from=2026-10-14` | 대기 |
+| ~~2026-10-31~~ | `sulwhasoo-ginseng-cream-rich` 2주 1면 진입 판정 (문서 643) | ✅ **완료(10-31)** — ❌ 미진입(10-24 6위 → 이탈) · GA4 PV 0 |
 | **2026-11-16** | **흡수 설계 6편 30일 판정** — `sulwhasoo-ginseng-cream-rich` 기록 질문 18개 1면 출현 수 (5↑ 산다 / 2↓ 죽는다) | 대기 |
 | **2026-11-15** | H9(시즌 선점) 판정 | 대기 |
 | **10편 완료 시** | **레딜식 실험(H11) 판정일 확정** — 마지막 발행일 +45일을 이 표에 박는다. 히트 3↑ 산다 / 1↓ 죽는다 → [`docs/experiments/2026-10-25-redill-type.md`](docs/experiments/2026-10-25-redill-type.md) | 진행 중 (10-25 시작) |
@@ -152,6 +153,12 @@ src/content/blog/슬러그명/
 
 - **다음 리뷰 예정일**: `2026-11-07` (`node scripts/pipeline/serp-audit.mjs --from=2026-10-01` 도 함께 실행할 것)
   - ⚠️ 키워드·웹문서 TOP30 **각 3페이지 전부**
+  - ⭐ **10-29 사이트 전체 급등(글별 중앙 2.3배, 네이버만)이 유지되는지 판정한다** — `npm run traffic -- --days=7 --base=14`. 이 판정을 보고 발행 방향(계속/변경)을 사용자와 정한다 → [`docs/research/2026-10-31-ga4-first-analysis.md`](docs/research/2026-10-31-ga4-first-analysis.md)
+- **2026-10-31 GA4 연결 + 10-29 급등 조사** → [`docs/research/2026-10-31-ga4-first-analysis.md`](docs/research/2026-10-31-ga4-first-analysis.md)
+  - 사이트 일평균 PV 58 → 190 (10-29~30). 네이버 모바일 33.7 → 136/일, Bing·직접 그대로, 우리 변경 없음. 원인 미확인
+  - `serp-audit` 1면 진입 누적 1/25 → **6/24** · 양성 대조 1위 1 → 4
+  - 흡수 2편 2/18 죽음 · **3편 8/17 산다인데 PV 9** — 1면 진입 ≠ 트래픽. 흡수 설계 수정 조건 **2/3 충족**(기록용)
+  - 히트율 전수 **14%**(발행 15~45일 PV 20↑, 28/207)
 - **2026-10-24 정규 리뷰 완료 (30일, 3페이지 전부)** → [`docs/snapshots/naver-search/2026-10-24.md`](docs/snapshots/naver-search/2026-10-24.md)
   - 클릭 **~1,000** (1,100 → 1,100 → 1,000, **5주째 횡보·소폭 하락**) / 노출 54,000 / CTR **1.9%**(세 번 연속 하락). 월 $3~5
   - ⛔ **흡수 1편 `urea-solution-additive` 0/23 → 죽음.** 수정 조건(셋 중 둘) **1/3**
