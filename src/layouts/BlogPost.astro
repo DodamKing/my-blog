@@ -428,7 +428,10 @@ const jsonLd = {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    table-layout: fixed;
+    /* 2026-11-07: fixed → auto. fixed 는 칸 너비를 똑같이 나눠 전화번호·금액이 중간에서 끊겼다 */
+    table-layout: auto;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   .prose :global(thead) {
@@ -453,6 +456,12 @@ const jsonLd = {
   .prose :global(td:first-child),
   .prose :global(th:first-child) {
     text-align: left;
+  }
+
+  /* 표 안의 전화번호·금액·용량 — plugins/rehype-table-nowrap.mjs 가 감싼다 */
+  .prose :global(td .nb),
+  .prose :global(th .nb) {
+    white-space: nowrap;
   }
 
   .prose :global(tbody tr:hover) {
@@ -528,13 +537,15 @@ const jsonLd = {
       padding: 2.25rem 1rem 1rem;
     }
 
-    /* 테이블 모바일 최적화 - 심플하게 */
+    /* 테이블 모바일 최적화 — 2026-11-07: 칸 안에서 줄바꿈되게 바꿨다.
+       전에는 첫 칸 외 nowrap 이라 표 590개 중 418개가 화면 폭을 넘었다(긴 칸이 한 줄로 늘어남).
+       아주 넓은 표만 가로 스크롤이 남는다. */
     .prose :global(table) {
       font-size: 0.875rem;
       display: block;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      table-layout: fixed;
+      table-layout: auto;
     }
 
     .prose :global(thead),
@@ -551,14 +562,13 @@ const jsonLd = {
     .prose :global(th),
     .prose :global(td) {
       display: table-cell;
-      padding: 0.625rem 0.75rem;
-      white-space: nowrap;
+      padding: 0.625rem 0.625rem;
+      white-space: normal;
     }
 
     .prose :global(td:first-child),
     .prose :global(th:first-child) {
-      white-space: normal;
-      min-width: 100px;
+      min-width: 80px;
     }
   }
 </style>

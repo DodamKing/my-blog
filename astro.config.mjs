@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import { defineConfig } from 'astro/config';
 import rehypeExternalLinks from 'rehype-external-links'
+import rehypeTableNowrap from './plugins/rehype-table-nowrap.mjs'
 import sitemapLastmod from './integrations/sitemap-lastmod';
 
 // https://astro.build/config
@@ -25,7 +26,8 @@ export default defineConfig({
 	],
 	markdown: {
 		rehypePlugins: [
-			[rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }]
+			[rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }],
+			rehypeTableNowrap,
 		]
 	}
 });
