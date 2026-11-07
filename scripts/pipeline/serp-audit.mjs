@@ -36,6 +36,8 @@ const domainsOf = async keyword => {
     body: JSON.stringify({ keyword }) });
   return r.json();
 };
+// 1면 도메인 목록도 남긴다 (2026-11-07 — 10-29 급등이 경쟁 사이트 이탈 때문인지 전후 비교하려고)
+const topOf = res => (res.domains || []).slice(0, 10).map(d => `${d.rank}:${d.domain}`);
 
 if (QUESTIONS) {
   const qs = fs.readFileSync(QUESTIONS, 'utf8').split(/\r?\n/).map(s => s.trim()).filter(s => s && !s.startsWith('#'));
@@ -46,7 +48,7 @@ if (QUESTIONS) {
     let res;
     try { res = await domainsOf(q); } catch (e) { console.log(`ERR  |      | ${q} (${e.message})`); out.push({ q, rank: null, error: e.message }); continue; }
     const hit = (res.domains || []).find(d => d.domain === OURS);
-    out.push({ q, rank: hit ? hit.rank : null, sampled: res.sampled ?? 0 });
+    out.push({ q, rank: hit ? hit.rank : null, sampled: res.sampled ?? 0, top: topOf(res) });
     console.log(`${(hit ? `${hit.rank}위` : '  —').padStart(4)} | ${String(res.sampled ?? '').padStart(4)} | ${q}`);
     await sleep(700);
   }
@@ -90,7 +92,7 @@ for (const p of batch) {
   } catch (e) { console.log(`ERR  |      | ${p.date} | ${p.kw} (${e.message})`); continue; }
   const hit = (res.domains || []).find(d => d.domain === OURS);
   const rank = hit ? hit.rank : null;
-  out.push({ ...p, rank, sampled: res.sampled ?? 0 });
+  out.push({ ...p, rank, sampled: res.sampled ?? 0, top: topOf(res) });
   console.log(`${(rank ? `${rank}위` : '  —').padStart(4)} | ${String(res.sampled ?? '').padStart(4)} | ${p.date} | ${p.exact ? '' : '~'}${p.kw} → ${p.slug}`);
   await sleep(700);
 }

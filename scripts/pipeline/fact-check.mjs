@@ -420,6 +420,10 @@ function checkMdx() {
     const un = noCode.match(/(?<!\\)~/g);
     if (un && un.length) bad.push(`${i + 1}행: 미이스케이프 \`~\` ${un.length}개`);
     if (/<!--/.test(l)) bad.push(`${i + 1}행: HTML 주석 (MDX 에서 파싱 오류)`);
+    // 의도치 않은 링크 — 상품명 "[TV상품](단품)" 같은 원문이 링크로 바뀐다 (2026-11-07 사고)
+    for (const m of noCode.matchAll(/(?<!\\)\[([^\]\n]+)\]\(([^)\s]*)\)/g)) {
+      if (!/^(https?:\/\/|\/|#|\.\/|mailto:)/.test(m[2])) bad.push(`${i + 1}행: 주소가 URL 이 아닌 링크 "[${m[1]}](${m[2]})" — 원문 대괄호면 \\[ \\] 로 이스케이프`);
+    }
   });
   if (bad.length) bad.forEach((b) => add('error', 'MDX', b));
 }
