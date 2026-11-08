@@ -26,6 +26,12 @@ const latestPosts = allPosts.slice(0, 6);
 <html lang="ko">
 	<head>
 		<BaseHead title="Laon — 건강·기술·재테크 인사이트 블로그" description={SITE_DESCRIPTION} />
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"name": "Laon",
+			"url": "https://blog.dimad.kr/",
+		})} />
 	</head>
 	<body>
 		<Header />
