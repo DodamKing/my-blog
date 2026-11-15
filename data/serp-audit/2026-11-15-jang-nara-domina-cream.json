@@ -1,0 +1,266 @@
+[
+  {
+    "q": "도미나크림 바르고 얼굴이 붉어짐·따가움",
+    "rank": 4,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "2:kin.naver.com",
+      "3:skincarelabs.org",
+      "4:blog.dimad.kr",
+      "5:cafe.naver.com",
+      "6:yakguk.hosfind.com"
+    ]
+  },
+  {
+    "q": "도미나크림 부작용으로 피부가 붉어지나",
+    "rank": 5,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "3:cafe.naver.com",
+      "4:kin.naver.com",
+      "2:health.kr",
+      "5:blog.dimad.kr"
+    ]
+  },
+  {
+    "q": "따갑고 붉어질 때 정상인가",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "2:kin.naver.com",
+      "4:blog.naver.com",
+      "16:cafe.naver.com",
+      "1:tktx-kr.com",
+      "3:goeunnara.co.kr",
+      "5:haeyulanyang.com",
+      "6:skin9hari.co.kr",
+      "7:sjhealing.com",
+      "8:healhouseskin.com",
+      "9:hanyeol.baekrokdam.com"
+    ]
+  },
+  {
+    "q": "붉어지면 접촉성피부염인가",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "2:blog.naver.com",
+      "3:cafe.naver.com",
+      "1:kin.naver.com",
+      "4:youtube.com"
+    ]
+  },
+  {
+    "q": "붉어지면 중단해야 하나",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "6:kin.naver.com",
+      "13:blog.naver.com",
+      "1:medigreen.co.kr",
+      "2:momtools.kr",
+      "3:health.chosun.com",
+      "4:glowmeo.com",
+      "5:doctornow.co.kr",
+      "7:klalykke.com",
+      "8:saengki.com",
+      "9:tip.sinnyeosa.com"
+    ]
+  },
+  {
+    "q": "피부 자극을 최소화하는 방법",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "2:blog.naver.com",
+      "15:cafe.naver.com",
+      "1:mymerci.kr",
+      "3:zoskinhealth.co.kr",
+      "4:medisobizanews.com",
+      "5:thenewsmedical.co.kr",
+      "6:a-ha.io",
+      "7:style.check.save-money.co.kr",
+      "8:gillette.co.kr",
+      "9:maisonkorea.com"
+    ]
+  },
+  {
+    "q": "바르고 잤는데 다음 날 얼굴이",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "2:blog.naver.com",
+      "4:kin.naver.com",
+      "1:sun.lifecare135.com",
+      "3:lalaif.co.kr",
+      "5:powderroom.co.kr",
+      "6:paparecipe.com",
+      "7:homeaesthetics.philosworld.com",
+      "8:cosrx.co.kr",
+      "9:meditherapy.co.kr",
+      "10:brtc.co.kr"
+    ]
+  },
+  {
+    "q": "도미나크림 기미 효과",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "2:blog.naver.com",
+      "1:cafe.naver.com",
+      "3:kin.naver.com",
+      "4:health.kr",
+      "5:youtube.com"
+    ]
+  },
+  {
+    "q": "효과가 언제부터 나타나나",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "6:kin.naver.com",
+      "2:on-clinic.co.kr",
+      "3:chuni114.co.kr",
+      "4:pecheskin.clinic",
+      "5:bsuni114.co.kr"
+    ]
+  },
+  {
+    "q": "주근깨에도 효과 있나",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "5:blog.naver.com",
+      "3:cafe.naver.com",
+      "1:kin.naver.com",
+      "2:gmuni114.co.kr",
+      "4:ko.wikipedia.org",
+      "6:youtube.com",
+      "7:health.chosun.com"
+    ]
+  },
+  {
+    "q": "도미나 vs 멜라논",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "13:kin.naver.com",
+      "2:unpa.me",
+      "3:health.kr",
+      "4:fineirean.com",
+      "5:mmchan.co.kr",
+      "6:yes-doit.com",
+      "7:oh-tip-today.blogspot.com",
+      "8:in.naver.com",
+      "9:gazet.ai"
+    ]
+  },
+  {
+    "q": "민감성 피부엔 멜라논·도미나 중 어느 쪽",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "2:blog.naver.com",
+      "1:kin.naver.com",
+      "8:cafe.naver.com",
+      "3:gazet.ai",
+      "4:pico.leedysite.com",
+      "5:mypicknote.kr",
+      "6:oh-tip-today.blogspot.com",
+      "7:health.roadto1rich.com",
+      "9:in.naver.com"
+    ]
+  },
+  {
+    "q": "도미나크림 vs 멜라토닝크림",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "2:health.roadto1rich.com",
+      "3:mypicknote.kr",
+      "4:kpanews.co.kr",
+      "5:yes-doit.com",
+      "6:mmchan.co.kr"
+    ]
+  },
+  {
+    "q": "샤르드 멜라케어 vs 도미나크림",
+    "rank": null,
+    "sampled": 13,
+    "top": [
+      "1:kin.naver.com",
+      "2:oh-tip-today.blogspot.com",
+      "3:in.naver.com",
+      "4:doctornow.co.kr",
+      "5:skincarelabs.org",
+      "6:samuel.healthblog99.com",
+      "7:tiktok.com",
+      "8:pandarank.net",
+      "9:if.mediedu.kr",
+      "10:handicap.turs.ar"
+    ]
+  },
+  {
+    "q": "바른 후 크림을 바로 발라도 되나",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "4:kin.naver.com",
+      "2:digitalchosun.dizzo.com",
+      "3:a-ha.io",
+      "5:drugsearch.co.kr",
+      "6:esquirekorea.co.kr",
+      "7:doctornow.co.kr"
+    ]
+  },
+  {
+    "q": "바디(팔꿈치·무릎)에도 되나",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "5:cafe.naver.com",
+      "2:pickdailynews.com",
+      "3:skinboostermaster.com",
+      "4:zerolabclinic.com",
+      "6:fitwill.app",
+      "7:glowmeo.com",
+      "8:skin.tigerbubu.com",
+      "9:modoo.io",
+      "10:youtube.com"
+    ]
+  },
+  {
+    "q": "약국 기미크림 처음인데 괜찮나",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "4:blog.naver.com",
+      "1:cafe.naver.com",
+      "2:info.todaysheep.com",
+      "3:skincarelabs.org",
+      "5:kin.naver.com",
+      "6:youtube.com",
+      "7:mypicknote.kr"
+    ]
+  },
+  {
+    "q": "도미나크림 가격",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "3:blog.naver.com",
+      "2:cafe.naver.com",
+      "1:in.naver.com",
+      "4:health.kr",
+      "5:kin.naver.com",
+      "6:taiguk.co.kr"
+    ]
+  }
+]

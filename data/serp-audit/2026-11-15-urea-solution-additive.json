@@ -1,0 +1,328 @@
+[
+  {
+    "q": "자동차에 요소수 대신 물을 넣으면",
+    "rank": 2,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "2:blog.dimad.kr",
+      "3:a-ha.io",
+      "4:car.ambitstock.com",
+      "5:car365.simplyinfos.com",
+      "6:cafe.naver.com"
+    ]
+  },
+  {
+    "q": "요소수에 첨가제를 넣어도 되나",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "2:cafe.naver.com"
+    ]
+  },
+  {
+    "q": "디젤 요소수 혼유 괜찮을까요",
+    "rank": 5,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "2:a-ha.io",
+      "3:motorzeen.com",
+      "4:car.ambitstock.com",
+      "5:blog.dimad.kr",
+      "6:feed.viewus.co.kr",
+      "7:tulsi.storyhauz.com",
+      "8:tiktok.com",
+      "9:brunch.co.kr",
+      "10:youtube.com"
+    ]
+  },
+  {
+    "q": "다른 브랜드 요소수를 섞어도 되나",
+    "rank": 1,
+    "sampled": 20,
+    "top": [
+      "5:blog.naver.com",
+      "1:blog.dimad.kr",
+      "2:car.gab1899.com",
+      "3:financeyh.com",
+      "4:cvinfo.com",
+      "6:freehealthier.com",
+      "7:jaenung.net"
+    ]
+  },
+  {
+    "q": "겨울에 요소수가 얼지 않을까요",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "2:cafe.naver.com"
+    ]
+  },
+  {
+    "q": "주유소에서 기름통에 받아서 얼마정도 보관할 수 있나요",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "2:blog.naver.com",
+      "3:cafe.naver.com",
+      "6:kin.naver.com",
+      "1:a-ha.io",
+      "4:picjjang.com",
+      "5:c.withseptembers.com",
+      "7:oilmap.kr"
+    ]
+  },
+  {
+    "q": "어는점을 낮출 수 있는 방법이 있나요",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "2:blog.naver.com",
+      "12:cafe.naver.com",
+      "1:gklibrarykor.com",
+      "3:newsteacher.chosun.com",
+      "4:cuwaqu.blogspot.com",
+      "5:ikblog.co.kr",
+      "6:incheontoday.com",
+      "7:kr.thamhiemmekong.com",
+      "8:jaenung.net",
+      "9:miniwebtool.com"
+    ]
+  },
+  {
+    "q": "겨울철 자동차 미리 점검해야 할 점",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "2:blog.naver.com",
+      "1:cafe.naver.com"
+    ]
+  },
+  {
+    "q": "QM6 디젤 요소수 주입 후 경고등이 계속 뜨는데 왜 그런가요",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "2:blog.naver.com",
+      "9:cafe.naver.com",
+      "1:a-ha.io",
+      "3:logiquee.com",
+      "4:freehealthier.com",
+      "5:cardamom.storyhauz.com",
+      "6:libae.net",
+      "7:car.gab1899.com",
+      "8:wp.goodlife-info.kr",
+      "10:jaenung.net"
+    ]
+  },
+  {
+    "q": "요소수 경고등 떴습니다",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "2:cafe.naver.com",
+      "3:youtube.com"
+    ]
+  },
+  {
+    "q": "팰리세이드 요소수 경고등",
+    "rank": null,
+    "sampled": 21,
+    "top": [
+      "3:blog.naver.com",
+      "2:cafe.naver.com",
+      "1:search.naver.com",
+      "4:lifeqoo.com",
+      "5:sdgn.co.kr",
+      "6:ownersmanual.hyundai.com",
+      "7:repair.eeye.co.kr"
+    ]
+  },
+  {
+    "q": "요소수 시스템을 점검하세요 에러코드 해결방법",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "3:blog.naver.com",
+      "6:cafe.naver.com",
+      "1:hi5-guide.com",
+      "2:terms.naver.com",
+      "4:b.bulsajoking.com",
+      "5:car.ohappycoco.com",
+      "7:truck.qcat.kr",
+      "8:logiquee.com",
+      "9:kin.naver.com"
+    ]
+  },
+  {
+    "q": "쏘렌토 요소수 시스템 경고",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "2:clien.net",
+      "3:loainsight.com",
+      "4:tip.sinnyeosa.com",
+      "5:cboard.net"
+    ]
+  },
+  {
+    "q": "요소수가 떨어지면 운행이 불가한가요",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "10:cafe.naver.com",
+      "2:ownersmanual.kia.com",
+      "3:ureasolution.co.kr",
+      "4:car.gab1899.com",
+      "5:a-ha.io",
+      "6:mycarspec.co.kr",
+      "7:ytn.co.kr",
+      "8:freehealthier.com",
+      "9:cardamom.storyhauz.com"
+    ]
+  },
+  {
+    "q": "디젤 경유차 요소수 안 넣으면 어떻게 되나요",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "2:namu.wiki",
+      "3:evpost.co.kr",
+      "4:specialtimes.co.kr",
+      "5:wemedifit.com",
+      "6:youtube.com"
+    ]
+  },
+  {
+    "q": "요소수 주입 경고가 자주 뜬다",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "2:richard100warp.co.kr",
+      "3:car.ambitstock.com",
+      "4:ureasolution.co.kr",
+      "5:freehealthier.com",
+      "6:wp.goodlife-info.kr"
+    ]
+  },
+  {
+    "q": "제 차는 왜 요소수가 줄지 않을까요",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "1:blog.naver.com",
+      "2:oil24.kr",
+      "3:specialtimes.co.kr",
+      "4:car.gab1899.com",
+      "5:cafe.naver.com",
+      "6:withnews.co.kr"
+    ]
+  },
+  {
+    "q": "요소수 충전 어떻게 하는 건가요",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "3:blog.naver.com",
+      "13:cafe.naver.com",
+      "1:a-ha.io",
+      "2:wemedifit.com",
+      "4:car.gab1899.com",
+      "5:wp.goodlife-info.kr",
+      "6:namu.wiki",
+      "7:oil.moateo.com",
+      "8:oil24.kr",
+      "9:lehemhouse.com"
+    ]
+  },
+  {
+    "q": "요소수 구멍이 없는 디젤 차량",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "2:blog.naver.com",
+      "8:cafe.naver.com",
+      "1:a-ha.io",
+      "3:v.daum.net",
+      "4:jaenung.net",
+      "5:car.allorobiz.com",
+      "6:terms.naver.com",
+      "7:wemedifit.com"
+    ]
+  },
+  {
+    "q": "요소수가 필요한 차량 연식이 궁금합니다",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "2:blog.naver.com",
+      "6:cafe.naver.com",
+      "1:a-ha.io",
+      "3:onkorea.co.kr",
+      "4:cboard.net",
+      "5:car.gab1899.com",
+      "7:tip.sinnyeosa.com",
+      "8:truck-log.blogspot.com",
+      "9:youtube.com"
+    ]
+  },
+  {
+    "q": "요소수가 손에 묻으면 해로운가요",
+    "rank": null,
+    "sampled": 18,
+    "top": [
+      "2:blog.naver.com",
+      "1:a-ha.io",
+      "3:chevrolet.co.kr",
+      "4:ownersmanual.hyundai.com",
+      "5:blog.kakaocdn.net",
+      "6:scribd.com",
+      "7:foeconomy.co.kr",
+      "8:jaenung.net",
+      "9:premium.sbs.co.kr",
+      "10:help.tulbone.co.kr"
+    ]
+  },
+  {
+    "q": "요소수가 바지에 튀었는데 빨리 씻지 않으면 피부에 해가 되나요",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "3:blog.naver.com",
+      "1:a-ha.io",
+      "2:uni-solutions.co.kr",
+      "4:kdoc.co.kr",
+      "5:blog.kakaocdn.net",
+      "6:kwpa.co.kr",
+      "7:cafe.naver.com",
+      "8:namu.wiki",
+      "9:ownersmanual.hyundai.com",
+      "10:moel.go.kr"
+    ]
+  },
+  {
+    "q": "요소수를 버리려고 하는데 어떻게 하는 게 좋을까요",
+    "rank": null,
+    "sampled": 20,
+    "top": [
+      "5:blog.naver.com",
+      "7:cafe.naver.com",
+      "1:a-ha.io",
+      "2:ureasolution.co.kr",
+      "3:ownersmanual.hyundai.com",
+      "4:daangn.com",
+      "6:youtube.com",
+      "8:richard100warp.co.kr",
+      "9:carprism.tmhub.co.kr",
+      "10:01077021213.blogspot.com"
+    ]
+  }
+]
